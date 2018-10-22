@@ -1,0 +1,15 @@
+<?php
+require_once '../Modelo/PerfilOrganizador.php';
+
+session_start();
+
+$res=PerfilOrganizador::borrarPerfilOrganizador($_GET['idpo'], $_SESSION['idusuario']);
+
+if($res[0]!="00000"){
+    print_r($res);
+}
+else{
+    header("Location:../Vista/gestionarPerfilesOrganizador.php");
+}
+
+?>
