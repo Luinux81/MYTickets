@@ -101,7 +101,15 @@ class Evento{
              
         Tool::desconectar(Evento::$dbh);
         
-        return $query->fetchAll();
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        $out=array();
+        $i=0;
+        foreach ($res as $r){
+            $out[$i]=self::arrayAObjeto($r);
+            $i++;
+        }
+        
+        return $out;
     }
         
     public static function getEvento($eid){
@@ -115,8 +123,10 @@ class Evento{
         
         Tool::desconectar(Evento::$dbh);
         
-        $res=$query->fetch();
-        
+        return self::arrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
+    }
+    
+    private static function arrayAObjeto($res){
         $ev=new Evento($res['Nombre'], $res['Descripcion'], $res['Fecha_inicio'], $res['Fecha_fin']);
         $ev->id=$res['Id'];
         $ev->aforo=$res['Aforo'];
@@ -129,6 +139,5 @@ class Evento{
         
         return $ev;
     }
-      
 }
 ?>
