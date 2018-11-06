@@ -142,7 +142,15 @@ class TipoEntrada
         
         TipoEntrada::desconectar();
         
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        
+        $out=array();
+        $i=0;
+        foreach($res as $r){
+            $out[$i]=TipoEntrada::arrayAObjeto($r);
+            $i++;
+        }
+        return $out; 
     }
     
     public static function getTipoEntrada($eid,$tpid){

@@ -52,9 +52,14 @@ $res=TipoEntrada::getAllTipoEntradas($ev->id);
 
 echo "<h3>Tipos de entradas</h3><ul>";
 foreach ($res as $tp){
+    /*
     echo "<li>" . $tp['Nombre'] . " Precio:" . $tp['Precio'] 
         . " <a href='../Vista/editarTipoEntrada.php?eid=". $tp['Id_Evento'] ."&tpid=". $tp['Id'] ."'>Editar</a> "
         . " <a href='../Controlador/eliminarTipoEntrada.php?eid=". $tp['Id_Evento'] ."&tpid=". $tp['Id'] ."'>Eliminar</a></li>";
+    */
+    echo "<li>" . $tp->nombre . " Precio:" . $tp->precio
+        . " <a href='../Vista/editarTipoEntrada.php?eid=". $tp->eventoId ."&tpid=". $tp->id ."'>Editar</a> "
+    	    . " <a href='../Controlador/eliminarTipoEntrada.php?eid=". $tp->eventoId ."&tpid=". $tp->id ."'>Eliminar</a></li>";
 }
 echo "</ul>";
 
