@@ -1,3 +1,7 @@
+<?php 
+require_once 'constantes.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

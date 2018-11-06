@@ -1,5 +1,6 @@
 <?php
-require_once '../Modelo/Evento.php';
+require_once '../constantes.php';
+require_once APP_ROOT . '/Modelo/Evento.php';
 
 //captura de parametros
 $nombre=$_POST['evento_nombre'];

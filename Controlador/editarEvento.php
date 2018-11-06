@@ -1,6 +1,7 @@
 <?php
-require_once '../Modelo/Evento.php';
-require_once '../Modelo/Tool.php';
+require_once '../constantes.php';
+require_once APP_ROOT . '/Modelo/Evento.php';
+require_once APP_ROOT . '/Modelo/Tool.php';
 
 $id=$_POST['id'];
 $nombre=$_POST['evento_nombre'];

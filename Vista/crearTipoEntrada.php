@@ -1,5 +1,6 @@
 <?php
-require_once '../Vista/actionBar.php';
+require_once '../consatntes.php';
+require_once APP_ROOT . '/Vista/actionBar.php';
 
 $idEvento=$_POST['id_evento'];
 $urlRetorno=$_POST['url_ref'];

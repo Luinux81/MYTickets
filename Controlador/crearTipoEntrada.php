@@ -1,5 +1,6 @@
 <?php
-require_once '../Modelo/TipoEntrada.php';
+require_once '../constantes.php';
+require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 $nombre=$_POST['te_nombre'];
 $descripcion=$_POST['te_descripcion'];

@@ -1,7 +1,6 @@
 <?php
-//require_once '../Modelo/ModeloBD.php';
-require_once '../Modelo/TipoEntrada.php';
-require_once '../Modelo/Tool.php';
+require_once APP_ROOT . '/Modelo/TipoEntrada.php';
+require_once APP_ROOT . '/Modelo/Tool.php';
 
 class Evento{
     
@@ -116,7 +115,19 @@ class Evento{
         
         Tool::desconectar(Evento::$dbh);
         
-        return $query->fetch();
+        $res=$query->fetch();
+        
+        $ev=new Evento($res['Nombre'], $res['Descripcion'], $res['Fecha_inicio'], $res['Fecha_fin']);
+        $ev->id=$res['Id'];
+        $ev->aforo=$res['Aforo'];
+        $ev->local=$res['Local'];
+        $ev->direccion=$res['Direccion'];
+        $ev->ciudad=$res['Ciudad'];
+        $ev->pais=$res['Pais'];
+        $ev->gps=$res['GPS'];
+        $ev->estado=$res['Estado'];
+        
+        return $ev;
     }
       
 }

@@ -2,7 +2,9 @@
 <?php
 error_reporting(E_ALL);
 
-require_once '../Modelo/Usuario.php';
+require_once '../constantes.php';
+
+require_once APP_ROOT . '/Modelo/Usuario.php';
 
 
 $nuevoSingleton = Usuario::singleton_login();

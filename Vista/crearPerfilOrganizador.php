@@ -1,5 +1,7 @@
 <?php
-require_once '../Vista/actionBar.php';
+require_once '../constantes.php';
+
+require_once APP_ROOT . '/Vista/actionBar.php';
 
 echo actionBar::Html("perfilesOrganizador");
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once '../Modelo/ModeloBD.php';
+require_once APP_ROOT . '/Modelo/ModeloBD.php';
 
 class TipoEntrada
 {

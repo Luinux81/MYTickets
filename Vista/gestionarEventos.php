@@ -1,6 +1,8 @@
 <?php
-require_once '../Vista/actionBar.php';
-require_once '../Modelo/Evento.php';
+require_once '../constantes.php';
+
+require_once APP_ROOT . '/Vista/actionBar.php';
+require_once APP_ROOT . '/Modelo/Evento.php';
 
 echo actionBar::Html();
 
