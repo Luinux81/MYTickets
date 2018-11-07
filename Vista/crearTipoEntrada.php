@@ -1,5 +1,5 @@
 <?php
-require_once '../consatntes.php';
+require_once '../constantes.php';
 require_once APP_ROOT . '/Vista/actionBar.php';
 
 $idEvento=$_POST['id_evento'];
