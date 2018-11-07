@@ -1,8 +1,8 @@
 <?php
 require_once '../constantes.php';
-require_once APP_ROOT . '/Vista/actionBar.php';
+require_once APP_ROOT . '/Vista/Html.php';
 
-echo actionBar::Html();
+echo Html::actionBar();
 ?>
 
 <div style='width: 100%;' id='mainContent'>

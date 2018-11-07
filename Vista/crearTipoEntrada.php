@@ -1,11 +1,11 @@
 <?php
 require_once '../constantes.php';
-require_once APP_ROOT . '/Vista/actionBar.php';
+require_once APP_ROOT . '/Vista/Html.php';
 
 $idEvento=$_POST['id_evento'];
 $urlRetorno=$_POST['url_ref'];
 
-echo actionBar::Html();
+echo Html::actionBar();
 
 ?>
 

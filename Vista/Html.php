@@ -2,9 +2,17 @@
 
 session_start();
 
-class actionBar{
+class Html{
     
-    public static function Html($location="home"){
+    public static function cabeceraHtml(){
+        $aux="<head>"
+            . "<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>"
+            . "</head>";
+        
+        return $aux;
+    }
+    
+    public static function actionBar($location="home"){
         switch($location){
             case "home":
                 $aux="<div style='width:100%;text-align:right;'> "
@@ -30,6 +38,7 @@ class actionBar{
         
         return $aux;
     }
+    
 }
 
 ?>

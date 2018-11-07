@@ -1,10 +1,10 @@
 <?php
 require_once '../constantes.php';
 
-require_once APP_ROOT . '/Vista/actionBar.php';
+require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
 
-echo actionBar::Html();
+echo Html::actionBar();
 
 $res=Evento::getAllEventos();
 

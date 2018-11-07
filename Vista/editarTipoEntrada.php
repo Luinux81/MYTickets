@@ -1,6 +1,6 @@
 <?php
 require_once '../constantes.php';
-require_once APP_ROOT . '/Vista/actionBar.php';
+require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 $idTp=$_GET['tpid'];
@@ -9,7 +9,7 @@ $urlRetorno="../Vista/editarEvento.php";
 
 $tp=TipoEntrada::getTipoEntrada($idEvento, $idTp);
 
-echo actionBar::Html();
+echo Html::actionBar();
 ?>
 <div style="width: 100%;" id="mainContent">
 <form method="post" action="../Controlador/editarTipoEntrada.php">

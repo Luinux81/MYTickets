@@ -1,7 +1,7 @@
 <?php
 require_once '../constantes.php';
 
-require_once APP_ROOT . '/Vista/actionBar.php';
+require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 require_once APP_ROOT . '/Modelo/Tool.php';
@@ -10,7 +10,7 @@ $eid=$_GET['eid'];
 
 $ev=Evento::getEvento($eid);
 
-echo actionBar::Html();
+echo Html::actionBar();
 
 ?>
 
