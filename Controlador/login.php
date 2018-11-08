@@ -6,6 +6,9 @@ require_once '../constantes.php';
 
 require_once APP_ROOT . '/Modelo/Usuario.php';
 
+session_start();
+
+$_SESSION['carro']="";
 
 $nuevoSingleton = Usuario::singleton_login();
 
