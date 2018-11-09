@@ -1,6 +1,7 @@
 <?php
 //require_once '../constantes.php';
 require_once APP_ROOT . '/Modelo/Tool.php';
+require_once APP_ROOT . '/Modelo/Evento.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 class CarroCompra{
@@ -21,47 +22,40 @@ class CarroCompra{
         return $encontrado;
     }
     
-    public static function getCountLineas(){               
-        if(!isset($_SESSION['carro'])){
-            return 0;    
-        }
-        else{
-            if($_SESSION['carro']!=""){
-                $carro=json_decode($_SESSION['carro'],true);
-                return count($carro);
-            }
-            else{
-                return 0;
-            }
-        }
-    }
     
-    public static function getCountEntradas(){
-        $res=0;
-        if(isset($_SESSION['carro'])){
-            if($_SESSION['carro']!=""){
-                $carro=json_decode($_SESSION['carro'],true);
-                for($i=0;$i<count($carro);$i++){
-                    $res+=$carro[$i]['cantidad'];
+    //FORMATO JSON: {numeroLineas:int ,numeroEntradas:int, totalPrecio:float,lineas[{evento:{id,nombre},tipoentrada:{id,nombre,precio},cantidad:int},{...}]}
+    public static function getJSON(){
+            $numeroLineas=0;
+            $numeroEntradas=0;
+            $totalPrecio=0;
+            $lineas=array();
+            
+            if(isset($_SESSION['carro'])){
+                if($_SESSION['carro']!=""){
+                    $carro=json_decode($_SESSION['carro'],true);
+                    
+                    $numeroLineas=count($carro);
+                    for($i=0;$i<count($carro);$i++){
+                        
+                        $cantidad=$carro[$i]['cantidad'];
+                        $idTipoEntrada=$carro[$i]['tipoentrada'];
+                        $idEvento=$carro[$i]['evento'];
+                        
+                        $aux=Evento::getEvento($idEvento);
+                        $evento=array("id"=>$idEvento,"nombre"=>$aux->nombre);
+                        
+                        $aux=TipoEntrada::getTipoEntrada($idEvento, $idTipoEntrada);
+                        $tipoEntrada=array("id"=>$idTipoEntrada,"nombre"=>$aux->nombre,"precio"=>$aux->precio);
+                        
+                        $numeroEntradas+=$cantidad;
+                        $totalPrecio+=$cantidad*$aux->precio;
+                        $lineas[]=array("evento"=>$evento,"tipoentrada"=>$tipoEntrada,"cantidad"=>$cantidad);
+                    }
                 }
             }
-        }
-        
-        return $res;
-    }
-    
-    public static function getValorTotal(){
-        $res=0;
-        if(isset($_SESSION['carro'])){
-            if($_SESSION['carro']!=""){
-                $carro=json_decode($_SESSION['carro'],true);
-                for($i=0;$i<count($carro);$i++){
-                    $res+=$carro[$i]['cantidad']*(TipoEntrada::getTipoEntrada($carro[$i]['evento'], $carro[$i]['tipoentrada']))->precio;
-                }
-            }
-        }
-        
-        return $res;
+            
+            $res=array("numeroLineas"=>$numeroLineas,"numeroEntradas"=>$numeroEntradas,"totalPrecio"=>$totalPrecio,"lineas"=>$lineas);
+            return json_encode($res);
     }
     
     public static function getHTMLAllItems(){

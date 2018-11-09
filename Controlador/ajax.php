@@ -20,14 +20,8 @@ switch($accion){
     case "limpiar":
         CarroCompra::vaciarCarro();
         break;
-    case "contar":
-        echo CarroCompra::getCountLineas();
-        break;
-    case "contarEntradas":
-        echo CarroCompra::getCountEntradas();
-        break;
-    case "valor":
-        echo CarroCompra::getValorTotal();
+    case "getJSON":
+        echo CarroCompra::getJSON();
         break;
 }
 

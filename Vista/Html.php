@@ -40,10 +40,16 @@ class Html{
     }
     
     private static function addCarroCompra(){
-        $out="<li style='display:inline;padding-right:10px;'><a href='' id='link_ver_carro'>";
-        if(CarroCompra::getCountLineas()>0){
-            $out.="Ver Carro ( " . CarroCompra::getCountLineas() . " items )";
+        $out="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/verCarroCompra.php' id='link_ver_carro'>";
+        
+        $json=CarroCompra::getJSON();
+        if(!empty($json)){
+            $json=json_decode($json);
+            if($json->numeroLineas!=0){
+                $out.="Ver Carro ( " . $json->numeroLineas . " items )";
+            }
         }
+        
         $out.="</a></li>";
         return $out;
     }
