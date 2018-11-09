@@ -24,5 +24,23 @@ class Tool
     public static function desconectar(&$dbHandler){
         $dbHandler=null;
     }
+    
+    public static function getToken($longitud,$alfabeto=""){
+        $token="";
+        if (strcmp($alfabeto,"")!==0){
+            $alfabeto="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            //$alfabeto.="abcdefghijklmnopqrstuvwxyz";
+            $alfabeto.="0123456789";
+        }
+            
+        $max=strlen($alfabeto);
+            
+        for($i=0;$i<$longitud;$i++){
+            $token.=$alfabeto[random_int(0, $max-1)];
+        }
+        
+        
+        return $token;
+    }
 }
 
