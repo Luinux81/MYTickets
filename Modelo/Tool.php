@@ -27,7 +27,7 @@ class Tool
     
     public static function getToken($longitud,$alfabeto=""){
         $token="";
-        if (strcmp($alfabeto,"")!==0){
+        if ($alfabeto==""){
             $alfabeto="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             //$alfabeto.="abcdefghijklmnopqrstuvwxyz";
             $alfabeto.="0123456789";
