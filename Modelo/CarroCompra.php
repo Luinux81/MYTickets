@@ -22,6 +22,28 @@ class CarroCompra{
         return $encontrado;
     }
     
+    public static function getCantidad($eid,$tp){
+        $res=0;
+        if(isset($_SESSION['carro'])){
+            if($_SESSION['carro']!=""){
+                $carro=json_decode($_SESSION['carro'],true);
+                $i=0;
+                $encontrado=false;
+                
+                while($i<count($carro) && !$encontrado){
+                    if($carro[$i]['evento']==$eid && $carro[$i]['tipoentrada']==$tp){
+                        $res=$carro[$i]['cantidad'];
+                        $encontrado=true;
+                    }
+                    else{
+                        $i++;
+                    }
+                }
+            }
+        }
+        
+        return $res;
+    }
     
     //FORMATO JSON: {numeroLineas:int ,numeroEntradas:int, totalPrecio:float,lineas[{evento:{id,nombre},tipoentrada:{id,nombre,precio},cantidad:int},{...}]}
     public static function getJSON(){

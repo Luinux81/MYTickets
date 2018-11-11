@@ -14,33 +14,37 @@ $out="<h2>Selecciona Tickets</h2><ul>";
 $carro=json_decode(CarroCompra::getJSON());
 
 $res=TipoEntrada::getAllTipoEntradas($eid);
+
+$out.="<table>";
+$out.="<tr> <th>Ticket</th> <th>Precio</th> <th>Cantidad</th> </tr>";
 foreach ($res as $te){
-    $out.="<li id=" . $te->id . "><span class='nombre'>" . $te->nombre . "</span> <span class='precio'>". $te->precio . "</span>" .  
-            "<select>" .
-            "<option value='0'>0</option>";
+    $out.="<tr>";
+    $out.="<td class='nombre'>" . $te->nombre . "</td>";
+    $out.="<td class='precio'>" . $te->precio . "</td>";
+    
+    $out.="<td><select data-eid='" . $eid . "' data-tpid='" . $te->id . "'><option value='0'>0</option>";
+    
+    $cantidadEnCarro=CarroCompra::getCantidad($eid, $te->id);
     
     for($i=$te->minimo_compra;$i<=$te->maximo_compra;$i++){
-        $out.="<option value='" . $i . "'>" . $i . "</option>";    
+        if($i==$cantidadEnCarro){
+            $aux=" selected ";            
+        }
+        else{
+            $aux="";
+        }
+        
+        $out.="<option value='" . $i . "' " . $aux . ">" . $i . "</option>";    
     }
     
-    $out.="</select></li>";
+    $out.="</select></td></tr>";
 }
-$out.="</ul>";
-
-$numItems=$carro->numeroLineas;
-if($numItems!=1){
-    $textNumItem="(" . $numItems . " items)";
-}
-else{
-    $textNumItem="(" . $numItems . " item)";
-}
+$out.="</table>";
 
 $out.="<input type='hidden' id='evento' value='". $eid . "'>" .
-        "<p>Cantidad:<span id='texto_salida_cuenta'>" . $carro->numeroEntradas . " </span>  Precio:<span id='texto_salida_valor'>" . $carro->totalPrecio . "</span> e</p>" . 
-        "<p>Carro Compra <span id='numeroItems'>" . $textNumItem . "<span></p>" .
-        "<div id='div_salida'>" . CarroCompra::getHTMLAllItems() . "</div>";
+        "<p>Cantidad:<span id='texto_salida_cuenta'>" . $carro->numeroEntradas . " </span>  Precio:<span id='texto_salida_valor'>" . $carro->totalPrecio . "</span> e</p>";
 
-$out.="<br><button id='limpiarCarro'>Limpiar carro</button>";
+$out.="<button id='limpiarCarro'>Limpiar carro</button>";
 echo $out;
 
 ?>
@@ -48,12 +52,12 @@ echo $out;
 <script>
 $(document).ready(function(){
 	$("select").change(function(){
-		var precio=$(this).parent().children("span.precio").text();
+		var precio=$(this).parent().parent().children("td.precio").html();
 		var cantidad=$(this).val();
 		
 		$.ajax({
 			type:"GET",
-			url:"../Controlador/ajax.php?eid="+ $("#evento").attr("value") + "&tp=" + $(this).parent().attr("id") + "&cantidad=" + cantidad + "&accion=add",
+			url:"../Controlador/ajax.php?eid="+ $(this).attr("data-eid") + "&tp=" + $(this).attr("data-tpid") + "&cantidad=" + cantidad + "&accion=add",
 			success:function(datahtml){
 				actualiza();
 			},
@@ -87,7 +91,6 @@ function actualiza(){
 			actualizaLinkCarro(data.numeroLineas);
 			$("#texto_salida_cuenta").html(data.numeroEntradas);
 			$("#texto_salida_valor").html(data.totalPrecio);
-			actualizaLineas(data.lineas);
 		},
 		error:function(){
 			alert("Error");
@@ -103,7 +106,7 @@ function actualizaLinkCarro(numItems){
 	else{
 		out="( " + numItems + " items )";
 	}
-	$("#numeroItems").html(out);
+	
 	if(numItems==0){
 		$("#link_ver_carro").html("");
 	}
@@ -112,16 +115,5 @@ function actualizaLinkCarro(numItems){
 	}	
 }
 
-function actualizaLineas(lineas){
-	var out="<ul>";
-	
-	$.each(lineas, function(key,value){
-		out+="<li>Evento->"+value['evento']['id']+"  TP->"+value['tipoentrada']+" Cantidad->"+value['cantidad']+"</li>";
-	});
-
-	out+="</ul>";
-
-	$("#div_salida").html(out);
-}
 
 </script>

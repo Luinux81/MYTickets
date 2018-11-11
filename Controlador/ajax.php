@@ -14,12 +14,13 @@ switch($accion){
         $tp=$_GET['tp'];
         $cantidad=$_GET['cantidad'];
         CarroCompra::addItem($eid, $tp, $cantidad);
-        echo CarroCompra::getHTMLAllItems();
-        
+        echo CarroCompra::getJSON();
         break;
+        
     case "limpiar":
         CarroCompra::vaciarCarro();
         break;
+        
     case "getJSON":
         echo CarroCompra::getJSON();
         break;
