@@ -13,6 +13,44 @@ class Venta{
     
     private static $dbh;
     
+    public static function importarJSONCarro($json){
+        $v=new Venta();
+        
+        $id=0;
+        $totalPrecio=0;
+        $lineasVenta=array();
+        
+        if(!empty($json)){
+            $carro=json_decode($json,true);
+            
+            $id=self::getNuevoId();
+            $totalPrecio=$carro["totalPrecio"];
+            
+            foreach($carro['lineas'] as $linea){
+                $lv=new LineaVenta();
+                
+                $lv->id=LineaVenta::getNuevoId($id);;
+                $lv->idVenta=$id;
+                $lv->idEvento=$linea['evento']['id'];
+                $lv->idTipoEntrada=$linea['tipoentrada']['id'];
+                $lv->precio=$linea['tipoentrada']['precio'];
+                $lv->cantidad=$linea['cantidad'];;
+                $lv->estado="";
+                
+                
+                $lineasVenta[]=$lv;
+            }
+        }
+        
+        $v->id=$id;
+        $v->idUsuario=$_SESSION['idusuario'];
+        $v->importe=$totalPrecio;
+        $v->fecha=date('Y-m-d h:i:s');
+        $v->lineasVenta=$lineasVenta;
+        
+        return $v;
+    }
+    
     public static function getNuevoId(){
         $idValido=false;
         
