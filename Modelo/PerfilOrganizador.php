@@ -17,56 +17,56 @@ class PerfilOrganizador
     
     
     public static function getAllPerfilesOrganizador($idUsuario){
-        PerfilOrganizador::$dbh=Tool::conectar();
+        self::$dbh=Tool::conectar();
         
         $sql="SELECT * FROM perfilesorganizador WHERE Id_Usuario=?";
         
-        $query=PerfilOrganizador::$dbh->prepare($sql);
+        $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$idUsuario);
         $query->execute();
         
-        Tool::desconectar(PerfilOrganizador::$dbh);
+        Tool::desconectar(self::$dbh);
         
-        return $query->fetchAll();
+        return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
     }
     
     public static function getPerfilOrganizador($id,$idUsuario){
-        PerfilOrganizador::$dbh=Tool::conectar();
+        self::$dbh=Tool::conectar();
         
         $sql="SELECT * FROM perfilesorganizador WHERE Id_Usuario=? AND Id=?";
         
-        $query=PerfilOrganizador::$dbh->prepare($sql);
+        $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$idUsuario);
         $query->bindParam(2,$id);
         $query->execute();
         
-        Tool::desconectar(PerfilOrganizador::$dbh);
+        Tool::desconectar(self::$dbh);
         
-        return $query->fetch();
+        return self::adaptaArrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
     }
     
     public static function nuevoIdPerfilOrganizador($idUsuario){
-        PerfilOrganizador::$dbh=Tool::conectar();
+        self::$dbh=Tool::conectar();
         
         $sql="SELECT MAX(Id) from perfilesorganizador WHERE Id_Usuario=?";
         
-        $query=PerfilOrganizador::$dbh->prepare($sql);
+        $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$idUsuario);
         $query->execute();
         
         $res=$query->fetch(PDO::FETCH_NUM);
         
-        Tool::desconectar(PerfilOrganizador::$dbh);
+        Tool::desconectar(self::$dbh);
         
         return $res[0]+1;
     }
     
     public function crearPerfilOrganizador(){
-        PerfilOrganizador::$dbh=Tool::conectar();
+        self::$dbh=Tool::conectar();
         
         $sql="INSERT INTO perfilesorganizador (Id,Id_Usuario,Nombre,Descripcion,Website,Facebook,Twitter,Instagram,Mostrar_descripcion) VALUES (?,?,?,?,?,?,?,?,?)";
         
-        $query=PerfilOrganizador::$dbh->prepare($sql);
+        $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$this->id);
         $query->bindParam(2,$this->idUsuario);
         $query->bindParam(3,$this->nombre);
@@ -80,17 +80,17 @@ class PerfilOrganizador
         
         //print_r($query->errorInfo());
         
-        Tool::desconectar(PerfilOrganizador::$dbh);
+        Tool::desconectar(self::$dbh);
     }
     
     public function editarPerfilOrganizador($id,$idUsuario){
-        PerfilOrganizador::$dbh=Tool::conectar();
+        self::$dbh=Tool::conectar();
         
         $sql="UPDATE perfilesorganizador SET ".
             "Nombre=?,Descripcion=?,Website=?,Facebook=?,Twitter=?,Instagram=?,Mostrar_descripcion=? ".
             "WHERE Id=? AND Id_Usuario=?";
         
-        $query=PerfilOrganizador::$dbh->prepare($sql);
+        $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$this->nombre);
         $query->bindParam(2,$this->descripcion);
         $query->bindParam(3,$this->website);
@@ -103,26 +103,53 @@ class PerfilOrganizador
         $query->execute();
                 
         
-        Tool::desconectar(PerfilOrganizador::$dbh);
+        Tool::desconectar(self::$dbh);
         
         return $query->errorInfo();
     }
     
     public static function borrarPerfilOrganizador($id,$idUsuario){
-        PerfilOrganizador::$dbh=Tool::conectar();
+        self::$dbh=Tool::conectar();
         
         $sql="DELETE FROM perfilesorganizador WHERE Id=? AND Id_Usuario=?";
         
-        $query=PerfilOrganizador::$dbh->prepare($sql);
+        $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$id);
         $query->bindParam(2,$idUsuario);
         $query->execute();
         
         
-        Tool::desconectar(PerfilOrganizador::$dbh);
+        Tool::desconectar(self::$dbh);
         
         return $query->errorInfo();
     }
     
+    private static function adaptaArrayAObjeto($array){
+        $p=new PerfilOrganizador();
+        
+        $p->id=$array['Id'];
+        $p->idUsuario=$array['Id_Usuario'];
+        $p->nombre=$array['Nombre'];
+        $p->descripcion=$array['Descripcion'];
+        $p->mostrarDescripcion=$array['Mostrar_descripcion'];
+        $p->website=$array['Website'];
+        $p->facebook=$array['Facebook'];
+        $p->twitter=$array['Twitter'];
+        $p->instagram=$array['Instagram'];
+        
+        return $p;
+    }
+    
+    private static function arrayDeObjetos($array){
+        $i=0;
+        $res=array();
+        
+        foreach($array as $r){
+            $res[$i]=self::adaptaArrayAObjeto($r);
+            $i++;
+        }
+        
+        return $res;
+    }
 }
 

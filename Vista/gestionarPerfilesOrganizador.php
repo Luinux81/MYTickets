@@ -14,8 +14,8 @@ $output="<h3>Perfiles de organizador</h3>
             <ul>";
 
 foreach ($perfiles as $p){
-    $output.="<li><a href='../Vista/editarPerfilOrganizador.php?idpo=". $p['Id'] ."'>" . $p['Nombre']. "</a> 
-                <a href='../Controlador/eliminarPerfilOrganizador.php?idpo=" . $p['Id'] . "'> Eliminar </a></li>";
+    $output.="<li><a href='../Vista/editarPerfilOrganizador.php?idpo=". $p->id ."'>" . $p->nombre. "</a> 
+                <a href='../Controlador/eliminarPerfilOrganizador.php?idpo=" . $p->id . "'> Eliminar </a></li>";
 }
 
 $output.="</ul>";
