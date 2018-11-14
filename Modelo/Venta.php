@@ -10,6 +10,7 @@ class Venta{
     public $fecha;
     public $estado;
     public $lineasVenta;
+    public $paymentID;
     
     private static $dbh;
     
@@ -83,6 +84,7 @@ class Venta{
         $v->importe=$res['Importe'];
         $v->fecha=$res['Fecha'];
         $v->estado=$res['Estado'];
+        $v->paymentID=$res['payment_id'];
         if($res['Id']!=""){
             $v->lineasVenta=LineaVenta::getAllLineasVenta($res['Id']);
         }
@@ -100,7 +102,7 @@ class Venta{
     public function crearVenta(){
         self::$dbh=Tool::conectar();
         
-        $sql="INSERT INTO ventas (Id,Id_Usuario,Importe,Fecha,Estado) VALUES (?,?,?,?,?)";
+        $sql="INSERT INTO ventas (Id,Id_Usuario,Importe,Fecha,Estado,payment_id) VALUES (?,?,?,?,?,?)";
         
         try {
             self::$dbh->beginTransaction();
@@ -111,10 +113,11 @@ class Venta{
             $query->bindParam(3,$this->importe);
             $query->bindParam(4,$this->fecha);
             $query->bindParam(5,$this->estado);
+            $query->bindParam(6,$this->paymentID);
             $query->execute();
             
             foreach($this->lineasVenta as $l){
-                LineaVenta::crearLineaVenta($l->id, $l->idVenta, $l->idEvento, $l->idTipoEntrada, $l->precio, $l->cantidad, $l->estado);
+                LineaVenta::crearLineaVenta($l->id, $l->idVenta, $l->idEvento, $l->idTipoEntrada, $l->precio, $l->cantidad, $l->estado,self::$dbh);
             }
             
             self::$dbh->commit();

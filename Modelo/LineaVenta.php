@@ -64,15 +64,17 @@ class LineaVenta{
         
         return $res;
     }
-    
-    
-    
-    public static function crearLineaVenta($id,$idVenta,$idEvento,$idTipoEntrada,$precio,$cantidad,$estado){
-        self::$dbh=Tool::conectar();
+        
+    public static function crearLineaVenta($id,$idVenta,$idEvento,$idTipoEntrada,$precio,$cantidad,$estado,$dbh=""){
+        if($dbh==""){
+            self::$dbh=Tool::conectar();
+            $dbh=self::$dbh;
+        }
+        
         
         $sql="INSERT INTO lineasventa (Id,Id_Venta,Id_Evento,Id_TipoEntrada,Precio,Cantidad,Estado) VALUES (?,?,?,?,?,?,?)";
         
-        $query=self::$dbh->prepare($sql);
+        $query=$dbh->prepare($sql);
         $query->bindParam(1,$id);
         $query->bindParam(2,$idVenta);
         $query->bindParam(3,$idEvento);
@@ -82,8 +84,10 @@ class LineaVenta{
         $query->bindParam(7,$estado);
         $query->execute();
         
+        if($dbh==""){
+            Tool::desconectar(self::$dbh);
+        }
         
-        Tool::desconectar(self::$dbh);
     }
     
     public static function editarLineaVenta($id,$idVenta,$idEvento,$idTipoEntrada,$precio,$cantidad,$estado){
