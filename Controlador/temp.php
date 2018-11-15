@@ -9,6 +9,7 @@ session_start();
 
 try {
     CheckoutManager::ejecutarPaypalPayment($_GET['paymentId'], $_GET['token'], $_GET['PayerID']);
+    header("Location:../home.php");
 } catch (Exception $e) {
     echo $e->getMessage();
 }

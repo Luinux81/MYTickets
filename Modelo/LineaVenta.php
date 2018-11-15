@@ -1,5 +1,6 @@
 <?php
 require_once APP_ROOT .'/Modelo/Tool.php';
+require_once APP_ROOT .'/Modelo/Entrada.php';
 
 class LineaVenta{
     public $id;
@@ -66,9 +67,11 @@ class LineaVenta{
     }
         
     public static function crearLineaVenta($id,$idVenta,$idEvento,$idTipoEntrada,$precio,$cantidad,$estado,$dbh=""){
+        $desconectar=false;
         if($dbh==""){
             self::$dbh=Tool::conectar();
             $dbh=self::$dbh;
+            $desconectar=true;
         }
         
         
@@ -84,7 +87,14 @@ class LineaVenta{
         $query->bindParam(7,$estado);
         $query->execute();
         
-        if($dbh==""){
+        $i=1;
+        while($i<=$cantidad){
+            //TODO: Cambiar clase entrada para que no necesite el idusuario, aqui se pasa siempre 0 
+            Entrada::crearEntrada($idTipoEntrada, $idEvento, $idVenta, $id, 0, $dbh);
+            $i++;
+        }
+        
+        if($desconectar){
             Tool::desconectar(self::$dbh);
         }
         

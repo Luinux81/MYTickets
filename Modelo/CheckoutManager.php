@@ -59,16 +59,14 @@ class CheckoutManager{
         try {
             $pago->execute($paymentExecution,$apiContext);
             
-            //$venta=Venta::importarJSONPaypal($pago->toJSON());
             
-            
-            echo "<br><br>JSON PAYPAL:<br>";
-            print_r($pago->toJSON());
+            //echo "<br><br>JSON PAYPAL:<br>";
+            //print_r($pago->toJSON());
             
             $venta=self::exportarPagoPaypal($pago);
             
-            echo "<br><br>VENTA:<br>";
-            print_r($venta);
+            //echo "<br><br>VENTA:<br>";
+            //print_r($venta);
                         
             $venta->crearVenta();
         } 

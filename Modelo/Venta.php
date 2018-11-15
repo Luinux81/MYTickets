@@ -1,6 +1,7 @@
 <?php
 require_once APP_ROOT . '/Modelo/Tool.php';
 require_once APP_ROOT . '/Modelo/LineaVenta.php';
+require_once APP_ROOT . '/Modelo/CarroCompra.php';
 
 class Venta{
     
@@ -121,6 +122,8 @@ class Venta{
             }
             
             self::$dbh->commit();
+            
+            CarroCompra::vaciarCarro();
             
         } catch (Exception $e) {
             self::$dbh->rollBack();
