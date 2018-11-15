@@ -1,6 +1,7 @@
 <?php
 //require_once '/mytickets_dev/constantes.php';
 require_once APP_ROOT . '/Modelo/CarroCompra.php';
+require_once APP_ROOT . '/Modelo/Entrada.php';
 
 session_start();
 
@@ -33,8 +34,9 @@ class Html{
         }
         
         $aux.=self::addCarroCompra()
-                ."</ul>"
-                ."</div>";
+            .self::addVerEntradas()
+            ."</ul>"
+            ."</div>";
         
         return $aux;
     }
@@ -50,6 +52,17 @@ class Html{
             }
         }
         
+        $out.="</a></li>";
+        return $out;
+    }
+    
+    private static function addVerEntradas(){
+        $entradas=Entrada::getAllEntradasUsuario($_SESSION['idusuario']);
+        
+        $out="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/verEntradasCompradas.php' id='link_ver_carro'>";
+        if(!empty($entradas)){
+            $out.="Ver Entradas ( " . count($entradas) . " )";
+        }
         $out.="</a></li>";
         return $out;
     }

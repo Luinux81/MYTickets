@@ -67,6 +67,26 @@ class Venta{
         return $token;
     }
     
+    public static function getVentasUsuario($idUsuario){
+        self::$dbh=Tool::conectar();
+        $ventas=array();
+        
+        $sql="SELECT * FROM ventas WHERE Id_Usuario=?";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1,$idUsuario);
+        $query->execute();
+        
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        foreach($res as $r){
+            $ventas[]=self::getVenta($r['Id']);
+        }
+        
+        Tool::desconectar(self::$dbh);
+        
+        return $ventas;
+    }
+    
     public static function getVenta($id){
         $v=new Venta();
         
@@ -98,6 +118,10 @@ class Venta{
         
         return $v;
         
+    }
+    
+    public static function getAllLineasVenta($idVenta){
+        return LineaVenta::getAllLineasVenta($idVenta);
     }
     
     public function crearVenta(){
@@ -174,15 +198,6 @@ class Venta{
         
         Tool::desconectar(self::$dbh);
     }
-    
-    public static function addLineaVenta(){
-        
-    }
-    
-    public static function eliminarLineaVenta($idLinea){
-        
-    }
-    
     
     
     

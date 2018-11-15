@@ -1,6 +1,8 @@
 <?php
-require_once APP_ROOT .'/Modelo/Tool.php';
-require_once APP_ROOT .'/Modelo/Entrada.php';
+require_once APP_ROOT . '/Modelo/Tool.php';
+require_once APP_ROOT . '/Modelo/Entrada.php';
+require_once APP_ROOT . '/Modelo/Evento.php';
+require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 class LineaVenta{
     public $id;
@@ -131,6 +133,18 @@ class LineaVenta{
         $query->execute();
         
         Tool::desconectar(self::$dbh);
+    }
+    
+    public function getEvento(){
+        return Evento::getEvento($this->idEvento);
+    }
+    
+    public function getTipoEntrada(){
+        return TipoEntrada::getTipoEntrada($this->idEvento, $this->idTipoEntrada);
+    }
+    
+    public function getEntradas(){
+        return Entrada::getEntradasPorLineaVenta($this->idVenta, $this->id);
     }
     
     private static function arrayAObjeto($array){

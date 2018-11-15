@@ -1,5 +1,7 @@
 <?php
 require_once APP_ROOT . '/Modelo/Tool.php';
+require_once APP_ROOT . '/Modelo/Evento.php';
+require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 class Entrada{
     
@@ -57,6 +59,21 @@ class Entrada{
         return self::adaptaArrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
     }
     
+    public static function getEntradasPorLineaVenta($idVenta,$idLineaVenta){
+        self::$dbh=Tool::conectar();
+        
+        $sql="SELECT * FROM entradas WHERE Id_Venta=? AND Id_LineaVenta=?";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1,$idVenta);
+        $query->bindParam(2,$idLineaVenta);
+        $query->execute();
+        
+        Tool::desconectar(self::$dbh);
+        
+        return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
+    }
+    
     public static function getAllEntradasEventoUsuario($idEvento,$idUsuario){
         self::$dbh=Tool::conectar();
         
@@ -86,7 +103,23 @@ class Entrada{
         
         return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
     }
-    
+     
+    public static function getAllEntradasUsuario($idUsuario){
+        self::$dbh=Tool::conectar();
+        
+        $sql="SELECT e.Codigo,e.Id_TipoEntrada,e.Id_Evento,e.Id_Venta,e.Id_LineaVenta,v.Id_Usuario FROM entradas AS e 
+                INNER JOIN ventas AS v ON e.Id_Venta=v.Id 
+                WHERE v.Id_Usuario=?";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1,$idUsuario);
+        $query->execute();
+        
+        Tool::desconectar(self::$dbh);
+        
+        return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
+    }
+     
     public static function crearEntrada($idTipoEntrada,$idEvento,$idVenta,$idLineaVenta, $idUsuario, $dbh=""){
         $desconectar=false;
         if($dbh==""){
@@ -113,23 +146,57 @@ class Entrada{
             Tool::desconectar(self::$dbh);
         }
     }
-    
-    public function ___crearEntrada(){
-        self::$dbh=Tool::conectar();
-        
-        $sql="INSERT INTO entradas (Id_Evento,Codigo,Id_TipoEntrada,Id_Usuario,Id_Venta,Id_LineaVenta) VALUES (?,?,?,?)";
-        
-        $query=self::$dbh->prepare($sql);
-        $query->bindParam(1,$this->idEvento);
-        $query->bindParam(2,$this->codigo);
-        $query->bindParam(3,$this->idTipoEntrada);
-        $query->bindParam(4,$this->idUsuario);
-        $query->bindParam(5,$this->idVenta);
-        $query->bindParam(6,$this->idLineaVenta);
-        $query->execute();
-        
-        Tool::desconectar(self::$dbh);
+       
+    public function getEvento(){
+        return Evento::getEvento($this->idEvento);
     }
+        
+    public function getTipoEntrada(){
+        return TipoEntrada::getTipoEntrada($this->idEvento, $this->idTipoEntrada);
+    }
+        
+    public static function getEntradaPDF($codigo){
+        
+    }
+    
+    
+    private static function adaptaArrayAObjeto($array){
+        $e=new Entrada();
+        
+        $e->codigo=$array['Codigo'];
+        $e->idTipoEntrada=$array['Id_TipoEntrada'];
+        $e->idEvento=$array['Id_Evento'];
+        $e->idVenta=$array['Id_Venta'];
+        $e->idLineaVenta=$array['Id_LineaVenta'];
+        $e->idUsuario=$array['Id_Usuario'];
+        
+        
+        return $e;
+    }
+    
+    
+    private static function arrayDeObjetos($array){
+        $i=0;
+        $res=array();
+        
+        foreach($array as $r){
+            $res[$i]=self::adaptaArrayAObjeto($r);
+            $i++;
+        }
+        
+        return $res;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public function editarEntrada(){
         self::$dbh=Tool::conectar();
@@ -161,30 +228,4 @@ class Entrada{
         Tool::desconectar(self::$dbh);
     }
     
-    public function getEntradaPDF($codigo,$idEvento){
-        
-    }
-    
-    private static function adaptaArrayAObjeto($array){
-        $e=new Entrada();
-        
-        $e->idEvento=$array['Id_Evento'];
-        $e->idTipoEntrada=$array['Id_TipoEntrada'];
-        $e->idUsuario=$array['Id_Usuario'];
-        $e->codigo=$array['Codigo'];
-        
-        return $e;
-    }
-    
-    private static function arrayDeObjetos($array){
-        $i=0;
-        $res=array();
-        
-        foreach($array as $r){
-            $res[$i]=adaptaArrayAObjeto($r);
-            $i++;
-        }
-        
-        return $res;
-    }
 }

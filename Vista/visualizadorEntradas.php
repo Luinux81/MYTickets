@@ -1,0 +1,31 @@
+<?php
+require_once '../constantes.php';
+require_once APP_ROOT . '/Modelo/Venta.php';
+
+session_start();
+
+$idVenta=$_GET['v'];
+$idLineaVenta=$_GET['lv'];
+$idUsuario=$_SESSION['idusuario'];
+
+$ventas=Venta::getVentasUsuario($idUsuario);
+$aux="";
+
+foreach ($ventas as $v){
+    if($v->id==$idVenta){
+        $aux=$v;
+        break;
+    }
+}
+
+if($aux!=""){
+    foreach ($v->lineasVenta as $lv){
+        if($lv->id==$idLineaVenta){
+            $entradas=Entrada::getEntradasPorLineaVenta($idVenta, $idLineaVenta);
+        }
+    }    
+}
+
+print_r($entradas);
+
+?>
