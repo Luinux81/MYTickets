@@ -1,6 +1,8 @@
 <?php
 require_once '../constantes.php';
 require_once APP_ROOT . '/Modelo/Venta.php';
+require_once APP_ROOT . '/Modelo/Entrada.php';
+require_once APP_ROOT . '/Modelo/GeneradorPDF.php';
 
 session_start();
 
@@ -26,6 +28,6 @@ if($aux!=""){
     }    
 }
 
-print_r($entradas);
+GeneradorPDF::generaPDF($entradas);
 
 ?>
