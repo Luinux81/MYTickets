@@ -26,6 +26,10 @@ $ev->ciudad=$ciudad;
 $ev->pais=$pais;
 $ev->gps=$gps;
 
+if($_FILES['imagen']['error']===0){
+    $ev->imagen=addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
+}
+
 $ev->guardarEventoEnBD();
 
 header("Location:../Vista/gestionarEventos.php")

@@ -18,6 +18,7 @@ class Evento{
     public $pais;
     public $gps;
     public $estado;
+    public $imagen;
     
     private static $dbh;
     
@@ -31,7 +32,7 @@ class Evento{
     public function guardarEventoEnBD(){
         Evento::$dbh=Tool::conectar();
         
-        $sql="INSERT INTO eventos (Nombre,Descripcion,Fecha_inicio,Fecha_fin,Aforo,Local,Direccion,Ciudad,Pais,GPS) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        $sql="INSERT INTO eventos (Nombre,Descripcion,Fecha_inicio,Fecha_fin,Aforo,Local,Direccion,Ciudad,Pais,GPS,Imagen) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
         $query=Evento::$dbh->prepare($sql);
         $query->bindParam(1,$this->nombre);
@@ -49,6 +50,7 @@ class Evento{
         $query->bindParam(8,$this->ciudad);
         $query->bindParam(9,$this->pais);
         $query->bindParam(10,$this->gps);
+        $query->bindParam(11,$this->imagen);
         $query->execute();        
         
         
@@ -68,7 +70,8 @@ class Evento{
             "Direccion=?,".
             "Ciudad=?,".
             "Pais=?,".
-            "GPS=? ".
+            "GPS=?, ".
+            "Imagen=? ".
             " WHERE Id=?";
         
         $query=Evento::$dbh->prepare($sql);
@@ -83,7 +86,8 @@ class Evento{
         $query->bindParam(8,$this->ciudad);
         $query->bindParam(9,$this->pais);
         $query->bindParam(10,$this->gps);
-        $query->bindParam(11,$this->id);
+        $query->bindParam(11,$this->imagen);
+        $query->bindParam(12,$this->id);
         
         $query->execute();        
         
@@ -136,6 +140,7 @@ class Evento{
         $ev->pais=$res['Pais'];
         $ev->gps=$res['GPS'];
         $ev->estado=$res['Estado'];
+        $ev->imagen=$res['Imagen'];
         
         return $ev;
     }

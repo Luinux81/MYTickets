@@ -26,6 +26,10 @@ $e->ciudad=$ciudad;
 $e->pais=$pais;
 $e->gps=$gps;
 
+if($_FILES['imagen']['error']===0){
+    $e->imagen=addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
+}
+
 
 $e->editarEventoEnBD();
 

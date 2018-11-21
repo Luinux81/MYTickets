@@ -10,12 +10,12 @@ $eid=$_GET['eid'];
 
 $ev=Evento::getEvento($eid);
 
-echo Html::actionBar();
+echo Html::cabeceraHtml() . Html::actionBar();
 
 ?>
 
 <div style='width: 100%;' id='mainContent'>
-	<form method="post" action="../Controlador/editarEvento.php">
+	<form method="post" action="../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
     	<h3>Detalles del evento</h3>
     	<p>Nombre</p>
     	<input type="text" id="evento_nombre" name="evento_nombre" value="<?php echo trim($ev->nombre); ?>">
@@ -41,6 +41,9 @@ echo Html::actionBar();
     	<input type="text" id="evento_pais" name="evento_pais" value="<?php echo trim($ev->pais); ?>">
     	<p>GPS</p>
     	<input type="text" id="evento_gps" name="evento_gps" value="<?php echo trim($ev->gps); ?>">
+    	<p>Imagen</p>
+    	<input type="file" id="imagen" name="imagen" accept="image/*" style="display:block;">
+    	<img id="imagen_preview" height="250px" style="clear:both;" src="data:image/*;base64,<?php echo base64_encode(stripslashes($ev->imagen)); ?>">
     	<br>
     	<input type="hidden"  name="id" value="<?php echo $ev->id; ?>">
     	<input type="submit" value="Editar evento">
@@ -71,3 +74,15 @@ echo "</ul>";
     	<input type="submit" value="Crear nuevo Tipo de Entrada">
     </form>
 </div>
+
+<script>
+$("#imagen").change(function(){
+	if(this.files && this.files[0]){
+		var reader=new FileReader();
+		reader.onload=function(e){
+			$("#imagen_preview").attr("src",e.target.result);
+		}
+		reader.readAsDataURL(this.files[0]);
+	}	
+});
+</script>

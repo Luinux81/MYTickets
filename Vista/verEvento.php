@@ -19,6 +19,8 @@ echo "<h3>Descripción</h3>" .
         "<p>" . $ev->fecha_fin . "</p>" .
         "<h3>Lugar</h3>" .
         "<p>". $ev->local . "</br>" . $ev->direccion . "</br>" . $ev->ciudad . "</p>" .
+        "<h3>Imagen</h3>" .
+        "<img src='data:image/*;base64," . base64_encode(stripslashes($ev->imagen)) . "' height='250px'/><br>" .
         "<a href='../Vista/verTiendaTickets.php?eid=" . $ev->id . "'>Tickets</a>";
 
 ?>

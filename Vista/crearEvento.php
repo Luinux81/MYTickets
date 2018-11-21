@@ -2,11 +2,11 @@
 require_once '../constantes.php';
 require_once APP_ROOT . '/Vista/Html.php';
 
-echo Html::actionBar();
+echo html::cabeceraHtml() . Html::actionBar();
 ?>
 
 <div style='width: 100%;' id='mainContent'>
-	<form method="post" action="../Controlador/crearEvento.php">
+	<form method="post" action="../Controlador/crearEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
     	<h3>Detalles del evento</h3>
     	<p>Nombre</p>
     	<input type="text" id="evento_nombre" name="evento_nombre">
@@ -32,7 +32,22 @@ echo Html::actionBar();
     	<input type="text" id="evento_pais" name="evento_pais">
     	<p>GPS</p>
     	<input type="text" id="evento_gps" name="evento_gps">
+    	<p>Imagen</p>
+    	<input type="file" accept="image/*" id="imagen" name="imagen"  style="display:block;">
+    	<img src="" id="imagen_preview" name="imagen_preview" height="250px"/>
     	<br>
     	<input type="submit" value="Crear evento">
     </form>
 </div>
+
+<script>
+$("#imagen").change(function(){
+	if(this.files && this.files[0]){
+		var reader=new FileReader();
+		reader.onload=function(e){
+			$("#imagen_preview").attr("src",e.target.result);
+		}
+		reader.readAsDataURL(this.files[0]);
+	}	
+});
+</script>
