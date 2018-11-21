@@ -19,6 +19,10 @@ $perfil->facebook=$_POST['facebook'];
 $perfil->twitter=$_POST['twitter'];
 $perfil->instagram=$_POST['instagram'];
 
+if($_FILES['imagen']['error']===0){
+    $perfil->imagen=addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
+}
+
 $perfil->crearPerfilOrganizador();
 
 header("Location:../Vista/gestionarPerfilesOrganizador.php");

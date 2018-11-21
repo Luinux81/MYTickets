@@ -12,6 +12,7 @@ class PerfilOrganizador
     public $facebook;
     public $twitter;
     public $instagram;    
+    public $imagen;
     
     private static $dbh;
     
@@ -64,7 +65,7 @@ class PerfilOrganizador
     public function crearPerfilOrganizador(){
         self::$dbh=Tool::conectar();
         
-        $sql="INSERT INTO perfilesorganizador (Id,Id_Usuario,Nombre,Descripcion,Website,Facebook,Twitter,Instagram,Mostrar_descripcion) VALUES (?,?,?,?,?,?,?,?,?)";
+        $sql="INSERT INTO perfilesorganizador (Id,Id_Usuario,Nombre,Descripcion,Website,Facebook,Twitter,Instagram,Mostrar_descripcion,Imagen) VALUES (?,?,?,?,?,?,?,?,?,?)";
         
         $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$this->id);
@@ -76,6 +77,7 @@ class PerfilOrganizador
         $query->bindParam(7,$this->twitter);
         $query->bindParam(8,$this->instagram);
         $query->bindParam(9,$this->mostrarDescripcion);
+        $query->bindParam(10,$this->imagen);
         $query->execute();
         
         //print_r($query->errorInfo());
@@ -87,7 +89,7 @@ class PerfilOrganizador
         self::$dbh=Tool::conectar();
         
         $sql="UPDATE perfilesorganizador SET ".
-            "Nombre=?,Descripcion=?,Website=?,Facebook=?,Twitter=?,Instagram=?,Mostrar_descripcion=? ".
+            "Nombre=?,Descripcion=?,Website=?,Facebook=?,Twitter=?,Instagram=?,Mostrar_descripcion=?,Imagen=?  ".
             "WHERE Id=? AND Id_Usuario=?";
         
         $query=self::$dbh->prepare($sql);
@@ -98,8 +100,9 @@ class PerfilOrganizador
         $query->bindParam(5,$this->twitter);
         $query->bindParam(6,$this->instagram);
         $query->bindParam(7,$this->mostrarDescripcion);
-        $query->bindParam(8,$this->id);
-        $query->bindParam(9,$this->idUsuario);
+        $query->bindParam(8,$this->imagen);
+        $query->bindParam(9,$this->id);
+        $query->bindParam(10,$this->idUsuario);
         $query->execute();
                 
         
@@ -136,6 +139,7 @@ class PerfilOrganizador
         $p->facebook=$array['Facebook'];
         $p->twitter=$array['Twitter'];
         $p->instagram=$array['Instagram'];
+        $p->imagen=$array['Imagen'];
         
         return $p;
     }

@@ -17,6 +17,10 @@ $perfil->twitter=$_POST['twitter'];
 $perfil->instagram=$_POST['instagram'];
 $perfil->mostrarDescripcion=$_POST['mostrar_descripcion'];
 
+if($_FILES['imagen']['error']===0){
+    $perfil->imagen=addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
+}
+
 $res=$perfil->editarPerfilOrganizador($perfil->id, $perfil->idUsuario);
 
 if ($res[0]!="00000"){
