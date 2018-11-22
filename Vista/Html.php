@@ -1,9 +1,6 @@
 <?php
-//require_once '/mytickets_dev/constantes.php';
 require_once APP_ROOT . '/Modelo/CarroCompra.php';
 require_once APP_ROOT . '/Modelo/Entrada.php';
-
-session_start();
 
 class Html{
     

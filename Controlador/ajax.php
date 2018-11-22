@@ -1,10 +1,6 @@
 <?php
 require_once '../constantes.php';
-
 require_once APP_ROOT . "/Modelo/CarroCompra.php";
-
-session_start();
-
 
 $accion=$_GET['accion'];
 

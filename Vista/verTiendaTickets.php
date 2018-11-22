@@ -62,7 +62,7 @@ $(document).ready(function(){
 				actualiza();
 			},
 			error:function(){
-				alert("Error");
+				alert("Error añadiendo item al carro de compra");
 			}
 		});
 	});
@@ -93,7 +93,7 @@ function actualiza(){
 			$("#texto_salida_valor").html(data.totalPrecio);
 		},
 		error:function(){
-			alert("Error");
+			alert("Error visualizando datos");
 		}		
 	});
 }

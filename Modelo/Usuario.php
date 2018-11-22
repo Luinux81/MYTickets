@@ -1,8 +1,5 @@
 <?php
-require_once '../Modelo/ModeloBD.php';
-
-
-session_start();
+require_once APP_ROOT . '/Modelo/ModeloBD.php';
 
 class Usuario
 {
