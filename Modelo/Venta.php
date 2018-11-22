@@ -45,7 +45,7 @@ class Venta{
         }
         
         $v->id=$id;
-        $v->idUsuario=$_SESSION['idusuario'];
+        $v->idUsuario=$_SESSION['usuario']['id'];
         $v->importe=$totalPrecio;
         $v->fecha=date('Y-m-d h:i:s');
         $v->lineasVenta=$lineasVenta;

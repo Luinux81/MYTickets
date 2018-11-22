@@ -50,7 +50,7 @@ require_once 'constantes.php';
  <form class="form" action="Controlador/login.php" method="post">
  
  <label>Nick</label>
- <input type="text" name="nick" required="true" placeholder="Introduce tu nick" />
+ <input type="text" name="email" required="true" placeholder="Introduce tu email" />
  
  <label>Password</label>
  <input type="password" name="password" required="true" placeholder="Introduce tu password" />

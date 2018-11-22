@@ -7,7 +7,7 @@ session_start();
 
 $perfil=new PerfilOrganizador();
 
-$perfil->idUsuario=$_SESSION['idusuario'];
+$perfil->idUsuario=$_SESSION['usuario']['id'];
 $perfil->id=$_POST['idPerfil'];
 $perfil->nombre=$_POST['nombre'];
 $perfil->descripcion=$_POST['descripcion'];

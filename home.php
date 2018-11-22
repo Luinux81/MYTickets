@@ -3,6 +3,7 @@ require_once 'constantes.php';
 
 require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
+require_once APP_ROOT . '/Modelo/Usuario.php';
 
 echo Html::actionBar();
 
@@ -16,4 +17,6 @@ foreach($res as $ev){
 $out.="</ul>";
 
 echo $out;
+
+//echo Usuario::getHash("luis");
 ?>

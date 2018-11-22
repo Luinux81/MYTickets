@@ -110,7 +110,7 @@ class CheckoutManager{
         $transaccion=new Transaction();
         $transaccion->setAmount($importe);
         $transaccion->setItemList($items);
-        $transaccion->setCustom($_SESSION['idusuario']);
+        $transaccion->setCustom($_SESSION['usuario']['id']);
         $transaccion->setInvoiceNumber($venta->id);
         
         $redirectUrls=new RedirectUrls();

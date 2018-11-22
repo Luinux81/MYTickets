@@ -19,13 +19,14 @@ class Html{
                 $aux.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/home.php'>Home</a></li>"
                     ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/crearEvento.php'>Crear Evento</a></li>"
                     ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/gestionarEventos.php'>Gestionar Eventos</a></li>"
-                    ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/gestionarPerfilesOrganizador.php'>Gestionar Perfiles de organizador (" . $_SESSION['nombre'] .")</a></li>"
+                    ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/gestionarPerfilesOrganizador.php'>Gestionar Perfiles de organizador (" . $_SESSION['usuario']['nombre'] .")</a></li>"
+                    ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/Usuario/cambiarPassword.php'>Cambiar password</a></li>"
                     ;
                 break;
             case "perfilesOrganizador":
                 $aux.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/home.php'>Home</a></li>"
                     ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/crearPerfilOrganizador.php'>Crear Perfil</a></li>"
-                    ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/gestionarPerfilesOrganizador.php'>Gestionar Perfiles de organizador (" . $_SESSION['nombre'] .")</a></li>"
+                    ."<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/gestionarPerfilesOrganizador.php'>Gestionar Perfiles de organizador (" . $_SESSION['usuario']['nombre'] .")</a></li>"
                     ;
                 break;
         }
@@ -54,7 +55,7 @@ class Html{
     }
     
     private static function addVerEntradas(){
-        $entradas=Entrada::getAllEntradasUsuario($_SESSION['idusuario']);
+        $entradas=Entrada::getAllEntradasUsuario($_SESSION['usuario']['id']);
         
         $out="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/verEntradasCompradas.php' id='link_ver_carro'>";
         if(!empty($entradas)){

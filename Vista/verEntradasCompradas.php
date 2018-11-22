@@ -6,8 +6,8 @@ require_once APP_ROOT . '/Modelo/Venta.php';
 
 echo Html::cabeceraHtml() . Html::actionBar();
 
-//$entradas=Entrada::getAllEntradasUsuario($_SESSION['idusuario']);
-$ventas=Venta::getVentasUsuario($_SESSION['idusuario']);
+//$entradas=Entrada::getAllEntradasUsuario($_SESSION['usuario']['id']);
+$ventas=Venta::getVentasUsuario($_SESSION['usuario']['id']);
 
 $out="<ul>";
 

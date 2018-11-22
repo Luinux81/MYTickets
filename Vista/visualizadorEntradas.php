@@ -8,7 +8,7 @@ session_start();
 
 $idVenta=$_GET['v'];
 $idLineaVenta=$_GET['lv'];
-$idUsuario=$_SESSION['idusuario'];
+$idUsuario=$_SESSION['usuario']['id'];
 
 $ventas=Venta::getVentasUsuario($idUsuario);
 $aux="";

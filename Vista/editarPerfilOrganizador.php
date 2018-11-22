@@ -5,7 +5,7 @@ require_once APP_ROOT . '/Modelo/PerfilOrganizador.php';
 require_once APP_ROOT . '/Vista/Html.php';
 
 $idPo=$_GET['idpo'];
-$idUsuario=$_SESSION['idusuario'];
+$idUsuario=$_SESSION['usuario']['id'];
 
 $perfil=PerfilOrganizador::getPerfilOrganizador($idPo, $idUsuario);
 

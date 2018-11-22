@@ -4,7 +4,7 @@ require_once '../constantes.php';
 require_once APP_ROOT . '/Modelo/PerfilOrganizador.php';
 require_once APP_ROOT . '/Vista/Html.php';
 
-$idUsuario=$_SESSION['idusuario'];
+$idUsuario=$_SESSION['usuario']['id'];
 
 $perfiles=PerfilOrganizador::getAllPerfilesOrganizador($idUsuario);
 
