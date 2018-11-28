@@ -7,7 +7,7 @@ require_once '../constantes.php';
 require_once APP_ROOT . '/Modelo/Usuario.php';
 
 
-$_SESSION['carro']="";
+//$_SESSION['carro']="";
 
 $nuevoSingleton = Usuario::singleton_login();
 
@@ -15,6 +15,15 @@ if(isset($_POST['email']))
 {
  $email = $_POST['email'];
  $password = $_POST['password'];
+ 
+ if($_POST['url']!=""){
+     $urlRetorno=urldecode($_POST['url']);
+ }
+ else{
+     $urlRetorno="";
+ }
+ 
+ 
  //accedemos al método usuarios y los mostramos
  $usuario = $nuevoSingleton->login_users($email,$password);
  
@@ -23,7 +32,13 @@ if(isset($_POST['email']))
  
  if($usuario == TRUE)
  {
-    header("Location:../home.php");
+     if($urlRetorno==""){
+         header("Location:../home.php");
+     }
+     else{
+         header("Location:" . $urlRetorno);
+         //print_r($urlRetorno);
+     }
  }
  else
  {

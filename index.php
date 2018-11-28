@@ -54,7 +54,7 @@ require_once 'constantes.php';
  
  <label>Password</label>
  <input type="password" name="password" required="true" placeholder="Introduce tu password" />
- 
+ <input type="hidden" name="url" value="<?php if(isset($_SESSION['urlRetorno']))echo urlencode($_SESSION['urlRetorno']); ?>" />
  <input type="submit" value="Login" />
  
  </form>

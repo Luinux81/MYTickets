@@ -4,7 +4,7 @@ require_once APP_ROOT . '/Modelo/Venta.php';
 require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/GeneradorPDF.php';
 
-session_start();
+//session_start();
 
 $idVenta=$_GET['v'];
 $idLineaVenta=$_GET['lv'];
