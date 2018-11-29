@@ -1,5 +1,11 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 require_once APP_ROOT . '/Modelo/ModeloBD.php';
+require_once APP_ROOT . '/lib/PHPMailer/src/PHPMailer.php';
+require_once APP_ROOT . '/lib/PHPMailer/src/Exception.php';
+require_once APP_ROOT . '/lib/PHPMailer/src/SMTP.php';
 
 class Tool
 {
@@ -53,6 +59,34 @@ class Tool
         
         
         return substr($aux,0, strrpos($aux, "/"));
+    }
+    
+    
+    public static function enviaEmail($direccion,$asunto,$mensaje,$cabeceras){
+        $mail=new PHPMailer(true);
+        
+        try{
+            $mail->SMTPDebug=0;
+            $mail->isSMTP();
+            $mail->Host=EMAIL_HOST;
+            $mail->SMTPAuth=true;
+            $mail->Username=EMAIL_USER;
+            $mail->Password=EMAIL_PASS;
+            $mail->Port=EMAIL_PORT;
+            $mail->SMTPSecure="tls";
+            
+            $mail->setFrom("druida@transitionfestival.org","Test Mailer");
+            $mail->addAddress($direccion);
+            
+            $mail->isHTML(true);
+            $mail->Subject=$asunto;
+            $mail->Body=$mensaje;
+            
+            $mail->send();
+            return true;
+        }catch (Exception $e){
+            return false;
+        }
     }
 }
 

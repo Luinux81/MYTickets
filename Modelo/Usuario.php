@@ -164,6 +164,10 @@ class Usuario
             $mensaje="Confirma tu registro en <a href='". Tool::getBaseURL() . "/Controlador/Usuario/confirmarRegistro.php?codigo=" . $res['Codigo_confirmacion'] . "&email=" . urlencode($email) . "'> este enlace </a>";
             $headers="X-Mailer: PHP/" . phpversion();
             
+            return Tool::enviaEmail($email, $asunto, $mensaje, $headers);
+            
+            
+            /*
             if($res=mail($email,$asunto,$mensaje,$headers)){                
                 return true;
             }
@@ -171,6 +175,7 @@ class Usuario
                 self::$ultimoError="Error enviando email";
                 return false;                
             }
+            */
         }
     }
     
