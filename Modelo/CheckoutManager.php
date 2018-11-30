@@ -114,8 +114,8 @@ class CheckoutManager{
         $transaccion->setInvoiceNumber($venta->id);
         
         $redirectUrls=new RedirectUrls();
-        $redirectUrls->setReturnUrl(Tool::getBaseURL() . "/../Controlador/temp.php");
-        $redirectUrls->setCancelUrl(Tool::getBaseURL() . "/../Vista/verCarroCompra.php?msg=cancelado");
+        $redirectUrls->setReturnUrl(Tool::getBaseURL() . "Controlador/temp.php");
+        $redirectUrls->setCancelUrl(Tool::getBaseURL() . "Vista/verCarroCompra.php?msg=cancelado");
         
         
         $pago= new Payment();

@@ -50,6 +50,7 @@ class Tool
     }
     
     public static function getBaseURL(){
+        /*
         $aux=sprintf(
             "%s://%s%s",
             isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
@@ -59,6 +60,8 @@ class Tool
         
         
         return substr($aux,0, strrpos($aux, "/"));
+        */
+        return APP_URL;
     }
     
     
