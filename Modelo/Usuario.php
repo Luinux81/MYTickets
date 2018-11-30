@@ -115,8 +115,8 @@ class Usuario
             return false;
         }
         else{
-            return true;
-            //return self::enviarEmailConfirmacion($email);
+            //return true;
+            return self::enviarEmailConfirmacion($email);
         }
     }
     
@@ -151,7 +151,9 @@ class Usuario
         $sql="SELECT Codigo_confirmacion FROM usuarios WHERE Email=? LIMIT 1";
         $query=$dbh->prepare($sql);
         $query->bindParam(1,$email);
-        $res=$query->execute();
+        $query->execute();
+        
+        $res=$query->fetch(PDO::FETCH_ASSOC);
         
         Tool::desconectar($dbh);
         
@@ -161,7 +163,7 @@ class Usuario
         }
         else{
             $asunto="Confirmación de registro";
-            $mensaje="Confirma tu registro en <a href='". Tool::getBaseURL() . "/Controlador/Usuario/confirmarRegistro.php?codigo=" . $res['Codigo_confirmacion'] . "&email=" . urlencode($email) . "'> este enlace </a>";
+            $mensaje="Confirma tu registro en <a href='". Tool::getBaseURL() . "Controlador/Usuario/confirmarRegistro.php?codigo=" . $res['Codigo_confirmacion'] . "&email=" . urlencode($email) . "'> este enlace </a>";
             $headers="X-Mailer: PHP/" . phpversion();
             
             return Tool::enviaEmail($email, $asunto, $mensaje, $headers);
@@ -187,38 +189,46 @@ class Usuario
     public static function activarCuentaUsuario($email,$codigo){
         $dbh=Tool::conectar();
         
-        $sql="UPDATE usuarios SET Confirmado=1 WHERE Email=? AND Codigo_confirmacion=? LIMIT 1";
+        $sql="SELECT * FROM usuarios WHERE Email=? AND Codigo_confirmacion=? LIMIT 1";
         $query=$dbh->prepare($sql);
-        $query->bindParam(1,$email);
-        $query->bindParam(2,$codigo);
-        $query->execute();
+        $query->execute([$email,$codigo]);
+        $usuario=$query->fetch(PDO::FETCH_ASSOC);
         
-        if($query->rowCount()>0){
-            $sql="SELECT * FROM usuarios WHERE Email=? LIMIT 1";            
-            $query->execute([$email]);
-            $res=$query->fetch(PDO::FETCH_ASSOC);
-            
-            Tool::desconectar($dbh);
-            
-            if(!empty($res['Email'])){
-                
-                $_SESSION['usuario']['id']=$res['Id'];
-                $_SESSION['usuario']['nombre']=$res['Nombre'];
-                $_SESSION['usuario']['email']=$res['Email'];
-                $_SESSION['usuario']['rol']=$res['Rol'];
-
-                self::$user=self::adaptaArrayAObjeto($res);
-                
-                return true;
+        if(count($usuario)>0){
+            //El email y codigo existen            
+            if($usuario['Confirmado']==1){
+                //Ya está confirmado
+                $res=true;
             }
-            else{
-                return false;
+            else{ 
+                //Confirmamos usuario
+                $sql="UPDATE usuarios SET Confirmado=1 WHERE Email=? AND Codigo_confirmacion=? LIMIT 1";
+                $query=$dbh->prepare($sql);                
+                $query->execute([$email,$codigo]);
+                
+                if($query->rowCount()>0){
+                    //Exito al confirmar
+                    $_SESSION['usuario']['id']=$usuario['Id'];
+                    $_SESSION['usuario']['nombre']=$usuario['Nombre'];
+                    $_SESSION['usuario']['email']=$usuario['Email'];
+                    $_SESSION['usuario']['rol']=$usuario['Rol'];
+                    
+                    self::$user=self::adaptaArrayAObjeto($usuario);
+                    $res=true;
+                }
+                else{
+                    self::$ultimoError="Error al confirmar cuenta de usuario";
+                    $res=false;
+                }
             }
         }
         else{
-            Tool::desconectar($dbh);
-            return false;
+            self::$ultimoError="El usuario no con email y codigo con existe";
+            $res=false;
         }
+        
+        Tool::desconectar($dbh);
+        return $res;
     }
     
     /**
