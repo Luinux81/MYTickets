@@ -26,7 +26,7 @@ const POS_BARCODE_Y=240;
 
 class GeneradorPDF{
     
-    public static function generaPDF($arrayEntradas){
+    public static function generaPDF($arrayEntradas,$modo="normal"){
         $pdf=new TCPDF();
 
         foreach($arrayEntradas as $entrada){
@@ -37,8 +37,16 @@ class GeneradorPDF{
             self::escribeEntradaEnDPF($pdf,$entrada);                       
         }
         
+        switch($modo){
+            case "normal":
+                $pdfdoc=$pdf->Output();
+                break;
+            case "cadena":
+                $pdfdoc=$pdf->Output("","S");
+                break;
+        }
         
-        $pdf->Output();
+        return $pdfdoc;
     }
     
     /**

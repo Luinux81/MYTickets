@@ -65,7 +65,7 @@ class Tool
     }
     
     
-    public static function enviaEmail($direccion,$asunto,$mensaje,$cabeceras){
+    public static function enviaEmail($direccion,$asunto,$mensaje,$cabeceras,$pdf=""){
         $mail=new PHPMailer(true);
         
         try{
@@ -84,6 +84,10 @@ class Tool
             $mail->isHTML(true);
             $mail->Subject=$asunto;
             $mail->Body=$mensaje;
+            
+            if($pdf!=""){
+                $mail->addStringAttachment($pdf, "tickets.pdf","base64","application/pdf");
+            }
             
             $mail->send();
             return true;

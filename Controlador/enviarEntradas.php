@@ -3,6 +3,7 @@ require_once '../constantes.php';
 require_once APP_ROOT . '/Modelo/Venta.php';
 require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/GeneradorPDF.php';
+require_once APP_ROOT . '/Modelo/Tool.php';
 
 //session_start();
 
@@ -25,9 +26,15 @@ if($aux!=""){
         if($lv->id==$idLineaVenta){
             $entradas=Entrada::getEntradasPorLineaVenta($idVenta, $idLineaVenta);
         }
-    }    
+    }
 }
 
-echo GeneradorPDF::generaPDF($entradas);
+$pdf=GeneradorPDF::generaPDF($entradas,"cadena");
 
+if(Tool::enviaEmail($_SESSION['usuario']['email'], "Tus entradas", "Tus entradas", "", $pdf)){
+    header("Location:" . Tool::getBaseURL() . "Vista/verEntradasCompradas.php");
+}
+else{
+    header("Location:" . Tool::getBaseURL() . "Vista/verEntradasCompradas.php?err=Error_enviando_email");
+}
 ?>

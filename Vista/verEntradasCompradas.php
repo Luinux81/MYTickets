@@ -28,7 +28,8 @@ foreach($ventas as $v){
             $aux=$eventoActual;
             $out.="<ul>" . $aux;
         }
-        $out.="<li><a href='./visualizadorEntradas.php?v=" . $v->id . "&lv=" . $linea->id ."' >" . $linea->getTipoEntrada()->nombre . " (" . $linea->cantidad . ")</a></li>";  
+        $out.="<li><a href='./visualizadorEntradas.php?v=" . $v->id . "&lv=" . $linea->id ."' >" . $linea->getTipoEntrada()->nombre . " (" . $linea->cantidad . ")</a>   "; 
+        $out.="<a href='../Controlador/enviarEntradas.php?v=" . $v->id . "&lv=" . $linea->id ."' >Enviar email</a></li>";
         
     }
     $out.="</ul></li>";
