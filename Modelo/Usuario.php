@@ -81,11 +81,12 @@ class Usuario
      * @param string $email
      * @param string $nombre
      * @param string $pass
+     * @param boolean $confirmado
      */
-    public function registroUsuario($email,$nombre,$pass){
+    public static function registroUsuario($email,$nombre,$pass,$confirmado=0){
         $dbh=Tool::conectar();
         
-        if($this->existeEmail($email)){
+        if(self::existeEmail($email)){
            return false; 
         }
         
@@ -95,7 +96,7 @@ class Usuario
         
         $pass=self::getHash($pass);
         $code=self::getHash(date("Y-M-d H:m:s") . $email );
-        $confirmado=0;
+        //$confirmado=0;
         $rol="cliente";
         
         $sql="INSERT INTO usuarios (Email,Nombre,Password,Codigo_confirmacion,Confirmado,Rol) VALUES (?,?,?,?,?,?)";
@@ -115,8 +116,12 @@ class Usuario
             return false;
         }
         else{
-            //return true;
-            return self::enviarEmailConfirmacion($email);
+            if(!$confirmado){
+                return self::enviarEmailConfirmacion($email);
+            }
+            else{
+                return true;
+            }
         }
     }
     

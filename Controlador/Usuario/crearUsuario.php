@@ -11,7 +11,7 @@ $pass=$_POST['password'];
 if(!Usuario::existeEmail($email)){
     $u=Usuario::singleton_login();
    
-    if($u->registroUsuario($email, $nombre, $pass)){
+    if(Usuario::registroUsuario($email, $nombre, $pass)){
         if($u->login_users($email, $pass)){
             header("Location:../../home.php");
         }
