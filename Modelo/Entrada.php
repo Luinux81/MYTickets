@@ -14,6 +14,11 @@ class Entrada{
     
     private static $dbh;
     
+    /**
+     * Genera un código que no este ya registrado por otra entrada en la base de datos. Permite pasar un objeto PDO como conexión a la base de datos, si se pasa el parámetro se crea una nueva conexión.
+     * @param PDO $dbh
+     * @return string
+     */
     public static function getNuevoCodigo($dbh=""){
         $desconectar=false;
         if($dbh==""){
@@ -38,6 +43,12 @@ class Entrada{
         return $res;
     }
     
+    /**
+     * Obtiene un objeto Entrada desde la base de datos seleccionado por su codigo
+     * @param string $codigo
+     * @param PDO $dbh
+     * @return Entrada
+     */
     public static function getEntrada($codigo,$dbh=""){
         $desconectar=false;
         if($dbh==""){
@@ -59,6 +70,12 @@ class Entrada{
         return self::adaptaArrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
     }
     
+    /**
+     * Obtiene en un array todas las entradas de una determinada linea de venta en la base de datos 
+     * @param string $idVenta
+     * @param int $idLineaVenta
+     * @return Entrada[]
+     */
     public static function getEntradasPorLineaVenta($idVenta,$idLineaVenta){
         self::$dbh=Tool::conectar();
         
@@ -74,6 +91,12 @@ class Entrada{
         return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
     }
     
+    /**
+     * Obtiene en un array todas las entradas de un determinado usuario y un determinado evento de la base de datos
+     * @param int $idEvento
+     * @param int $idUsuario
+     * @return Entrada[]
+     */
     public static function getAllEntradasEventoUsuario($idEvento,$idUsuario){
         self::$dbh=Tool::conectar();
         
@@ -89,6 +112,11 @@ class Entrada{
         return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
     }
     
+    /**
+     * Obtiene en un array todas las entradas de un determinado evento de la base de datos
+     * @param int $idEvento
+     * @return Entrada[]
+     */
     public static function getAllEntradasEvento($idEvento){
         self::$dbh=Tool::conectar();
         
@@ -104,6 +132,10 @@ class Entrada{
         return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
     }
      
+    /**
+     * Obtiene en un array todas las entradas de un determinado usuario de la base de datos
+     * @param int $idUsuario
+     */
     public static function getAllEntradasUsuario($idUsuario){
         self::$dbh=Tool::conectar();
         
@@ -120,6 +152,15 @@ class Entrada{
         return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
     }
      
+    /**
+     * Inserta una nueva entrada en la base de datos con los parametros especificados. Permite pasar un objeto PDO como conexión a la base de datos, en caso de no pasar esta conexión se creará una nueva
+     * @param int $idTipoEntrada
+     * @param int $idEvento
+     * @param string $idVenta
+     * @param int $idLineaVenta
+     * @param int $idUsuario
+     * @param string $dbh
+     */
     public static function crearEntrada($idTipoEntrada,$idEvento,$idVenta,$idLineaVenta, $idUsuario, $dbh=""){
         $desconectar=false;
         if($dbh==""){
@@ -146,20 +187,28 @@ class Entrada{
             Tool::desconectar(self::$dbh);
         }
     }
-       
+    
+    /**
+     * Devuelve un objeto Evento con el que está asociado la entrada 
+     * @return Evento
+     */
     public function getEvento(){
         return Evento::getEvento($this->idEvento);
     }
         
+    /**
+     * Devuelve un objeto TipoEntrada con el que está asociado la entrada
+     * @return TipoEntrada
+     */
     public function getTipoEntrada(){
         return TipoEntrada::getTipoEntrada($this->idEvento, $this->idTipoEntrada);
     }
         
-    public static function getEntradaPDF($codigo){
-        
-    }
-    
-    
+    /**
+     * Devuelve un registro de entrada en la base de datos como un objeto Entrada
+     * @param array $array
+     * @return Entrada
+     */
     private static function adaptaArrayAObjeto($array){
         $e=new Entrada();
         
@@ -174,7 +223,11 @@ class Entrada{
         return $e;
     }
     
-    
+    /**
+     * Devuelve varios registros de entradas de la base de datos como un array de objetos Entrada
+     * @param array $array
+     * @return Entrada[]
+     */
     private static function arrayDeObjetos($array){
         $i=0;
         $res=array();
