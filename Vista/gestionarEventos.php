@@ -11,7 +11,10 @@ $res=Evento::getAllEventos();
 $output="<ul>";
 
 foreach ($res as $r){
-    $output.="<li><a href='../Vista/editarEvento.php?eid=" . $r->id . "'>" . $r->nombre."</a></li>";
+    $output.="<li>" . $r->nombre 
+    . " <a href='../Vista/editarEvento.php?eid=" . $r->id . "'>Editar</a> "
+    . " <a href='../Vista/listadoEvento.php?eid=" . $r->id . "'>Listado</a> "
+        . "</li>";
 }
 
 $output.="</ul>";
