@@ -23,6 +23,10 @@ class Tool
         return $aux;
     }
     
+    /**
+     * 
+     * @return ModeloBD
+     */
     public static function conectar(){
         return ModeloBD::getConexion();    
     }
@@ -65,7 +69,7 @@ class Tool
     }
     
     
-    public static function enviaEmail($direccion,$asunto,$mensaje,$cabeceras,$pdf=""){
+    public static function enviaEmail($direccion,$from,$fromNombre,$asunto,$mensaje,$cabeceras,$pdf=""){
         $mail=new PHPMailer(true);
         
         try{
@@ -78,7 +82,7 @@ class Tool
             $mail->Port=EMAIL_PORT;
             $mail->SMTPSecure="tls";
             
-            $mail->setFrom("druida@transitionfestival.org","Test Mailer");
+            $mail->setFrom($from,$fromNombre);
             $mail->addAddress($direccion);
             
             $mail->isHTML(true);

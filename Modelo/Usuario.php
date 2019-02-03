@@ -128,7 +128,32 @@ class Usuario
     public static function getUsuarioLogeado(){
         return self::$user;
     }
+    
+    /**
+     * 
+     * @param int $id
+     * @return Usuario
+     */
+    public static function getUsuario($id){
+        $dbh=Tool::conectar();
         
+        $sql="SELECT * FROM usuarios WHERE Id=?";
+        
+        $query=$dbh->prepare($sql);
+        $query->bindParam(1,$id);
+        $query->execute();
+        
+        Tool::desconectar($dbh);
+        
+        if($query->rowCount()>0){
+            $aux=$query->fetch(PDO::FETCH_ASSOC);
+            return self::adaptaArrayAObjeto($aux);
+        }
+        else{
+            return false;
+        }
+    }
+    
     /**
      * 
      * @param string $email
@@ -141,9 +166,17 @@ class Usuario
         $query=$dbh->prepare($sql);
         $query->bindParam(1,$email);
         $query->execute();
+               
+        if($query->rowCount()>0){
+            $aux=$query->fetch(PDO::FETCH_ASSOC);
+            $out=$aux['Id'];
+        }
+        else{
+            $out=false;
+        }
         
         Tool::desconectar($dbh);
-        return ($query->rowCount()>0);
+        return $out;
     }
     
     /**
@@ -171,7 +204,7 @@ class Usuario
             $mensaje="Confirma tu registro en <a href='". Tool::getBaseURL() . "Controlador/Usuario/confirmarRegistro.php?codigo=" . $res['Codigo_confirmacion'] . "&email=" . urlencode($email) . "'> este enlace </a>";
             $headers="X-Mailer: PHP/" . phpversion();
             
-            return Tool::enviaEmail($email, $asunto, $mensaje, $headers);
+            return Tool::enviaEmail($email,"druida@transitionfestival.org","Test Mailer", $asunto, $mensaje, $headers);
             
             
             /*
@@ -260,7 +293,15 @@ class Usuario
     public static function getHash($pass){
         return password_hash($pass, PASSWORD_DEFAULT);
     }
-       
+    
+    /**
+     * 
+     * @param string $file
+     */
+    public static function importarUsuarios($file){
+        
+    }
+    
     /**
      * 
      * @param array $usuario

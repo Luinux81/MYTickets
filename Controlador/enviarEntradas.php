@@ -31,7 +31,7 @@ if($aux!=""){
 
 $pdf=GeneradorPDF::generaPDF($entradas,"cadena");
 
-if(Tool::enviaEmail($_SESSION['usuario']['email'], "Tus entradas", "Tus entradas", "", $pdf)){
+if(Tool::enviaEmail($_SESSION['usuario']['email'],"druida@transitionfestival.org","Test Mailer", "Tus entradas", "Tus entradas", "", $pdf)){
     header("Location:" . Tool::getBaseURL() . "Vista/verEntradasCompradas.php");
 }
 else{
