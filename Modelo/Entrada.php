@@ -71,6 +71,25 @@ class Entrada{
     }
     
     /**
+     * Obtiene en un array todas las entradas de una determinada venta en la base de datos
+     * @param int $idVenta
+     * @return Entrada[]
+     */
+    public static function getEntradasPorVenta($idVenta){
+        self::$dbh=Tool::conectar();
+        
+        $sql="SELECT * FROM entradas WHERE Id_Venta=?";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1, $idVenta);
+        $query->execute();
+        
+        Tool::desconectar(self::$dbh);
+        
+        return self::arrayDeObjetos($query->fetchAll(PDO::FETCH_ASSOC));
+    }
+    
+    /**
      * Obtiene en un array todas las entradas de una determinada linea de venta en la base de datos 
      * @param string $idVenta
      * @param int $idLineaVenta

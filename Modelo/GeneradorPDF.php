@@ -92,9 +92,9 @@ class GeneradorPDF{
                     self::$modelo2Info['head_i']="MARKET TRANSITION 2019";
                     self::$modelo2Info['head_d']="MARKET TRANSITION 2019";
                     self::$modelo2Info['info_t_1']="MARTES 14 MAYO 2019";
-                    self::$modelo2Info['info_t_2']="PINAR JURADO\n(ALMONTE-SPAIN)\n\n CEREMONIA DE APERTURA: 22:22 H\n WWW.TRANSITIONFESTIVAL.ORG\n\n\n";
+                    self::$modelo2Info['info_t_2']="PINAR JURADO\n(ALMONTE-SPAIN)\n\n CEREMONIA DE APERTURA: 22:22 H\n\n WWW.TRANSITIONFESTIVAL.ORG\n\n\n";
                     self::$modelo2Info['info_b_1']="TUESDAY 14th MAY 2019";
-                    self::$modelo2Info['info_b_1']="PINAR JURADO\n(ALMONTE-SPAIN)\n\n OPENING CEREMONY: 22:22 H\n WWW.TRANSITIONFESTIVAL.ORG";
+                    self::$modelo2Info['info_b_2']="PINAR JURADO\n(ALMONTE-SPAIN)\n\n OPENING CEREMONY: 22:22 H\n\n WWW.TRANSITIONFESTIVAL.ORG";
                     self::$modelo2Info['imagen']="http://market.transitionfestival.org/logo.jpg";
                     $modelo="modelo2";
                     break;
@@ -104,7 +104,7 @@ class GeneradorPDF{
                     self::$modelo2Info['info_t_1']="MARTES 17 SEPTIEMBRE 2019";
                     self::$modelo2Info['info_t_2']="PISCINAS NATURALES LA CODOSERA\n(BADAJOZ-SPAIN)\n\n WWW.CONNECTIONFESTIVAL.ES\n\n\n";
                     self::$modelo2Info['info_b_1']="TUESDAY 17th SEPTEMBER 2019";
-                    self::$modelo2Info['info_b_1']="NATURAL POOLS LA CODOSERA\n(BADAJOZ-SPAIN)\n\n WWW.CONNECTIONFESTIVAL.ES";
+                    self::$modelo2Info['info_b_2']="NATURAL POOLS LA CODOSERA\n(BADAJOZ-SPAIN)\n\n WWW.CONNECTIONFESTIVAL.ES";
                     self::$modelo2Info['imagen']="http://connection.transitionfestival.org/connection2016.jpg";
                     $modelo="modelo2";
                     break;
@@ -266,8 +266,7 @@ class GeneradorPDF{
     private static function seccionArtwork(&$pdf, &$imagen){
         $pdf->Image('@' . stripslashes($imagen), POS_IMAGEN_X,POS_IMAGEN_Y, 160, 80, 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
     }
-    
-    
+        
     /**
      * 
      * @param TCPDF $pdf

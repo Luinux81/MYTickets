@@ -87,6 +87,32 @@ class Venta{
         return $ventas;
     }
     
+    /**
+     * 
+     * @param int $idEvento
+     * @return Venta[]
+     */
+    public static function getVentasEvento($idEvento){
+        self::$dbh=Tool::conectar();
+        $ventas=array();
+        
+        $sql="SELECT * FROM ventas WHERE Id_Evento=?";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1,$idEvento);
+        $query->execute();
+        
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach($res as $r){
+            $ventas[]=self::getVenta($r['Id']);
+        }
+        
+        Tool::desconectar(self::$dbh);
+        
+        return $ventas;
+    }
+    
     public static function getVenta($id){
         $v=new Venta();
         
@@ -124,8 +150,14 @@ class Venta{
         return LineaVenta::getAllLineasVenta($idVenta);
     }
     
+    /**
+     * Crea registros de venta, lineas de venta y entradas en la base de datos con los datos del objeto actual usando una transacción.
+     * 
+     * @return boolean Devuelve true si se realiza la inserción correcta de venta,lineas de venta y entradas, false en caso de error
+     */
     public function crearVenta(){
         self::$dbh=Tool::conectar();
+        $aux=true;
         
         $sql="INSERT INTO ventas (Id,Id_Usuario,Importe,Fecha,Estado,payment_id) VALUES (?,?,?,?,?,?)";
         
@@ -151,11 +183,12 @@ class Venta{
             
         } catch (Exception $e) {
             self::$dbh->rollBack();
+            $aux=false;
             
+        } finally{
+            Tool::desconectar(self::$dbh);
+            return $aux;
         }
-        
-        
-        Tool::desconectar(self::$dbh);
     }
     
     public function editarVenta(){

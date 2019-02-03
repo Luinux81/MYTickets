@@ -153,6 +153,11 @@ class TipoEntrada
         return $out; 
     }
     
+    /**
+     * @param int eid
+     * @param int tpid
+     * @return TipoEntrada
+     */
     public static function getTipoEntrada($eid,$tpid){
         TipoEntrada::conectar();
         

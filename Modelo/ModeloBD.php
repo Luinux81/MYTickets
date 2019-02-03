@@ -25,6 +25,11 @@ class ModeloBD {
         }
     }
     
+    /**
+     * 
+     * @param string $sql
+     * @return PDOStatement
+     */
     public function prepare($sql)
     {        
         return $this->dbh->prepare($sql);        

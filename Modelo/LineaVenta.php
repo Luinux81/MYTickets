@@ -139,6 +139,10 @@ class LineaVenta{
         return Evento::getEvento($this->idEvento);
     }
     
+    /**
+     * 
+     * @return TipoEntrada
+     */
     public function getTipoEntrada(){
         return TipoEntrada::getTipoEntrada($this->idEvento, $this->idTipoEntrada);
     }
