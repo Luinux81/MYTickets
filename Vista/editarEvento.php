@@ -5,6 +5,9 @@ require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 require_once APP_ROOT . '/Modelo/Tool.php';
+require_once APP_ROOT . '/Modelo/Entrada.php';
+require_once APP_ROOT . '/Modelo/Venta.php';
+require_once APP_ROOT . '/Modelo/Usuario.php';
 
 $eid=$_GET['eid'];
 
@@ -74,7 +77,23 @@ echo "</ul>";
     	<input type="submit" value="Crear nuevo Tipo de Entrada">
     </form>
 </div>
+<?php 
 
+echo "<h3>Lista de entradas</h3>";
+
+$aux=Venta::getVentasEvento($ev->id);
+
+echo "<table>" .
+        "<tr><th>#</th><th>Id</th><th>Nombre</th><th>Email</th><th>Cantidad</th><th>Fecha</th></tr>";
+$i=1;
+foreach ($aux as $v){
+    $u=Usuario::getUsuario($v['Id_Usuario']);
+    echo "<tr><td>" . $i++ . "</td><td><a href='./visualizadorEntradas.php?v=" . $v['Id_Venta'] . "&lv=" . $v['Id'] . "&u=" . $v['Id_Usuario'] . "'>" . $v['Id_Venta'] . "</a></td><td>" . $u->nombre . "</td><td>" . $u->email . "</td><td>" . $v['Cantidad'] . "</td><td>" . $v['Fecha'] . "</td></tr>";
+}
+echo "</table>";
+
+
+?>
 <script>
 $("#imagen").change(function(){
 	if(this.files && this.files[0]){

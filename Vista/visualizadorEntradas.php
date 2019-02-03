@@ -8,7 +8,12 @@ require_once APP_ROOT . '/Modelo/GeneradorPDF.php';
 
 $idVenta=$_GET['v'];
 $idLineaVenta=$_GET['lv'];
-$idUsuario=$_SESSION['usuario']['id'];
+$idUsuario=$_GET['u'];
+
+if($idUsuario==""){
+    $idUsuario=$_SESSION['usuario']['id'];
+}
+
 
 $ventas=Venta::getVentasUsuario($idUsuario);
 $aux="";

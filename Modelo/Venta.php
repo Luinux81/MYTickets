@@ -90,13 +90,13 @@ class Venta{
     /**
      * 
      * @param int $idEvento
-     * @return Venta[]
+     * @return array
      */
     public static function getVentasEvento($idEvento){
         self::$dbh=Tool::conectar();
-        $ventas=array();
+        //$ventas=array();
         
-        $sql="SELECT * FROM ventas WHERE Id_Evento=?";
+        $sql="SELECT * FROM ventas AS v INNER JOIN lineasventa AS lv ON v.Id=lv.Id_venta WHERE lv.Id_Evento=? ORDER BY v.Fecha ASC";
         
         $query=self::$dbh->prepare($sql);
         $query->bindParam(1,$idEvento);
@@ -104,6 +104,7 @@ class Venta{
         
         $res=$query->fetchAll(PDO::FETCH_ASSOC);
         
+        /*
         foreach($res as $r){
             $ventas[]=self::getVenta($r['Id']);
         }
@@ -111,6 +112,9 @@ class Venta{
         Tool::desconectar(self::$dbh);
         
         return $ventas;
+        */
+        Tool::desconectar(self::$dbh);
+        return $res;
     }
     
     public static function getVenta($id){
