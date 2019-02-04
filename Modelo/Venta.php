@@ -2,6 +2,7 @@
 require_once APP_ROOT . '/Modelo/Tool.php';
 require_once APP_ROOT . '/Modelo/LineaVenta.php';
 require_once APP_ROOT . '/Modelo/CarroCompra.php';
+require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 class Venta{
     
@@ -236,6 +237,39 @@ class Venta{
         Tool::desconectar(self::$dbh);
     }
     
-    
+    public static function getMensajeEmail($idVenta,$modelo=""){
+        $v=self::getVenta($idVenta);
+        $u=Usuario::getUsuario($v->idUsuario);
+        
+        switch ($modelo){
+            case "market":
+                $aux="<img src='http://market.transitionfestival.org/typo.festival.market.png' width='350' height='100' >";
+                break;
+            case "connection":
+                $aux="<img src='http://connection.transitionfestival.org/tipografia_negro.png' width='350' height='100' >";
+                break;
+            default:
+                $aux="";
+        }
+        
+        $msg="<html>
+                <head></head>
+                <body>
+                    ". $aux . "<br>
+                        <b>Reserva Realizada</b> <br>ID:" . $v->id . "<br><br> 
+                        <b>Datos del comprador:</b> <br>   
+                            Nombre completo: " . $u->nombre . " <br>
+                            Email: " . $u->email . "<br><br>
+                        <b>Detalles de la compra:</b><br><br>   ";
+        foreach ($v->lineasVenta as $l){
+            $msg.=      $l->cantidad . " x " . TipoEntrada::getTipoEntrada($l->idEvento, $l->idTipoEntrada)->nombre . "<br>"; 
+        }
+        
+        $msg.=  "   <b>Total: " . $v->importe . " euros</b>
+                </body>
+                </html>";
+        
+        return $msg;
+    }
     
 }
