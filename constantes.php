@@ -2,7 +2,7 @@
 session_start();
 
 defined("APP_ROOT")?null:define("APP_ROOT",__DIR__);
-defined("APP_URL")?null:define("APP_URL","http://localhost/mytickets_dev/");
+defined("APP_URL")?null:define("APP_URL","http://localhost/mytickets_dev");
 
 require_once APP_ROOT . '/credenciales.php';
 

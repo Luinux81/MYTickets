@@ -15,15 +15,15 @@ class Html{
     
     public static function actionBar($location="home"){
         $aux="<div style='width:100%;text-align:right;'><ul>";
-        $aux.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/home.php'>Home</a></li>";
+        $aux.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/home.php'>Home</a></li>";
         $aux.=self::addCarroCompra();
         
         switch($location){
             case "home":
-                $aux.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/crearEvento.php'>Crear Evento</a></li>";
+                $aux.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/crearEvento.php'>Crear Evento</a></li>";
                 break;
             case "perfilesOrganizador":
-                $aux.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/crearPerfilOrganizador.php'>Crear Perfil</a></li>";
+                $aux.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/crearPerfilOrganizador.php'>Crear Perfil</a></li>";
                 break;
         }
         
@@ -38,22 +38,22 @@ class Html{
         $out="";
         
         if(!isset($_SESSION['usuario'])){
-            $out="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/index.php'>Log in </a></li>";
-            $out.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/Usuario/crearUsuario.php'>Register</a></li>";
+            $out="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/index.php'>Log in </a></li>";
+            $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/Usuario/crearUsuario.php'>Register</a></li>";
         }
         else{
-            $out.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/gestionarEventos.php'>Gestionar Eventos</a></li>";
-            $out.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/gestionarPerfilesOrganizador.php'>Gestionar Perfiles de organizador (" . $_SESSION['usuario']['nombre'] .")</a></li>";
-            $out.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/Usuario/cambiarPassword.php'>Cambiar password</a></li>";
+            $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/gestionarEventos.php'>Gestionar Eventos</a></li>";
+            $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/gestionarPerfilesOrganizador.php'>Gestionar Perfiles de organizador (" . $_SESSION['usuario']['nombre'] .")</a></li>";
+            $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/Usuario/cambiarPassword.php'>Cambiar password</a></li>";
             $out.=self::addVerEntradas();
-            $out.="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Controlador/Usuario/cerrarSesion.php'>Log Out</a></li>";
+            $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Controlador/Usuario/cerrarSesion.php'>Log Out</a></li>";
         }
         
         return $out;
     }
     
     private static function addCarroCompra(){
-        $out="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/verCarroCompra.php' id='link_ver_carro'>";
+        $out="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/verCarroCompra.php' id='link_ver_carro'>";
         
         $json=CarroCompra::getJSON();
         if(!empty($json)){
@@ -70,7 +70,7 @@ class Html{
     private static function addVerEntradas(){
         $entradas=Entrada::getAllEntradasUsuario($_SESSION['usuario']['id']);
         
-        $out="<li style='display:inline;padding-right:10px;'><a href='/mytickets_dev/Vista/verEntradasCompradas.php' id='link_ver_carro'>";
+        $out="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/verEntradasCompradas.php' id='link_ver_carro'>";
         if(!empty($entradas)){
             $out.="Ver Entradas ( " . count($entradas) . " )";
         }
