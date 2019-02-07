@@ -271,5 +271,18 @@ class Venta{
         
         return $msg;
     }
-    
+
+    public static function existePaymentID($id){
+        self::$dbh=Tool::conectar();
+        
+        $sql="SELECT * FROM ventas WHERE payment_id=?";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1, $id);
+        $query->execute();
+        
+        Tool::desconectar(self::$dbh);
+        
+        return($query->rowCount()>0);
+    }
 }

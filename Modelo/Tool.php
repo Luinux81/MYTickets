@@ -23,6 +23,10 @@ class Tool
         return $aux;
     }
     
+    public static function formatoFechaMysql($fecha){
+        return date('Y-m-d H:i:s',strtotime($fecha));
+    }
+    
     /**
      * 
      * @return ModeloBD

@@ -422,7 +422,7 @@ class GeneradorPDF{
         $posY=$posYCentro+40;
         $pdf->SetXY($posX, $posY);
         //$pdf->SetFont('Arial','B',12);
-        $pdf->SetFont('dejavusans', 'B', 12, '', true);
+        $pdf->SetFont('dejavusans', 'B', 10, '', true);
         $pdf->SetTextColor(150,150,150);
         $pdf->Cell(GLOBAL_WIDTH/2-20,HEAD2_LINE_HEIGHT,self::$modelo2Info['info_b_1'],0,2,"",0);
         //$pdf->SetFont('Arial','',10);
