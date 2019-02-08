@@ -78,7 +78,16 @@ class Tool
         
         try{
             $mail->SMTPDebug=0;
-            $mail->isSMTP();
+            
+            //1and1 hack
+            if(substr_count(APP_URL, "localhost")>0){
+                $mail->isSMTP();
+            }
+            else{
+                $mail->isSendmail();
+            }
+            //
+            
             $mail->Host=EMAIL_HOST;
             $mail->SMTPAuth=true;
             $mail->Username=EMAIL_USER;
@@ -98,10 +107,17 @@ class Tool
             }
             
             $mail->send();
+            self::log("Mensaje enviado a " . $direccion);
             return true;
         }catch (Exception $e){
+            self::log("Error enviado mensaje a " . $direccion);
+            self::log("Error: [" . $e->getCode() . "] " . $e->errorMessage());
             return false;
         }
+    }
+    
+    public static function log($mensaje){
+        error_log(date('[Y-m-d H:i] '). " " . $mensaje . PHP_EOL, 3, LOG_FILE);
     }
 }
 
