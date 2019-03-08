@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Clase para gestionar la conexión a la base de datos
+ * 
+ * Esta clase gestiona la conexión a la base de datos implementando un patron singleton
+ * 
+ * @author Luis Breña Calvo
+ *
+ */
 class ModeloBD {
 
     private static $instancia;
@@ -26,6 +34,7 @@ class ModeloBD {
     }
     
     /**
+     * Esta función prepara una sentencia SQL para ser ejecutada. Devuelve un objeto PDOStatement
      * 
      * @param string $sql
      * @return PDOStatement
@@ -35,18 +44,38 @@ class ModeloBD {
         return $this->dbh->prepare($sql);        
     }
     
+    /**
+     * Está función inicia una transacción en la base de datos
+     * 
+     * @return boolean
+     */
     public function beginTransaction() {
         return $this->dbh->beginTransaction();
     }
     
+    /**
+     * Está función confirma una transacción en la base de datos
+     * 
+     * @return boolean
+     */
     public function commit(){
         return $this->dbh->commit();
     }
     
+    /**
+     * Está función cancela una transacción en la base de datos
+     * 
+     * @return boolean
+     */
     public function rollBack(){
         return $this->dbh->rollBack();
     }
-    
+   
+    /**
+     * Esta función devuelve un objeto ModeloDB para gestionar las operaciones con la base de datos
+     * 
+     * @return ModeloBD 
+     */
     public static function getConexion()
     {        
         if (!isset(self::$instancia)) {
