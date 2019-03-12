@@ -1,7 +1,22 @@
 <?php
+/**
+ * Clase Evento | Modelo/Evento.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
+
+
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 require_once APP_ROOT . '/Modelo/Tool.php';
 
+
+/**
+ * Esta clase modela un evento
+ * 
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ *
+ */
 class Evento{
     
     public $id;

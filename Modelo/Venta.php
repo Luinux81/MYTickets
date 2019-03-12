@@ -1,9 +1,21 @@
 <?php
+/**
+ * Clase Venta | Modelo/Venta.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1 
+ */
+
 require_once APP_ROOT . '/Modelo/Tool.php';
 require_once APP_ROOT . '/Modelo/LineaVenta.php';
 require_once APP_ROOT . '/Modelo/CarroCompra.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
+
+/**
+ * Esta clase modela una venta de entradas
+ *
+ */
 class Venta{
     
     public $id;
@@ -18,6 +30,7 @@ class Venta{
     
     /**
      * Obtiene un objeto Venta a partir del valor de la variable de entrada en formato JSON
+     * 
      * @param string $json
      * @return Venta
      */
@@ -60,8 +73,8 @@ class Venta{
     }
     
     /**
-     * Devuelve un id no existente en la tabla ventas de la base de datos.
-     * 
+     * Devuelve un id no existente en la tabla ventas de la base de datos
+     *
      * @return string Id válido para una nueva venta en la base de datos.
      */
     public static function getNuevoId(){
