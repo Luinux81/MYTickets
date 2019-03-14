@@ -159,6 +159,33 @@ class Usuario
     }
     
     /**
+     * Obtiene el usuario con el email deteminado por el parametro de entrada
+     * 
+     * 
+     * @param string $email
+     * @return Usuario|boolean      
+     */
+    public static function getUsuarioPorEmail($email){
+        $dbh=Tool::conectar();
+        
+        $sql="SELECT * FROM usuarios WHERE email=?";
+        
+        $query=$dbh->prepare($sql);
+        $query->bindParam(1,$email);
+        $query->execute();
+        
+        Tool::desconectar($dbh);
+        
+        if($query->rowCount()>0){
+            $aux=$query->fetch(PDO::FETCH_ASSOC);
+            return self::adaptaArrayAObjeto($aux);
+        }
+        else{
+            return false;
+        }
+    }
+    
+    /**
      * 
      * @param string $email
      */
