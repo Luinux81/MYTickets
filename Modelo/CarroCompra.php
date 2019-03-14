@@ -1,4 +1,11 @@
 <?php
+/**
+ * Clase CarroCompra | Modelo/CarroCompra.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1 
+ */
+
 //require_once '../constantes.php';
 require_once APP_ROOT . '/Modelo/Tool.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
@@ -7,9 +14,7 @@ require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 /**
  * Clase para gestionar el carro de compra.
  * 
- * Esta clase utiliza una implementación del carro de compra como una variable de sesion.
- * 
- * @author Luis Breña Calvo
+ * Esta clase utiliza una implementacion del carro de compra como una variable de sesion.
  *
  */
 class CarroCompra{
@@ -17,7 +22,7 @@ class CarroCompra{
     private static $dbh;
     
     /**
-     * La función devuelve si existe un item guardado en el carro de compra correspondiente a un evento y tipo de entrada determinados.
+     * La funcion devuelve si existe un item guardado en el carro de compra correspondiente a un evento y tipo de entrada determinados.
      * 
      * @param int $eid Id de evento
      * @param int $tp Id de tipo de entrada
@@ -39,14 +44,14 @@ class CarroCompra{
     
     
     /**
-     * Está función devuelve la cantidad correspondiente a un item guardado en el carro de compra.
+     * Esta funcion devuelve la cantidad correspondiente a un item guardado en el carro de compra.
      * 
      * Devuelve la cantidad de un item guardado en el carro de compra correspondiente a un evento y tipo de entrada determinados.
-     * En caso de no existir el elemento la función devuelve 0.
+     * En caso de no existir el elemento la funcion devuelve 0.
      * 
-     * @param int $eid
-     * @param int $tp
-     * @return int
+     * @param int $eid Id del evento
+     * @param int $tp Id del tipo de entrada
+     * @return int Cantidad del tipo de entrada
      */
     public static function getCantidad($eid,$tp){
         $res=0;
@@ -73,11 +78,11 @@ class CarroCompra{
     
     
     /**
-     * Devuelve el contenido de la variable de sesión en formato JSON
+     * Devuelve el contenido de la variable de sesion en formato JSON
      * 
      * FORMATO JSON: {numeroLineas:int ,numeroEntradas:int, totalPrecio:float,lineas[{evento:{id,nombre},tipoentrada:{id,nombre,precio},cantidad:int},{...}]}
      *  
-     * @return string Contenido de la variable de sesión en formato JSON
+     * @return string Contenido de la variable de sesion en formato JSON
      */
     public static function getJSON(){
             $numeroLineas=0;
@@ -117,8 +122,8 @@ class CarroCompra{
     /**
      * Guarda un nuevo item en la variable de carro de compra con los atributos determinados por los parametros de entrada
      * 
-     * Esta función añade un nuevo item en caso de que no exista en la variable de sesión 
-     * o en caso de que el item si existe, se añade la cantidad a la ya guardada en la variable.
+     * Esta funcion guarda un nuevo item en caso de que no exista en la variable de sesion 
+     * o en caso de que el item si existe, se suma la cantidad a la ya guardada en la variable.
      * 
      * @param int $eid Id del evento
      * @param int $tp Id del tipo de entrada
@@ -162,11 +167,13 @@ class CarroCompra{
     }
     
     /**
-     * Esta función modifica la cantidad de un item guardado en la variable de sesión determinado por los parámetros de entrada. Si el item no existe no se modifica la variable de sesión.
+     * Esta funcion modifica la cantidad de un item guardado en la variable de sesion determinado por los parametros de entrada
      * 
-     * @param int $eid
-     * @param int $tp
-     * @param int $cantidad
+     * Si el item no existe no se modifica la variable de sesion.
+     * 
+     * @param int $eid Id del evento
+     * @param int $tp Id del tipo de entrada
+     * @param int $cantidad Cantidad de entradas
      */
     public static function editarCarro($eid,$tp,$cantidad){
         if($_SESSION['carro']!=""){
@@ -182,9 +189,9 @@ class CarroCompra{
     }
     
     /**
-     * Esta función elimina un item de la variable de sesión determinado por los parámetros de entrada. Si el item no existe no se modifica la variable de sesión.
+     * Esta funcion elimina un item de la variable de sesion determinado por los parametros de entrada
      * 
-     * @internal Para la eliminación se fija la cantidad del item a 0 y se invoca la funcion limpiaArrayDeVacios
+     * Si el item no existe no se modifica la variable de sesion. Para la eliminacion se fija la cantidad del item a 0 y se invoca la funcion limpiaArrayDeVacios
      * 
      * @param int $eid Id de evento
      * @param int $tp Id de tipo de entrada
@@ -203,7 +210,7 @@ class CarroCompra{
     }
     
     /**
-     * Esta función borra todos los items en la variable de sesión.
+     * Esta funcion borra todos los items en la variable de sesion.
      */
     public static function vaciarCarro(){
         $_SESSION['carro']="";
@@ -212,7 +219,7 @@ class CarroCompra{
     /**
      * @access private
      * 
-     * Esta función recorre el array de entrada y añade al array de salida sólo los elementos con cantidad mayor que 0
+     * Esta funcion recorre el array de entrada y añade al array de salida solo los elementos con cantidad mayor que 0
      * 
      * @param array $array
      * @return array

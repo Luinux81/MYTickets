@@ -75,7 +75,7 @@ class Venta{
     /**
      * Devuelve un id no existente en la tabla ventas de la base de datos
      *
-     * @return string Id válido para una nueva venta en la base de datos.
+     * @return string Id valido para una nueva venta en la base de datos.
      */
     public static function getNuevoId(){
         $idValido=false;
@@ -94,7 +94,7 @@ class Venta{
     /**
      * Obtiene todas las ventas de un usuario determinado en un array
      * 
-     * @param int $idUsuario
+     * @param int $idUsuario Id del usuario
      * @return Venta[]
      */
     public static function getVentasUsuario($idUsuario){
@@ -120,7 +120,7 @@ class Venta{
     /**
      * Obtiene todas las ventas de un evento determinado en un array
      * 
-     * @param int $idEvento
+     * @param int $idEvento Id del evento
      * @return array
      */
     public static function getVentasEvento($idEvento){
@@ -192,9 +192,9 @@ class Venta{
     }
     
     /**
-     * Crea registros de venta, lineas de venta y entradas en la base de datos con los datos del objeto actual usando una transacción.
+     * Crea registros de venta, lineas de venta y entradas en la base de datos con los datos del objeto actual usando una transaccion.
      * 
-     * @return boolean Devuelve true si se realiza la inserción correcta de venta,lineas de venta y entradas, false en caso de error
+     * @return boolean Devuelve true si se realiza la insercion correcta de venta,lineas de venta y entradas, false en caso de error
      */
     public function crearVenta(){
         self::$dbh=Tool::conectar();
@@ -254,9 +254,9 @@ class Venta{
     /**
      * Elimina un registro de venta de la base de datos
      * 
-     * @internal También se eliminan las lineas de venta y entradas asociadas a traves de las foreing_keys de la base de datos
-     * @param string $idVenta
-     * @param int $idUsuario
+     * @internal Tambien se eliminan las lineas de venta y entradas asociadas a traves de las foreing_keys de la base de datos
+     * @param string $idVenta Id de la venta
+     * @param int $idUsuario Id del usuario
      */
     public static function eliminarVenta($idVenta,$idUsuario){
         self::$dbh=Tool::conectar();
@@ -272,10 +272,10 @@ class Venta{
     }
     
     /**
-     * Cambia el atributo estado en un registro de venta en la base de datos determinado por el parámetro de entrada
+     * Cambia el atributo estado en un registro de venta en la base de datos determinado por el parametro de entrada
      * 
      * @param string $idVenta Id de la venta
-     * @param string $estado Estado que quedará guardado en el base de datos
+     * @param string $estado Estado que quedara guardado en el base de datos
      */
     public static function cambiarEstado($idVenta,$estado){
         self::$dbh=Tool::conectar();
@@ -290,7 +290,7 @@ class Venta{
     }
     
     /**
-     * Obtiene el mensaje para enviar en el email de notificación 
+     * Obtiene el mensaje para enviar en el email de notificacion 
      * 
      * @param string $idVenta Id de la venta
      * @param string $modelo Las opciones son "", "market" y "connection"
@@ -334,7 +334,7 @@ class Venta{
     /**
      * Determina si existe una venta en la base de datos con un determinado paymentID
      * 
-     * @param string $id
+     * @param string $id Payment Id
      * @return boolean
      */
     public static function existePaymentID($id){

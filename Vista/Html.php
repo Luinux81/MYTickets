@@ -42,7 +42,7 @@ class Html{
             $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/Usuario/crearUsuario.php'>Register</a></li>";
         }
         else{
-            $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/gestionarEventos.php'>Gestionar Eventos</a></li>";
+            $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/Evento/gestionarEventos.php'>Gestionar Eventos</a></li>";
             $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/gestionarPerfilesOrganizador.php'>Gestionar Perfiles de organizador (" . $_SESSION['usuario']['nombre'] .")</a></li>";
             $out.="<li style='display:inline;padding-right:10px;'><a href='" . Tool::getBaseURL() . "/Vista/Usuario/cambiarPassword.php'>Cambiar password</a></li>";
             $out.=self::addVerEntradas();

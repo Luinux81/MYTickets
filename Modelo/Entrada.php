@@ -1,8 +1,19 @@
 <?php
+/**
+ * Clase Entrada | Modelo/Entrada.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
+
 require_once APP_ROOT . '/Modelo/Tool.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
+/**
+ * Esta clase modela una entrada
+ *
+ */
 class Entrada{
     
     public $codigo;
@@ -15,7 +26,7 @@ class Entrada{
     private static $dbh;
     
     /**
-     * Genera un código que no este ya registrado por otra entrada en la base de datos. Permite pasar un objeto PDO como conexión a la base de datos, si se pasa el parámetro se crea una nueva conexión.
+     * Genera un codigo que no este ya registrado por otra entrada en la base de datos. Permite pasar un objeto PDO como conexion a la base de datos, si se pasa el parametro se crea una nueva conexion.
      * @param PDO $dbh
      * @return string
      */

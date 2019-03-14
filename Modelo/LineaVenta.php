@@ -1,9 +1,20 @@
 <?php
+/**
+ * Clase LineaVenta | Modelo/LineaVenta.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1 
+ */
+
 require_once APP_ROOT . '/Modelo/Tool.php';
 require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
+/**
+ * Esta clase modela una linea de venta
+ *
+ */
 class LineaVenta{
     public $id;
     public $idVenta;

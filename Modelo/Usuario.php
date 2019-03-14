@@ -42,7 +42,8 @@ class Usuario
     }
     
     public function login_users($email,$password)
-    {
+    {        
+        $res=false;
         
         try {
             
@@ -64,7 +65,7 @@ class Usuario
                     
                     $this->user=self::adaptaArrayAObjeto($usuario);
                     
-                    return TRUE;
+                    $res=true;
                 }
             }
         
@@ -72,6 +73,9 @@ class Usuario
             
             print "Error!: " . $e->getMessage();
             
+        }
+        finally {
+            return $res;
         }
         
     }

@@ -1,5 +1,5 @@
 <?php
-require_once '../constantes.php';
+require_once '../../constantes.php';
 
 require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
@@ -91,7 +91,6 @@ foreach ($aux as $v){
     echo "<tr><td>" . $i++ . "</td><td><a href='./visualizadorEntradas.php?v=" . $v['Id_Venta'] . "&lv=" . $v['Id'] . "&u=" . $v['Id_Usuario'] . "'>" . $v['Id_Venta'] . "</a></td><td>" . $u->nombre . "</td><td>" . $u->email . "</td><td>" . $v['Cantidad'] . "</td><td>" . $v['Fecha'] . "</td></tr>";
 }
 echo "</table>";
-
 
 ?>
 <script>
