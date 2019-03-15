@@ -4,17 +4,18 @@ require_once '../../constantes.php';
 require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
 
+echo Html::cabeceraHtml();
 echo Html::actionBar();
 
 $res=Evento::getAllEventos();
 
-$output="<ul>";
+$output="<ul id='evento-lista'>";
 
 foreach ($res as $r){
-    $output.="<li>" . $r->nombre 
-    . " <a href='./editarEvento.php?eid=" . $r->id . "'>Editar</a> "
-    . " <a href='./listadoEvento.php?eid=" . $r->id . "'>Listado</a> "
-        . "</li>";
+    $output.="<li class='evento-item'>" . $r->nombre 
+    . " <a href='./editarEvento.php?eid=" . $r->id . "'>Gestionar</a> "
+    . " <a href='./listadoEvento.php?eid=" . $r->id . "' target='_blank'>Listado</a> "
+    . "</li>";
 }
 
 $output.="</ul>";

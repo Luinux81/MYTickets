@@ -8,6 +8,9 @@ class Html{
     public static function cabeceraHtml(){
         $aux="<head>"
             . "<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>"
+            . "<script type='text/javascript' src='" . APP_URL . "/main.js'></script>"  
+            . "<link rel='stylesheet' type='text/css' href='" . APP_URL . "/style.css" . "'>"    
+            . "<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'> "
             . "</head>";
         
         return $aux;

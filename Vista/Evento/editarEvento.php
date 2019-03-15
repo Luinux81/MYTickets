@@ -88,11 +88,36 @@ echo "<table>" .
 $i=1;
 foreach ($aux as $v){
     $u=Usuario::getUsuario($v['Id_Usuario']);
-    echo "<tr><td>" . $i++ . "</td><td><a href='./visualizadorEntradas.php?v=" . $v['Id_Venta'] . "&lv=" . $v['Id'] . "&u=" . $v['Id_Usuario'] . "'>" . $v['Id_Venta'] . "</a></td><td>" . $u->nombre . "</td><td>" . $u->email . "</td><td>" . $v['Cantidad'] . "</td><td>" . $v['Fecha'] . "</td></tr>";
+    echo "<tr><td>" . $i++ . "</td><td><a href='../visualizadorEntradas.php?v=" . $v['Id_Venta'] . "&lv=" . $v['Id'] . "&u=" . $v['Id_Usuario'] . "' target='_blank'>" . $v['Id_Venta'] . "</a></td><td>" . $u->nombre . "</td><td>" . $u->email . "</td><td>" . $v['Cantidad'] . "</td><td>" . $v['Fecha'] . "</td></tr>";
 }
 echo "</table>";
 
 ?>
+<h3>Nueva Venta Manual</h3>
+
+<h4>Usuario</h4>
+
+<label for='user_email'>Email</label><input id='user_email' ><span id='user_resultado'></span><br>
+<label for='user_nombre'>Nombre</label><input id='user_nombre' >
+
+<h4>Entradas</h4>
+
+<?php 
+
+foreach ($res as $tp){
+    echo "<label for='entrada_" . $tp->id . "'>" . $tp->nombre . " " . $tp->precio . "e</label>";
+    echo "<input id='entrada_" . $tp->id . "' class='cantidadTipoEntrada' type='number' min='0' value='0'>";
+    
+}
+
+echo "<input type='hidden' id='evento_id' value='" . $ev->id . "'>";
+
+?>
+
+
+<br>
+<button id='venta_enviar' disabled>Registrar Venta</button>
+
 <script>
 $("#imagen").change(function(){
 	if(this.files && this.files[0]){

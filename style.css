@@ -1,0 +1,29 @@
+
+body{
+	font-family:'Montserrat', sans-serif;
+}
+#evento-lista{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+}
+
+.evento-item{
+	width:30%;
+	list-style-type:none;
+	height:5em;
+	margin-top:1em;
+	padding:1em;
+	background-color:rgba(0,0,0,0.5);
+	border-radius:10px;
+}
+
+label{
+	display:inline-block;
+	width:15em;
+	margin-bottom:1em;
+}
+
+input{
+	width:20em;
+}
