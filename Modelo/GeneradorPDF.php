@@ -3,9 +3,7 @@ require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/Venta.php';
 require_once APP_ROOT . '/Modelo/Usuario.php';
 
-require_once APP_ROOT . '/lib/tfpdf/tfpdf.php';
 require_once APP_ROOT . '/lib/tcpdf/tcpdf.php';
-require_once APP_ROOT . '/lib/fpdf/fpdf.php';
 require_once APP_ROOT . '/lib/qrcode/qrcode.class.php';
 
 
