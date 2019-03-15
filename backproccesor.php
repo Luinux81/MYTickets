@@ -14,7 +14,10 @@ $ipn=new IPNManager();
 
 $ipn->getDataFromPaypal();
 
+Tool::log("Nuevo IPN Paypal:");
+
 if(Venta::existePaymentID($ipn->pago_id)){
+    Tool::log("IPN venta duplicada:" . $ipn->pago_id);
     exit();    
 }
 
@@ -22,19 +25,21 @@ $aux=Usuario::existeEmail($ipn->payer_email);
 $idUsuario="";
 
 if(!$aux){
-    echo "Nuevo usuario <br />";        
+    //echo "Nuevo usuario <br />";        
     if(Usuario::registroUsuario($ipn->payer_email, $ipn->payer_name . " " . $ipn->payer_lastname, $ipn->payer_email,1)){
-        echo "Usuario Creado <br/>";
+        Tool::log("Usuario Creado: " . $ipn->payer_email . " " . $ipn->payer_name . " " . $ipn->payer_lastname);
         $idUsuario=Usuario::existeEmail($ipn->payer_email);
     }
     else{
-        echo "Error creando usuario";
+        //echo "Error creando usuario";
         //error creando usuario, enviar a log
+        Tool::log("ERROR creando usuario: " . $ipn->payer_email . " " . $ipn->payer_name . " " . $ipn->payer_lastname);
         return false;
     }
 }
 else{
-    echo "Usuario existente <br />";
+    //echo "Usuario existente <br />";
+    Tool::log("Usuario existente: " . $ipn->payer_email . " " . $ipn->payer_name . " " . $ipn->payer_lastname);
     $idUsuario=$aux;
 }
 
@@ -87,8 +92,8 @@ if($v->crearVenta()){
             $fromNombre="Connection Mailer";
             $msg=Venta::getMensajeEmail($v->id,"connection");
             
-            //$to="tickets@connectionfestival.es";
-            $to="druida@transitionfestival.org";
+            $to="tickets@connectionfestival.es";
+            //$to="druida@transitionfestival.org";
             break;
     }
     
@@ -98,7 +103,7 @@ if($v->crearVenta()){
     Tool::enviaEmail($ipn->payer_email, $from, $fromNombre, "Tickets", $msg, "",$pdfs);
 }
 else{
-    echo "Error creando venta<br>";
+    Tool::log("Error creando venta");
 }
 
 
