@@ -75,6 +75,16 @@ function asignaHandlerBotonEnviar(){
 			url:url,
 			success:function(result){
 				console.log(result);
+				
+				var json=JSON.parse(result);
+								
+				if(json.resultado){
+					console.log(json.data);
+					location.reload();
+				}
+				else{
+					alert(json.data);
+				}
 			}
 		});
 	});
