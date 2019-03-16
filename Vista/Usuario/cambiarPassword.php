@@ -1,7 +1,7 @@
 <?php
 require_once '../../constantes.php';
 
-
+echo Html::cabeceraHtml() . Html::actionBar();
 ?>
 
 <form method="post" action="../../Controlador/Usuario/cambiarPassword.php">

@@ -8,7 +8,7 @@ $eid=$_GET['eid'];
 
 $ev=Evento::getEvento($eid);
 
-echo Html::actionBar();
+echo Html::cabeceraHtml() . Html::actionBar();
 
 echo "<h2>" . $ev->nombre . "</h2>";
 

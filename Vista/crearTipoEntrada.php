@@ -5,7 +5,7 @@ require_once APP_ROOT . '/Vista/Html.php';
 $idEvento=$_POST['id_evento'];
 $urlRetorno=$_POST['url_ref'];
 
-echo Html::actionBar();
+echo Html::cabeceraHtml() . Html::actionBar();
 
 ?>
 

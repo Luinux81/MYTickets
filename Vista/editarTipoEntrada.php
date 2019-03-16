@@ -9,7 +9,7 @@ $urlRetorno="../Vista/editarEvento.php";
 
 $tp=TipoEntrada::getTipoEntrada($idEvento, $idTp);
 
-echo Html::actionBar();
+echo Html::cabeceraHtml() . Html::actionBar();
 ?>
 <div style="width: 100%;" id="mainContent">
 <form method="post" action="../Controlador/editarTipoEntrada.php">

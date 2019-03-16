@@ -8,7 +8,7 @@ $idUsuario=$_SESSION['usuario']['id'];
 
 $perfiles=PerfilOrganizador::getAllPerfilesOrganizador($idUsuario);
 
-echo Html::actionBar("perfilesOrganizador");
+echo Html::cabeceraHtml() . Html::actionBar("perfilesOrganizador");
 
 $output="<h3>Perfiles de organizador</h3>
             <ul>";

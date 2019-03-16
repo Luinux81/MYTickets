@@ -4,8 +4,7 @@ require_once '../../constantes.php';
 require_once APP_ROOT . '/Vista/Html.php';
 require_once APP_ROOT . '/Modelo/Evento.php';
 
-echo Html::cabeceraHtml();
-echo Html::actionBar();
+echo Html::cabeceraHtml() . Html::actionBar();
 
 $res=Evento::getAllEventos();
 
