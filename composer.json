@@ -1,0 +1,11 @@
+{
+	"require" : {
+		"tecnickcom/tcpdf" : "~6.2"
+	},
+	"name" : "lacuevadeldruida/mytickets",
+	"authors" : [{
+			"name" : "Luis BC",
+			"email" : "luinux81@gmail.com"
+		}
+	]
+}

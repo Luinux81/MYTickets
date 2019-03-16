@@ -1,9 +1,12 @@
 <?php
+
 require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/Venta.php';
 require_once APP_ROOT . '/Modelo/Usuario.php';
 
-require_once APP_ROOT . '/lib/tcpdf/tcpdf.php';
+require APP_ROOT . '/vendor/autoload.php';
+
+//require_once APP_ROOT . '/lib/tcpdf/tcpdf.php';
 require_once APP_ROOT . '/lib/qrcode/qrcode.class.php';
 
 
@@ -78,6 +81,7 @@ class GeneradorPDF{
      */
     public static function generaPDF($arrayEntradas,$modo="normal"){
         $pdf=new TCPDF();
+        
         $modelo="modelo1";
         
         foreach($arrayEntradas as $entrada){
