@@ -18,25 +18,93 @@ require_once APP_ROOT . '/Modelo/Tool.php';
  *
  */
 class Evento{
-    
+    /**
+     * @var int Identificador del evento.
+     */
     public $id;
+
+    /**
+     * @var string Nombre del evento.
+     */
     public $nombre;
+    
+    /**
+     * @var string Descripcion del evento.
+     */
     public $descripcion;
+    
+    /**
+     * @var string Fecha de inicio del evento.
+     */
     public $fecha_inicio;
+    
+    /**
+     * @var string Hora de inicio del evento.
+     */
     public $hora_inicio;
+    
+    /**
+     * @var string Fecha de finalizacion del evento.
+     */
     public $fecha_fin;
+    
+    /**
+     * @var string Hora de finalizacion del evento.
+     */
     public $hora_fin;
+    
+    /**
+     * @var int Aforo del evento.
+     */
     public $aforo;
+    
+    /**
+     * @var string Nombre del local donde se realiza el evento.
+     */
     public $local;
+    
+    /**
+     * @var string Direccion del local donde se realiza el evento.
+     */
     public $direccion;
+    
+    /**
+     * @var string Ciudad donde se realiza el evento.
+     */
     public $ciudad;
+    
+    /**
+     * @var string Pais donde se realiza el evento.
+     */
     public $pais;
+    
+    /**
+     * @var string Coordenadas GPS del evento.
+     */
     public $gps;
+    
+    /**
+     * @var string Estado del evento.
+     */
     public $estado;
+    
+    /**
+     * @var string Imagen del evento.
+     */
     public $imagen;
     
+    /**
+     * @var ModeloBD Handler de la conexion con la base de datos.
+     */
     private static $dbh;
     
+    /**
+     * Constructor de la clase
+     * @param string $nombre Nombre del evento.
+     * @param string $descripcion Descripcion del evento.
+     * @param string $fecha_inicio Fecha de inicio del evento.
+     * @param string $fecha_fin Fecha de finalizacion del evento.
+     */
     public function __construct($nombre,$descripcion,$fecha_inicio,$fecha_fin){
         $this->nombre=$nombre;
         $this->descripcion=$descripcion;
@@ -44,6 +112,9 @@ class Evento{
         $this->fecha_fin=$fecha_fin;        
     }
     
+    /**
+     * Inserta un nuevo registro de evento en la base de datos con los valores de los atributos del objeto actual ($this).
+     */
     public function guardarEventoEnBD(){
         Evento::$dbh=Tool::conectar();
         
@@ -71,7 +142,10 @@ class Evento{
         
         Tool::desconectar(Evento::$dbh);
     }
-    
+ 
+    /**
+     * Modifica un registro de evento en la base de datos determinado por $this->id con los valores de los atributos del objeto actual ($this).
+     */
     public function editarEventoEnBD(){
         Evento::$dbh=Tool::conectar();
         
@@ -109,6 +183,11 @@ class Evento{
         Tool::desconectar(Evento::$dbh);
     }
     
+    /**
+     * Obtiene todos los eventos de la base de datos.
+     * 
+     * @return Evento[]
+     */
     public static function getAllEventos(){        
         Evento::$dbh=Tool::conectar();
         
@@ -130,7 +209,14 @@ class Evento{
         
         return $out;
     }
-        
+     
+    /**
+     * Obtiene el evento de la base de datos determinado por el parametro de entrada.
+     * 
+     * @param int $eid Identificador del evento.
+     * 
+     * @return Evento
+     */
     public static function getEvento($eid){
         Evento::$dbh=Tool::conectar();
         
@@ -144,7 +230,17 @@ class Evento{
         
         return self::arrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
     }
+
     
+    //TODO:Aclarar formato fechas en la documentacion
+    /**
+     * Transforma un array asociativo con claves iguales a las columnas de la tabla Eventos de la base de datos.
+     *  [{Id, Nombre, Descripcion, Fecha_inicio, Fecha_fin, Aforo, ..... }]
+     *  
+     * @param array $res
+     * 
+     * @return Evento
+     */
     private static function arrayAObjeto($res){
         $ev=new Evento($res['Nombre'], $res['Descripcion'], $res['Fecha_inicio'], $res['Fecha_fin']);
         $ev->id=$res['Id'];

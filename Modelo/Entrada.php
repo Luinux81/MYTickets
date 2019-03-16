@@ -11,24 +11,54 @@ require_once APP_ROOT . '/Modelo/Evento.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 /**
- * Esta clase modela una entrada
+ * Esta clase modela una entrada individual.
  *
  */
 class Entrada{
     
+    /**
+     * @var string Codigo identificativo unico de la entrada.
+     */
     public $codigo;
-    public $idEvento;
-    public $idTipoEntrada;
-    public $idUsuario;    
-    public $idVenta;
-    public $idLineaVenta;
-    
-    private static $dbh;
     
     /**
-     * Genera un codigo que no este ya registrado por otra entrada en la base de datos. Permite pasar un objeto PDO como conexion a la base de datos, si se pasa el parametro se crea una nueva conexion.
-     * @param PDO $dbh
-     * @return string
+     * @var int Identificador del evento al que corresponde la entrada. 
+     */
+    public $idEvento;
+    
+    /**
+     * @var int Identificador del tipo de entrada.
+     */
+    public $idTipoEntrada;
+    
+    /**
+     * @var int Identificador del usuario que realiza la compra de la entrada.
+     */
+    public $idUsuario;    
+    
+    /**
+     * @var string  Identificador de la venta de la entrada.
+     */
+    public $idVenta;
+    
+    /**
+     * @var int Identificador de la linea de venta a la que corresponde la entrada.
+     */
+    public $idLineaVenta;
+    
+    /**
+     * @var ModeloBD Handler de la conexion con la base de datos.
+     */
+    private static $dbh;
+    
+    
+    
+    /**
+     * Genera un codigo que no este ya registrado por otra entrada en la base de datos de longitud determinada por la constante TICKET_CODE_LENGTH.
+     * 
+     * @param ModeloBD $dbh Handler de la conexion con la base de datos. Si se pasa el parametro de entrada la conexion no se cierra despues de realizar la operacion.
+     *  
+     * @return string Codigo para la entrada verificado que no esta duplicado en la base de datos.
      */
     public static function getNuevoCodigo($dbh=""){
         $desconectar=false;
@@ -55,9 +85,11 @@ class Entrada{
     }
     
     /**
-     * Obtiene un objeto Entrada desde la base de datos seleccionado por su codigo
-     * @param string $codigo
-     * @param PDO $dbh
+     * Obtiene un objeto Entrada desde la base de datos seleccionado por su codigo.
+     * 
+     * @param string $codigo Codigo de la entrada a obtener.      
+     * @param ModeloBD $dbh Handler de la conexion con la base de datos. Si se pasa el parametro de entrada la conexion no se cierra despues de realizar la operacion.
+     * 
      * @return Entrada
      */
     public static function getEntrada($codigo,$dbh=""){
@@ -82,8 +114,10 @@ class Entrada{
     }
     
     /**
-     * Obtiene en un array todas las entradas de una determinada venta en la base de datos
-     * @param int $idVenta
+     * Obtiene en un array todas las entradas de una determinada venta en la base de datos.
+     * 
+     * @param string $idVenta Identificador de la venta.
+     *  
      * @return Entrada[]
      */
     public static function getEntradasPorVenta($idVenta){
@@ -101,9 +135,11 @@ class Entrada{
     }
     
     /**
-     * Obtiene en un array todas las entradas de una determinada linea de venta en la base de datos 
-     * @param string $idVenta
-     * @param int $idLineaVenta
+     * Obtiene en un array todas las entradas de una determinada linea de venta en la base de datos.
+     *  
+     * @param string $idVenta Identificador de la venta.
+     * @param int $idLineaVenta Identificador de la linea de venta.
+     * 
      * @return Entrada[]
      */
     public static function getEntradasPorLineaVenta($idVenta,$idLineaVenta){
@@ -122,9 +158,11 @@ class Entrada{
     }
     
     /**
-     * Obtiene en un array todas las entradas de un determinado usuario y un determinado evento de la base de datos
-     * @param int $idEvento
-     * @param int $idUsuario
+     * Obtiene en un array todas las entradas de un determinado usuario y un determinado evento de la base de datos.
+     * 
+     * @param int $idEvento Identificador del evento.
+     * @param int $idUsuario Identificador del usuario.
+     * 
      * @return Entrada[]
      */
     public static function getAllEntradasEventoUsuario($idEvento,$idUsuario){
@@ -143,8 +181,10 @@ class Entrada{
     }
     
     /**
-     * Obtiene en un array todas las entradas de un determinado evento de la base de datos
-     * @param int $idEvento
+     * Obtiene en un array todas las entradas de un determinado evento de la base de datos.
+     * 
+     * @param int $idEvento Identificador del Evento
+     * 
      * @return Entrada[]
      */
     public static function getAllEntradasEvento($idEvento){
@@ -163,8 +203,11 @@ class Entrada{
     }
      
     /**
-     * Obtiene en un array todas las entradas de un determinado usuario de la base de datos
-     * @param int $idUsuario
+     * Obtiene en un array todas las entradas de un determinado usuario de la base de datos.
+     * 
+     * @param int $idUsuario Identificador del usuario.
+     * 
+     * @return Entrada[]
      */
     public static function getAllEntradasUsuario($idUsuario){
         self::$dbh=Tool::conectar();
@@ -183,13 +226,14 @@ class Entrada{
     }
      
     /**
-     * Inserta una nueva entrada en la base de datos con los parametros especificados. Permite pasar un objeto PDO como conexión a la base de datos, en caso de no pasar esta conexión se creará una nueva
-     * @param int $idTipoEntrada
-     * @param int $idEvento
-     * @param string $idVenta
-     * @param int $idLineaVenta
-     * @param int $idUsuario
-     * @param string $dbh
+     * Inserta una nueva entrada en la base de datos con los parametros especificados. En caso de pasar un handler de la base de datos como parametro de entrada no se cerrara la conexion al terminar la operacion.
+     * 
+     * @param int       $idTipoEntrada  Identificador del tipo de entrada.
+     * @param int       $idEvento       Identificador del evento.
+     * @param string    $idVenta        Identificador de la venta.
+     * @param int       $idLineaVenta   Identificador de la linea de venta.
+     * @param int       $idUsuario      Identificador del usuario.
+     * @param ModeloBD  $dbh            Handler de la conexion con la base de datos.
      */
     public static function crearEntrada($idTipoEntrada,$idEvento,$idVenta,$idLineaVenta, $idUsuario, $dbh=""){
         $desconectar=false;
@@ -219,7 +263,8 @@ class Entrada{
     }
     
     /**
-     * Devuelve un objeto Evento con el que está asociado la entrada 
+     * Devuelve un objeto Evento con el que esta asociado la entrada.
+     * 
      * @return Evento
      */
     public function getEvento(){
@@ -227,7 +272,8 @@ class Entrada{
     }
         
     /**
-     * Devuelve un objeto TipoEntrada con el que está asociado la entrada
+     * Devuelve un objeto TipoEntrada con el que esta asociado la entrada.
+     * 
      * @return TipoEntrada
      */
     public function getTipoEntrada(){
@@ -235,8 +281,10 @@ class Entrada{
     }
         
     /**
-     * Devuelve un registro de entrada en la base de datos como un objeto Entrada
-     * @param array $array
+     * Devuelve un registro de entrada en la base de datos como un objeto Entrada.
+     * 
+     * @param array $array Array con la definicion { [Codigo, Id_TipoEntrada, Id_Evento, Id_Venta, Id_LineaVenta, Id_Usuario] }
+     * 
      * @return Entrada
      */
     private static function adaptaArrayAObjeto($array){
@@ -255,7 +303,9 @@ class Entrada{
     
     /**
      * Devuelve varios registros de entradas de la base de datos como un array de objetos Entrada
-     * @param array $array
+     * 
+     * @param array $array Array con la definicion { {[Codigo, Id_TipoEntrada, Id_Evento, Id_Venta, Id_LineaVenta, Id_Usuario]}, ..... }
+     * 
      * @return Entrada[]
      */
     private static function arrayDeObjetos($array){
@@ -280,7 +330,10 @@ class Entrada{
     
     
     
-    
+    /**
+     * Modifica el registro de la base de datos determinado por el atributo codigo del objeto actual con los valores de los atributos del objeto actual.
+     * 
+     */
     public function editarEntrada(){
         self::$dbh=Tool::conectar();
         
@@ -299,6 +352,11 @@ class Entrada{
         Tool::desconectar(self::$dbh);
     }
     
+    /**
+     * Elimina el registro de la base de datos determinado por el campo codigo pasado como parametro de entrada.
+     * 
+     * @param string $codigo Codigo de la entrada a eliminar.
+     */
     public static function eliminarEntrada($codigo){
         self::$dbh=Tool::conectar();
         
