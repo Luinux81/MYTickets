@@ -1,6 +1,8 @@
 <?php
 require_once '../../constantes.php';
 
+require_once APP_ROOT . "/Vista/Html.php";
+
 echo Html::cabeceraHtml() . Html::actionBar();
 ?>
 

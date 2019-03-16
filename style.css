@@ -1,3 +1,7 @@
+*{
+	margin:0px;
+	padding:0px;
+}
 
 body{
 	font-family:'Montserrat', sans-serif;
@@ -26,4 +30,65 @@ label{
 
 input{
 	width:20em;
+}
+
+															/***	Menu superior	***/
+#menu-div{	
+	position:relative;
+	top:0px;
+	right:0px;
+	/*
+	margin:auto;	
+	width:100%;
+	*/
+	
+	background-color:#9f9f9f;
+	
+}
+
+.nav{
+	list-style:none;
+	
+	display:flex;
+	justify-content:flex-end;
+	
+
+}
+
+.nav > li{
+
+}
+
+.nav li a {
+	background-color:#000;
+	color:#fff;
+	text-decoration:none;
+	padding:1em 2em;
+	display:block;
+}
+
+.nav li a:hover {
+	background-color:#434343;
+}
+
+/* Submenu */
+
+.nav li ul {
+	display:none;
+	position:absolute;
+	min-width:140px;
+	list-style:none;
+}
+
+.nav li:hover > ul {
+	display:block;
+}
+
+.nav li ul li {
+	position:relative;
+}
+
+.nav li ul li ul {
+	right:-140px;
+	top:0px;
 }
