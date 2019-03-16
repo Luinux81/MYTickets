@@ -1,27 +1,110 @@
 <?php
+/**
+ * Clase Evento | Modelo/Evento.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
+
+
 require_once APP_ROOT . '/Modelo/ModeloBD.php';
 
+/**
+ * Esta clase modela un tipo de entrada de un evento 
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ *
+ */
 class TipoEntrada
 {
+    /**
+     * @var int Identificador del evento.
+     */
     public $id;
+    
+    /**
+     * @var int Identificador del evento.
+     */
     public $eventoId;
+    
+    /**
+     * @var string Nombre del tipo de entrada.
+     */    
     public $nombre;
+    
+    /**
+     * @var string Descripcion del tipo de entrada.
+     */    
     public $descripcion;
+    
+    /**
+     * @var string Determina si la descripcion se muestra o no.
+     */    
     public $mostrar_descripcion;
+    
+    /**
+     * @var int Cantidad disponible del tipo de entrada para su venta.
+     */    
     public $cantidad_disponible;
+    
+    /**
+     * @var float Precio individual del tipo de entrada.
+     */    
     public $precio;
+    
+    /**
+     * @var string Canales de venta disponibles para el tipo de entrada.
+     */    
     public $canales_venta;
+    
+    /**
+     * @var string Impuestos aplicable al tipo de entrada.
+     */    
     public $impuestos;
+    
+    /**
+     * @var string Fecha inicial en la que el tipo de entrada esta disponible para su venta.
+     */    
     public $inicio_venta;
+    
+    /**
+     * @var string Fecha final en la que el tipo de entrada esta disponible para su venta.
+     */    
     public $fin_venta;
+    
+    /**
+     * @var string Visibilidad del tipo de entrada.
+     */    
     public $visibilidad;
+    
+    /**
+     * @var int Minimo numero de entradas disponible para adquirir en una venta determinada.
+     */    
     public $minimo_compra;
+    
+    /**
+     * @var int Maximo numero de entradas disponible para adquirir en una venta determinada.
+     */    
     public $maximo_compra;
+    
+    /**
+     * @var string Grupo del tipo de entrada.
+     */    
     public $grupo;
+    
+    /**
+     * @var string Estado del tipo de entrada.
+     */    
     public $estado;
     
+    /**
+     * @var ModeloBD Handler de la conexion con la base de datos.
+     */    
     private static $dbh;
     
+    /**
+     * Inserta un nuevo registro de tipo de entrada en la base de datos con los valores de los atributos del objeto actual ($this).
+     */
     public function crearTipoEntrada(){
         $this->conectar();
         
@@ -53,7 +136,10 @@ class TipoEntrada
         
         $this->desconectar();
     }
-    
+  
+    /**
+     * Modifica un registro de tipo de entrada en la base de datos determinado por $this->id con los valores de los atributos del objeto actual ($this).
+     */
     public function editarTipoEntrada(){
         $this->conectar();
         
@@ -98,6 +184,12 @@ class TipoEntrada
         $this->desconectar();
     }
     
+    /**
+     * Elimina un registro de tipo de entrada de la base de datos determinado por los parametros de entrada
+     * 
+     * @param int $eid Identificador del evento.
+     * @param int $teid Identificador del tipo de entrada.
+     */
     public static function eliminarTipoEntrada($eid,$teid){
         TipoEntrada::conectar();
         
@@ -113,6 +205,13 @@ class TipoEntrada
         TipoEntrada::desconectar();        
     }
     
+    /**
+     * Obtiene el siguiente identificador valido para un registro nuevo en la base de datos de un tipo de entrada asociado al evento determinado con el parametro de entrada.
+     *  
+     * @param int $eid Identificador del evento.
+     * 
+     * @return int 
+     */
     public static function nuevoIdTipoEntrada($eid){
         TipoEntrada::conectar();
         
@@ -130,7 +229,14 @@ class TipoEntrada
         
         return $res[0]+1;
     }
-    
+
+    /**
+     * Obtiene un array con todos los tipos de entrada de un determinado evento determinado por el parametro de entrada.
+     * 
+     * @param int $eid Identificador del evento.
+     * 
+     * @return TipoEntrada[]
+     */
     public static function getAllTipoEntradas($eid){
         TipoEntrada::conectar();
         
@@ -154,8 +260,11 @@ class TipoEntrada
     }
     
     /**
-     * @param int eid
-     * @param int tpid
+     * Obtiene un tipo de entrada determinado por los parametros de entrada.
+     * 
+     * @param int $eid  Identificador del evento.
+     * @param int $tpid Identificador del tipo de entrada.
+     *  
      * @return TipoEntrada
      */
     public static function getTipoEntrada($eid,$tpid){
@@ -175,15 +284,29 @@ class TipoEntrada
         return TipoEntrada::arrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
     }
     
-    
+    /**
+     * Define el handler de la conexion con la base de datos.
+     */
     private static function conectar(){
         TipoEntrada::$dbh=ModeloBD::getConexion();
     }
     
+    /**
+     * Elimina el handler de la conexion con la base de datos.
+     */
     private static function desconectar(){
         TipoEntrada::$dbh=null;
     }
     
+    /**
+     * Transforma un array asociativo con claves iguales a las columnas de la tabla TiposEntrada de la base de datos.
+     * 
+     *  [{Id, Id_evento,  Nombre, Descripcion, Mostrar_descripcion, Cantidad_disponible, Precio, Canales_venta, Impuestos, Inicio_venta, Fin_venta, Visibilidad, Minimo_compra, Maximo_compra, Grupo_tipoEntrada, Estado}]
+     *
+     * @param array $arrayTp Array con las claves definidas en la descripcion.
+     *
+     * @return TipoEntrada
+     */
     private static function arrayAObjeto($arrayTp){
         $tp=new TipoEntrada();
         
