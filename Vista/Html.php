@@ -1,10 +1,26 @@
 <?php
+/**
+ * Clase Html | Modelo/Html.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
+
+
 require_once APP_ROOT . '/Modelo/CarroCompra.php';
 require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/Tool.php';
 
+/**
+ * Clase para escribir codigo HTML comun en distintas partes de la aplicacion.
+ */
 class Html{
     
+    /**
+     * Obtiene el codigo HTML del tag <head> con las definiciones de hojas de estilos y scripts.
+     * 
+     * @return string HTML de la cabecera.
+     */
     public static function cabeceraHtml(){
         $aux="<head>"
             . "<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>"
@@ -16,6 +32,13 @@ class Html{
         return $aux;
     }
     
+    /**
+     * Obtiene el codigo HTML del menu de navegacion superior de la aplicacion.
+     * 
+     * @param string $location Los posibles valores son "home"(por defecto) y "perfilesOrganizador"
+     * 
+     * @return string HTML del menu de navegacion.
+     */
     public static function actionBar($location="home"){
         $aux="<div id='menu-div'>
                 <ul class='nav'>
@@ -38,6 +61,11 @@ class Html{
         return $aux;
     }
     
+    /**
+     * Obtiene el codigo HTML de los items del menu de navegacion dependiendo de si hay un usuario logeado o no.
+     * 
+     * @return string
+     */
     private static function verInfoLogin(){
         $out="";
         
@@ -66,6 +94,11 @@ class Html{
         return $out;
     }
     
+    /**
+     * Obtiene el codigo HTML del item de menu de navegacion dependiendo de si hay un carro de compra activo o no.
+     * 
+     * @return string
+     */
     private static function addCarroCompra(){
         $out="";
         
@@ -82,6 +115,11 @@ class Html{
         return $out;
     }
     
+    /**
+     * Obtiene el codigo HTML del item de menu de navegacion dependiendo de si el usuario ha comprado entradas anteriormente o no.
+     *
+     * @return string
+     */
     private static function addVerEntradas(){
         $entradas=Entrada::getAllEntradasUsuario($_SESSION['usuario']['id']);
         $out="";

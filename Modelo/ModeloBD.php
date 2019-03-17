@@ -1,18 +1,32 @@
 <?php
+/**
+ * Clase ModeloBD | Modelo/ModeloBD.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
+
 
 /**
- * Clase para gestionar la conexión a la base de datos
- * 
- * Esta clase gestiona la conexión a la base de datos implementando un patron singleton
- * 
- * @author Luis Breña Calvo
- *
+ * Clase para gestionar la conexion a la base de datos implementando un patron singleton.
  */
 class ModeloBD {
 
+    /**
+     * Variable para implementar el patron singleton.
+     * @var ModeloBD
+     */
     private static $instancia;
+    
+    /**
+     * Handler real de la conexion con la base de datos.
+     * @var PDO 
+     */
     private $dbh;
     
+    /**
+     * Constructor de la clase
+     */
     private function __construct()
     {
         try {
@@ -34,7 +48,7 @@ class ModeloBD {
     }
     
     /**
-     * Esta función prepara una sentencia SQL para ser ejecutada. Devuelve un objeto PDOStatement
+     * Prepara una sentencia SQL para ser ejecutada. Devuelve un objeto PDOStatement
      * 
      * @param string $sql
      * @return PDOStatement
@@ -45,7 +59,7 @@ class ModeloBD {
     }
     
     /**
-     * Está función inicia una transacción en la base de datos
+     * Inicia una transaccion en la base de datos
      * 
      * @return boolean
      */
@@ -54,7 +68,7 @@ class ModeloBD {
     }
     
     /**
-     * Está función confirma una transacción en la base de datos
+     * Confirma una transaccion en cuerso en la base de datos
      * 
      * @return boolean
      */
@@ -63,7 +77,7 @@ class ModeloBD {
     }
     
     /**
-     * Está función cancela una transacción en la base de datos
+     * Cancela una transaccion en curso en la base de datos
      * 
      * @return boolean
      */
@@ -72,7 +86,7 @@ class ModeloBD {
     }
    
     /**
-     * Esta función devuelve un objeto ModeloDB para gestionar las operaciones con la base de datos
+     * Obtiene un objeto singleton ModeloDB para gestionar las operaciones con la base de datos
      * 
      * @return ModeloBD 
      */
@@ -88,7 +102,9 @@ class ModeloBD {
     }
     
     
-    // Evita que el objeto se pueda clonar
+    /**
+     * Evita que el objeto se pueda clonar
+     */
     public function __clone()
     {        
         trigger_error('La clonación de este objeto no está permitida', E_USER_ERROR);        

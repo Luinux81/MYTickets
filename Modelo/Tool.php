@@ -1,4 +1,11 @@
 <?php
+/**
+ * Clase Tool | Modelo/Tool.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -7,12 +14,34 @@ require_once APP_ROOT . '/lib/PHPMailer/src/PHPMailer.php';
 require_once APP_ROOT . '/lib/PHPMailer/src/Exception.php';
 require_once APP_ROOT . '/lib/PHPMailer/src/SMTP.php';
 
+
+/**
+ * Clase con funciones de utilidad para las demas clases.
+ *
+ */
 class Tool
 {
+    
+    /**
+     * Concatena los dos parametros con un espacio blanco en medio.
+     * 
+     * @param string $date Fecha.
+     * @param string $time Hora.
+     * 
+     * @return string
+     */
     public static function adaptaFechaHora($date,$time){
         return $date . " " . $time;
     }
     
+    /**
+     * Obtiene la fecha o la hora de una fecha en formato dd-MM-YYYY HH:mm:ss pasada como parametro de entrada.
+     * 
+     * @param string $datetime Fecha
+     * @param boolean $fecha Determina si devuelve la fecha(true, valor por defecto) o la hora(false).
+     * 
+     * @return string
+     */
     public static function separaFechaHora($datetime,$fecha=true){
         $aux=substr($datetime,0,10);
         if(!$fecha)
@@ -23,11 +52,17 @@ class Tool
         return $aux;
     }
     
+    /**
+     * Transforma una fecha al formato de fechas de MySQL
+     * @param string $fecha
+     * @return string
+     */
     public static function formatoFechaMysql($fecha){
         return date('Y-m-d H:i:s',strtotime($fecha));
     }
     
     /**
+     * Obtiene un handler de la conexion con la base  de datos.
      * 
      * @return ModeloBD
      */
@@ -35,10 +70,23 @@ class Tool
         return ModeloBD::getConexion();    
     }
     
+    /**
+     * Asigna null al valor pasado como parametro.
+     * 
+     * @param ModeloBD $dbHandler
+     */
     public static function desconectar(&$dbHandler){
         $dbHandler=null;
     }
     
+    /**
+     * Obtiene una cadena de caracteres aleatorios con la longitud y el alfabeto pasados como parametros.
+     * 
+     * @param int $longitud Longitud de la cadena de salida.
+     * @param string $alfabeto Alfabeto del que obtener los caracteres aleatorios
+     * 
+     * @return string
+     */
     public static function getToken($longitud,$alfabeto=""){
         $token="";
         if ($alfabeto==""){
@@ -57,6 +105,11 @@ class Tool
         return $token;
     }
     
+    /**
+     * Obtiene la url base de la aplicacion.
+     * 
+     * @return string
+     */
     public static function getBaseURL(){
         /*
         $aux=sprintf(
@@ -72,7 +125,19 @@ class Tool
         return APP_URL;
     }
     
-    
+    /**
+     * Envia un email utilizando la libreria PHPMailer.
+     * 
+     * @param string $direccion Direccion de email del destinatario.
+     * @param string $from Direccion de email del remitente.
+     * @param string $fromNombre Nombre del remitente.
+     * @param string $asunto Asunto del email.
+     * @param string $mensaje Cuerpo del email.
+     * @param string $cabeceras Cabeceras.
+     * @param string $pdf String para adjuntar al email.
+     * 
+     * @return boolean True si el envio es correcto, false en caso contrario.
+     */
     public static function enviaEmail($direccion,$from,$fromNombre,$asunto,$mensaje,$cabeceras,$pdf=""){
         $mail=new PHPMailer(true);
         
@@ -116,6 +181,12 @@ class Tool
         }
     }
     
+    
+    /**
+     * Inserta un mensaje en el archivo de log con marca de tiempo.
+     * 
+     * @param string $mensaje Mensaje para insertar en el archivo de log.
+     */
     public static function log($mensaje){
         error_log(date('[Y-m-d H:i] '). " " . $mensaje . PHP_EOL, 3, LOG_FILE);
     }

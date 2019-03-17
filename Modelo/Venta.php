@@ -13,7 +13,7 @@ require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 
 /**
- * Esta clase modela una venta de entradas
+ * Esta clase modela una venta de entradas.
  *
  */
 class Venta{

@@ -12,8 +12,7 @@ require_once APP_ROOT . '/Modelo/Evento.php';
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 
 /**
- * Esta clase modela una linea de venta
- *
+ * Esta clase modela una linea de venta.
  */
 class LineaVenta{
     
@@ -147,8 +146,8 @@ class LineaVenta{
     
     /**
      * Elimina un registro de linea de venta de la base de datos determinado por los parametros de entrada
-     * @param int $id
-     * @param string $idVenta
+     * @param int $id Identificador de la linea de venta.
+     * @param string $idVenta Identificador de la venta.
      */
     public static function eliminarLineaVenta($id,$idVenta){
         self::$dbh=Tool::conectar();
@@ -267,6 +266,7 @@ class LineaVenta{
     
     /**
      * Obtiene el tipo de entrada asociado a la linea de venta determinada por los atributos $this->idEvento y $this->idTipoEntrada.
+     * 
      * @return TipoEntrada
      */
     public function getTipoEntrada(){
@@ -281,6 +281,7 @@ class LineaVenta{
      * [{Id, Id_Venta, Id_Evento. Id_TipoEntrada, Precio, Cantidad, Estado}]
      * 
      * @param array $array Array con las claves definidas en la descripcion.
+     * 
      * @return LineaVenta
      */
     private static function arrayAObjeto($array){

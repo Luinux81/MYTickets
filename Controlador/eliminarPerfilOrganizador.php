@@ -4,7 +4,7 @@ require_once APP_ROOT . '/Modelo/PerfilOrganizador.php';
 
 session_start();
 
-$res=PerfilOrganizador::borrarPerfilOrganizador($_GET['idpo'], $_SESSION['usuario']['id']);
+$res=PerfilOrganizador::eliminarPerfilOrganizador($_GET['idpo'], $_SESSION['usuario']['id']);
 
 if($res[0]!="00000"){
     print_r($res);

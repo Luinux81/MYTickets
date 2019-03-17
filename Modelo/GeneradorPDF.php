@@ -1,4 +1,10 @@
 <?php
+/**
+ * Clase GeneradorPDF | Modelo/GeneradorPDF.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
 
 require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/Venta.php';
@@ -48,7 +54,10 @@ const POSY_DATA=220;
 
 /*Modelo 2*/
 
-
+/**
+ * Clase para generar tickets de entradas y listados de eventos en formato PDF.
+ *
+ */
 class GeneradorPDF{
     private static $modelo2Info=array(
         "top1"=>"BIENVENIDO",
@@ -74,9 +83,11 @@ class GeneradorPDF{
     );
     
     /**
+     * Devuelve las entradas pasadas como parametro en formato PDF.
      * 
-     * @param Entrada[] $arrayEntradas
-     * @param string $modo
+     * @param Entrada[] $arrayEntradas Array de entradas para generar en formato PDF.
+     * @param string $modo Los valores posibles son "normal"(por defecto)(para visualizar en navegador/descargar) para o "cadena"(para adjuntar a email).
+     * 
      * @return string
      */
     public static function generaPDF($arrayEntradas,$modo="normal"){
@@ -128,8 +139,11 @@ class GeneradorPDF{
     }
     
     /**
+     * Devuelve un listado de acceso con todas las entradas de un evento en formato PDF. 
      * 
-     * @param int $eid
+     * Cada linea del listado contiene el codigo de la entrada, el email y el nombre del usuario. Listado de acceso al evento.
+     * 
+     * @param int $eid Identificador del evento.
      */
     public static function generaPDFListadoEvento($eid){
         $aux="u.Nombre,u.Email,e.Codigo";

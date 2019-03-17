@@ -1,29 +1,105 @@
 <?php
+/**
+ * Clase IPNManager | Modelo/IPNManager.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
 
+/**
+ * Esta clase gestiona la comunicacion con paypal a traves de IPN (Instant Payment Notification).
+ * 
+ *
+ */
 class IPNManager{
-    
+    /**
+     * Nombre del pagador
+     * @var string
+     */
     public $payer_name;
+    
+    /**
+     * Apellidos del pagador
+     * @var string
+     */
     public $payer_lastname;
+    
+    /**
+     * Email del pagador
+     * @var string
+     */
     public $payer_email;
+    
+    
+    /**
+     * Importe de la venta
+     * @var string
+     */
     public $importe;
+    
+    
+    /**
+     * Nombre del item
+     * @var string
+     */
     public $item_nombre;
+    
+    
+    /**
+     * Cantidad del item
+     * @var string
+     */
     public $item_cantidad;
     
+    
+    /**
+     * Campo custom. Primera parte antes de ','
+     * @var string
+     */
     public $custom_idevento;
+    /**
+     * Campo custom. Segunda parte despues de ','
+     * @var string
+     */
     public $custom_idtipoentrada;
     
+    /**
+     * Fecha del pago.
+     * @var string
+     */
     public $pago_fecha;
+    
+    /**
+     * Estado del pago.
+     * @var string
+     */
     public $pago_estado;
+    
+    /**
+     * Id del pago.
+     * @var string
+     */
     public $pago_id;
     
+    /**
+     * Pago verificado. 
+     * @var boolean
+     */
     public $verificado;
     
     
+    /**
+     * Constructor de la clase.
+     */
     function __construct(){
         $this->verificado=false;
     }
     
-    
+    /**
+     * Implementa la comunicacion con Paypal IPN y guarda los valores recibidos en los atributos del objeto actual ($this).
+     *  
+     * @return boolean
+     */
     public function getDataFromPaypal(){
         // CONFIG: Enable debug mode. This means we'll log requests into 'ipn.log' in the same directory.
         // Especially useful if you encounter network errors or other intermittent problems with IPN (validation).

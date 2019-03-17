@@ -1,4 +1,11 @@
 <?php
+/**
+ * Clase CheckoutManager | Modelo/CheckoutManager.php
+ *
+ * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @version     v.0.1
+ */
+
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Payer;
 use PayPal\Rest\ApiContext;
@@ -26,8 +33,18 @@ require_once APP_ROOT . '/Modelo/LineaVenta.php';
 require_once APP_ROOT . '/lib/PayPal-PHP-SDK/autoload.php';
 
 
+/**
+ * Esta clase gestiona el checkout con paypal de una venta utilizando la libreria Paypal-PHP-SDK.
+ * 
+ *
+ */
 class CheckoutManager{
 
+    /**
+     * Crea un pago a traves de la API de Paypal y envia al navegador a la pagina de aprobacion por parte del usuario Paypal.
+     * 
+     * @param Venta $venta Venta a partir de la que se genera un pago paypal.
+     */
     public static function empezarPaypalPayment($venta){
         $apiContext=new ApiContext(
                 new OAuthTokenCredential(PAYPAL_CLIENTID, PAYPAL_SECRET)
@@ -45,6 +62,16 @@ class CheckoutManager{
         
     }
     
+    /**
+     * Ejecuta un pago paypal una vez aceptado por el usuario Paypal y guarda la venta en la base de datos. 
+     * 
+     * Los paremetros de entrada se pasan desde Paypal a la url definida en el pago como url de retorno en caso de aprobacion del usuario. 
+     * Al guardar la venta en la base de datos se guardan registros asociados en las tablas ventas, lineasventa y entradas. 
+     * 
+     * @param string $paymentId $_GET['paymentId']
+     * @param string $token $_GET['token']
+     * @param string $payerID $_GET['PayerID']
+     */
     public static function ejecutarPaypalPayment($paymentId,$token,$payerID){
         $apiContext=new ApiContext(
             new OAuthTokenCredential(PAYPAL_CLIENTID, PAYPAL_SECRET)
@@ -75,6 +102,15 @@ class CheckoutManager{
         }
     }
     
+    
+    /**
+     * Crea un objeto \PayPal\Api\Payment asociado a una venta determinada.
+     * 
+     * @param Venta $venta Venta a partir de la que se crea el pago.
+     * @param \PayPal\Rest\ApiContext $apiContext Objeto creado a partir del token OAuthTokenCredential creado con el clientid y secret de la api paypal.
+     * 
+     * @return \PayPal\Api\Payment
+     */
     private static function crearPaypalPayment($venta,$apiContext){
         $pagador=new Payer();
         $pagador->setPaymentMethod("paypal");
@@ -131,6 +167,13 @@ class CheckoutManager{
         return $pago;
     }
  
+    /**
+     * Crea un perfil de experiencia para ser usado en un pago paypal.
+     * 
+     * @param \Paypal\Rest\ApiContext $apiContext Objeto creado a partir del token OAuthTokenCredential creado con el clientid y secret de la api paypal.
+     * 
+     * @return \PayPal\Api\CreateProfileResponse
+     */
     private static function creaNuevaExperiencia($apiContext){
         $flowConfig=new FlowConfig();
         $flowConfig->setLandingPageType("Billing");
@@ -159,6 +202,14 @@ class CheckoutManager{
         return $perfilCreado;
     }
 
+    
+    /**
+     * Obtiene un objeto Venta a partir de un objeto \PayPal\Api\Payment
+     *  
+     * @param \PayPal\Api\Payment $pagoPaypal
+     * 
+     * @return Venta
+     */
     private static function exportarPagoPaypal($pagoPaypal){
         $v=new Venta();
         
@@ -198,6 +249,14 @@ class CheckoutManager{
         return $v;
     }
     
+    
+    /**
+     * Obtiene un objeto LineaVenta a partir de un array de entrada
+     * 
+     * @param array $argsArray Claves del array {nombreEvento,nombreTipoEntrada,idVenta,idLinea,precio,estado,cantidad}
+     * 
+     * @return LineaVenta
+     */
     private static function exportarItemPaypal($argsArray){
         $dbh=Tool::conectar();
         

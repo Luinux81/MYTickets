@@ -10,9 +10,7 @@
 require_once APP_ROOT . '/Modelo/ModeloBD.php';
 
 /**
- * Esta clase modela un tipo de entrada de un evento 
- *
- * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * Esta clase modela un tipo de entrada de un evento. 
  *
  */
 class TipoEntrada

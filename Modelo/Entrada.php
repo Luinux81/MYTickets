@@ -17,37 +17,44 @@ require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 class Entrada{
     
     /**
-     * @var string Codigo identificativo unico de la entrada.
+     * Codigo identificativo unico de la entrada.
+     * @var string 
      */
     public $codigo;
     
     /**
-     * @var int Identificador del evento al que corresponde la entrada. 
+     * Identificador del evento al que corresponde la entrada. 
+     * @var int 
      */
     public $idEvento;
     
     /**
-     * @var int Identificador del tipo de entrada.
+     * Identificador del tipo de entrada.
+     * @var int 
      */
     public $idTipoEntrada;
     
     /**
-     * @var int Identificador del usuario que realiza la compra de la entrada.
+     * Identificador del usuario que realiza la compra de la entrada.
+     * @var int 
      */
     public $idUsuario;    
     
     /**
-     * @var string  Identificador de la venta de la entrada.
+     * Identificador de la venta de la entrada.
+     * @var string  
      */
     public $idVenta;
     
     /**
-     * @var int Identificador de la linea de venta a la que corresponde la entrada.
+     * Identificador de la linea de venta a la que corresponde la entrada.
+     * @var int 
      */
     public $idLineaVenta;
     
     /**
-     * @var ModeloBD Handler de la conexion con la base de datos.
+     * Handler de la conexion con la base de datos.
+     * @var ModeloBD 
      */
     private static $dbh;
     
@@ -281,7 +288,7 @@ class Entrada{
     }
         
     /**
-     * Devuelve un registro de entrada en la base de datos como un objeto Entrada.
+     * Transforma un array asociativo con claves iguales a las columnas de la tabla Entradas de la base de datos.
      * 
      * @param array $array Array con la definicion { [Codigo, Id_TipoEntrada, Id_Evento, Id_Venta, Id_LineaVenta, Id_Usuario] }
      * 
@@ -302,7 +309,7 @@ class Entrada{
     }
     
     /**
-     * Devuelve varios registros de entradas de la base de datos como un array de objetos Entrada
+     * Devuelve varios registros de entradas de la base de datos como un array de objetos Entrada.
      * 
      * @param array $array Array con la definicion { {[Codigo, Id_TipoEntrada, Id_Evento, Id_Venta, Id_LineaVenta, Id_Usuario]}, ..... }
      * 

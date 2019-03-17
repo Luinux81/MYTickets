@@ -12,89 +12,103 @@ require_once APP_ROOT . '/Modelo/Tool.php';
 
 
 /**
- * Esta clase modela un evento
- * 
- * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * Esta clase modela un evento.
  *
  */
 class Evento{
     /**
-     * @var int Identificador del evento.
+     * Identificador del evento.
+     * @var int 
      */
     public $id;
 
     /**
-     * @var string Nombre del evento.
+     * Nombre del evento.
+     * @var string 
      */
     public $nombre;
     
     /**
-     * @var string Descripcion del evento.
+     * Descripcion del evento.
+     * @var string 
      */
     public $descripcion;
     
     /**
-     * @var string Fecha de inicio del evento.
+     * Fecha de inicio del evento.
+     * @var string 
      */
     public $fecha_inicio;
     
     /**
-     * @var string Hora de inicio del evento.
+     * Hora de inicio del evento.
+     * @var string 
      */
     public $hora_inicio;
     
     /**
-     * @var string Fecha de finalizacion del evento.
+     * Fecha de finalizacion del evento.
+     * @var string 
      */
     public $fecha_fin;
     
     /**
-     * @var string Hora de finalizacion del evento.
+     * Hora de finalizacion del evento.
+     * @var string 
      */
     public $hora_fin;
     
     /**
-     * @var int Aforo del evento.
+     * Aforo del evento.
+     * @var int 
      */
     public $aforo;
     
     /**
-     * @var string Nombre del local donde se realiza el evento.
+     * Nombre del local donde se realiza el evento.
+     * @var string 
      */
     public $local;
     
     /**
-     * @var string Direccion del local donde se realiza el evento.
+     * Direccion del local donde se realiza el evento.
+     * @var string 
      */
     public $direccion;
     
     /**
-     * @var string Ciudad donde se realiza el evento.
+     * Ciudad donde se realiza el evento.
+     * @var string 
      */
     public $ciudad;
     
     /**
-     * @var string Pais donde se realiza el evento.
+     * Pais donde se realiza el evento.
+     * @var string 
      */
     public $pais;
     
     /**
-     * @var string Coordenadas GPS del evento.
+     * Coordenadas GPS del evento.
+     * @var string 
      */
     public $gps;
     
     /**
-     * @var string Estado del evento.
+     * Estado del evento.
+     * @var string 
      */
     public $estado;
     
     /**
-     * @var string Imagen del evento.
+     * Imagen del evento.
+     * @var string 
      */
     public $imagen;
     
     /**
-     * @var ModeloBD Handler de la conexion con la base de datos.
+     * Handler de la conexion con la base de datos.
+     * @var ModeloBD 
      */
     private static $dbh;
     
