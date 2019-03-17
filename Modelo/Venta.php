@@ -18,182 +18,58 @@ require_once APP_ROOT . '/Modelo/TipoEntrada.php';
  */
 class Venta{
     
+    /**
+     * Identificador de la venta.
+     * @var string $id 
+     */
     public $id;
+    
+    /**
+     * Identificador del usuario.
+     * @var int $id 
+     */
     public $idUsuario;
+    
+    /**
+     * Importe de la venta.
+     * @var float $importe 
+     */
     public $importe;
+    
+    /**
+     * Fecha y hora de la venta.
+     * @var string $fecha 
+     */
     public $fecha;
+    
+    /**
+     * Estado de la venta.
+     * @var string $estado 
+     */
     public $estado;
+    
+    /**
+     * Array de objetos LineaVenta.
+     * @var LineaVenta[] $lineasVenta 
+     */
     public $lineasVenta;
+    
+    /**
+     * Identificador del pago.
+     * @var string $paymentID 
+     */
     public $paymentID;
     
+    /**
+     * Handler de la conexion con la base de datos.
+     * @var ModeloBD $dbh 
+     */
     private static $dbh;
     
-    /**
-     * Obtiene un objeto Venta a partir del valor de la variable de entrada en formato JSON
-     * 
-     * @param string $json
-     * @return Venta
-     */
-    public static function importarJSONCarro($json){
-        $v=new Venta();
-        
-        $id=0;
-        $totalPrecio=0;
-        $lineasVenta=array();
-        
-        if(!empty($json)){
-            $carro=json_decode($json,true);
-            
-            $id=self::getNuevoId();
-            $totalPrecio=$carro["totalPrecio"];
-            
-            foreach($carro['lineas'] as $linea){
-                $lv=new LineaVenta();
-                
-                $lv->id=LineaVenta::getNuevoId($id);;
-                $lv->idVenta=$id;
-                $lv->idEvento=$linea['evento']['id'];
-                $lv->idTipoEntrada=$linea['tipoentrada']['id'];
-                $lv->precio=$linea['tipoentrada']['precio'];
-                $lv->cantidad=$linea['cantidad'];;
-                $lv->estado="";
-                
-                
-                $lineasVenta[]=$lv;
-            }
-        }
-        
-        $v->id=$id;
-        $v->idUsuario=$_SESSION['usuario']['id'];
-        $v->importe=$totalPrecio;
-        $v->fecha=date('Y-m-d h:i:s');
-        $v->lineasVenta=$lineasVenta;
-        
-        return $v;
-    }
-    
-    /**
-     * Devuelve un id no existente en la tabla ventas de la base de datos
-     *
-     * @return string Id valido para una nueva venta en la base de datos.
-     */
-    public static function getNuevoId(){
-        $idValido=false;
-        
-        while(!$idValido){
-            $token=Tool::getToken(ID_VENTA_LENGHT);
-            $res=self::getVenta($token);
-            if($res->id==""){
-                $idValido=true;
-            }
-        }
-        
-        return $token;
-    }
-    
-    /**
-     * Obtiene todas las ventas de un usuario determinado en un array
-     * 
-     * @param int $idUsuario Id del usuario
-     * @return Venta[]
-     */
-    public static function getVentasUsuario($idUsuario){
-        self::$dbh=Tool::conectar();
-        $ventas=array();
-        
-        $sql="SELECT * FROM ventas WHERE Id_Usuario=?";
-        
-        $query=self::$dbh->prepare($sql);
-        $query->bindParam(1,$idUsuario);
-        $query->execute();
-        
-        $res=$query->fetchAll(PDO::FETCH_ASSOC);
-        foreach($res as $r){
-            $ventas[]=self::getVenta($r['Id']);
-        }
-        
-        Tool::desconectar(self::$dbh);
-        
-        return $ventas;
-    }
-    
-    /**
-     * Obtiene todas las ventas de un evento determinado en un array
-     * 
-     * @param int $idEvento Id del evento
-     * @return array
-     */
-    public static function getVentasEvento($idEvento){
-        self::$dbh=Tool::conectar();
-        //$ventas=array();
-        
-        $sql="SELECT * FROM ventas AS v INNER JOIN lineasventa AS lv ON v.Id=lv.Id_venta WHERE lv.Id_Evento=? ORDER BY v.Fecha ASC";
-        
-        $query=self::$dbh->prepare($sql);
-        $query->bindParam(1,$idEvento);
-        $query->execute();
-        
-        $res=$query->fetchAll(PDO::FETCH_ASSOC);
-        
-        /*
-        foreach($res as $r){
-            $ventas[]=self::getVenta($r['Id']);
-        }
-        
-        Tool::desconectar(self::$dbh);
-        
-        return $ventas;
-        */
-        Tool::desconectar(self::$dbh);
-        return $res;
-    }
-    
-    /**
-     * Obtiene una venta determinada de la base de datos en un objeto Venta
-     * 
-     * @param string $id Id de la Venta
-     * @return Venta
-     */
-    public static function getVenta($id){
-        $v=new Venta();
-        
-        self::$dbh=Tool::conectar();
-        
-        $sql="SELECT * FROM ventas WHERE Id=?";
-        
-        $query=self::$dbh->prepare($sql);
-        $query->bindParam(1,$id);
-        $query->execute();
-        
-        $res=$query->fetch(PDO::FETCH_ASSOC);
-        
-        $v->id=$res['Id'];        
-        $v->idUsuario=$res['Id_Usuario'];
-        $v->importe=$res['Importe'];
-        $v->fecha=$res['Fecha'];
-        $v->estado=$res['Estado'];
-        $v->paymentID=$res['payment_id'];
-        if($res['Id']!=""){
-            $v->lineasVenta=LineaVenta::getAllLineasVenta($res['Id']);
-        }
-        else{
-            $v->lineasVenta=array();
-        }
-        
-        
-        Tool::desconectar(self::$dbh);
-        
-        return $v;
-        
-    }
-    
-    public static function getAllLineasVenta($idVenta){
-        return LineaVenta::getAllLineasVenta($idVenta);
-    }
     
     /**
      * Crea registros de venta, lineas de venta y entradas en la base de datos con los datos del objeto actual usando una transaccion.
-     * 
+     *
      * @return boolean Devuelve true si se realiza la insercion correcta de venta,lineas de venta y entradas, false en caso de error
      */
     public function crearVenta(){
@@ -251,9 +127,10 @@ class Venta{
         Tool::desconectar(self::$dbh);
     }
     
+    
     /**
      * Elimina un registro de venta de la base de datos
-     * 
+     *
      * @internal Tambien se eliminan las lineas de venta y entradas asociadas a traves de las foreing_keys de la base de datos
      * @param string $idVenta Id de la venta
      * @param int $idUsuario Id del usuario
@@ -271,27 +148,89 @@ class Venta{
         Tool::desconectar(self::$dbh);
     }
     
+    
     /**
-     * Cambia el atributo estado en un registro de venta en la base de datos determinado por el parametro de entrada
-     * 
-     * @param string $idVenta Id de la venta
-     * @param string $estado Estado que quedara guardado en el base de datos
+     * Determina si existe una venta en la base de datos con un determinado paymentID
+     *
+     * @param string $id Payment Id
+     * @return boolean
      */
-    public static function cambiarEstado($idVenta,$estado){
+    public static function existePaymentID($id){
         self::$dbh=Tool::conectar();
         
-        $sql="UPDATE ventas SET Estado=? WHERE Id=?";
+        $sql="SELECT * FROM ventas WHERE payment_id=?";
+        
         $query=self::$dbh->prepare($sql);
-        $query->bindParam(1,$estado);
-        $query->bindParam(2,$idVenta);
+        $query->bindParam(1, $id);
         $query->execute();
         
         Tool::desconectar(self::$dbh);
+        
+        return($query->rowCount()>0);
     }
     
+        
     /**
-     * Obtiene el mensaje para enviar en el email de notificacion 
+     * Obtiene un objeto Venta a partir del valor de la variable de entrada en formato JSON.
      * 
+     * @param string $json FORMATO JSON: {numeroLineas:int ,numeroEntradas:int, totalPrecio:float,lineas[{evento:{id,nombre},tipoentrada:{id,nombre,precio},cantidad:int},{...}]}
+     * 
+     * @return Venta
+     */
+    public static function importarJSONCarro($json){
+        $v=new Venta();
+        
+        $id=0;
+        $totalPrecio=0;
+        $lineasVenta=array();
+        
+        if(!empty($json)){
+            $carro=json_decode($json,true);
+            
+            $id=self::getNuevoId();
+            $totalPrecio=$carro["totalPrecio"];
+            
+            foreach($carro['lineas'] as $linea){
+                $lv=new LineaVenta();
+                
+                $lv->id=LineaVenta::getNuevoId($id);;
+                $lv->idVenta=$id;
+                $lv->idEvento=$linea['evento']['id'];
+                $lv->idTipoEntrada=$linea['tipoentrada']['id'];
+                $lv->precio=$linea['tipoentrada']['precio'];
+                $lv->cantidad=$linea['cantidad'];;
+                $lv->estado="";
+                
+                
+                $lineasVenta[]=$lv;
+            }
+        }
+        
+        $v->id=$id;
+        $v->idUsuario=$_SESSION['usuario']['id'];
+        $v->importe=$totalPrecio;
+        $v->fecha=date('Y-m-d h:i:s');
+        $v->lineasVenta=$lineasVenta;
+        
+        return $v;
+    }
+    
+    
+    /**
+     * Obtiene un array con todas las lineas de venta correspondientes a la venta determinada por el parametro de entrada.
+     *
+     * @param string $idVenta Id de la venta.
+     *
+     * @return LineaVenta[]
+     */
+    public static function getLineasVenta($idVenta){
+        return LineaVenta::getLineasVenta($idVenta);
+    }
+    
+    
+    /**
+     * Obtiene el mensaje para enviar en el email de notificacion
+     *
      * @param string $idVenta Id de la venta
      * @param string $modelo Las opciones son "", "market" y "connection"
      * @return string
@@ -315,13 +254,13 @@ class Venta{
                 <head></head>
                 <body>
                     ". $aux . "<br>
-                        <b>Reserva Realizada</b> <br>ID:" . $v->id . "<br><br> 
-                        <b>Datos del comprador:</b> <br>   
+                        <b>Reserva Realizada</b> <br>ID:" . $v->id . "<br><br>
+                        <b>Datos del comprador:</b> <br>
                             Nombre completo: " . $u->nombre . " <br>
                             Email: " . $u->email . "<br><br>
                         <b>Detalles de la compra:</b><br><br>   ";
         foreach ($v->lineasVenta as $l){
-            $msg.=      $l->cantidad . " x " . TipoEntrada::getTipoEntrada($l->idEvento, $l->idTipoEntrada)->nombre . "<br>"; 
+            $msg.=      $l->cantidad . " x " . TipoEntrada::getTipoEntrada($l->idEvento, $l->idTipoEntrada)->nombre . "<br>";
         }
         
         $msg.=  "   <b>Total: " . $v->importe . " euros</b>
@@ -330,24 +269,149 @@ class Venta{
         
         return $msg;
     }
-
+    
+    
     /**
-     * Determina si existe una venta en la base de datos con un determinado paymentID
-     * 
-     * @param string $id Payment Id
-     * @return boolean
+     * Devuelve un id no existente en la tabla ventas de la base de datos.
+     *
+     * @return string Id valido para una nueva venta en la base de datos.
      */
-    public static function existePaymentID($id){
+    public static function getNuevoId(){
+        $idValido=false;
+        
+        while(!$idValido){
+            $token=Tool::getToken(ID_VENTA_LENGHT);
+            $res=self::getVenta($token);
+            if($res->id==""){
+                $idValido=true;
+            }
+        }
+        
+        return $token;
+    }
+    
+    
+    /**
+     * Obtiene una venta determinada de la base de datos en un objeto Venta.
+     *
+     * @param string $id Id de la Venta.
+     *
+     * @return Venta
+     */
+    public static function getVenta($id){
+        $v=new Venta();
+        
         self::$dbh=Tool::conectar();
         
-        $sql="SELECT * FROM ventas WHERE payment_id=?";
+        $sql="SELECT * FROM ventas WHERE Id=?";
         
         $query=self::$dbh->prepare($sql);
-        $query->bindParam(1, $id);
+        $query->bindParam(1,$id);
         $query->execute();
+        
+        $res=$query->fetch(PDO::FETCH_ASSOC);
+        
+        $v->id=$res['Id'];
+        $v->idUsuario=$res['Id_Usuario'];
+        $v->importe=$res['Importe'];
+        $v->fecha=$res['Fecha'];
+        $v->estado=$res['Estado'];
+        $v->paymentID=$res['payment_id'];
+        if($res['Id']!=""){
+            $v->lineasVenta=LineaVenta::getLineasVenta($res['Id']);
+        }
+        else{
+            $v->lineasVenta=array();
+        }
+        
         
         Tool::desconectar(self::$dbh);
         
-        return($query->rowCount()>0);
+        return $v;
+        
     }
+    
+    
+    /**
+     * Obtiene todas las ventas de un evento determinado en un array.
+     *
+     * @param int $idEvento Id del evento.
+     *
+     * @return array
+     */
+    public static function getVentasEvento($idEvento){
+        self::$dbh=Tool::conectar();
+        //$ventas=array();
+        
+        $sql="SELECT * FROM ventas AS v INNER JOIN lineasventa AS lv ON v.Id=lv.Id_venta WHERE lv.Id_Evento=? ORDER BY v.Fecha ASC";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1,$idEvento);
+        $query->execute();
+        
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        
+        /*
+         foreach($res as $r){
+         $ventas[]=self::getVenta($r['Id']);
+         }
+         
+         Tool::desconectar(self::$dbh);
+         
+         return $ventas;
+         */
+        Tool::desconectar(self::$dbh);
+        return $res;
+    }
+    
+    
+    /**
+     * Obtiene todas las ventas de un usuario determinado en un array.
+     * 
+     * @param int $idUsuario Id del usuario.
+
+     * @return Venta[]
+     */
+    public static function getVentasUsuario($idUsuario){
+        self::$dbh=Tool::conectar();
+        $ventas=array();
+        
+        $sql="SELECT * FROM ventas WHERE Id_Usuario=?";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1,$idUsuario);
+        $query->execute();
+        
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        foreach($res as $r){
+            $ventas[]=self::getVenta($r['Id']);
+        }
+        
+        Tool::desconectar(self::$dbh);
+        
+        return $ventas;
+    }
+   
+    
+    /**
+     * Cambia el atributo estado en un registro de venta en la base de datos determinado por el parametro de entrada
+     * 
+     * @param string $idVenta Id de la venta
+     * @param string $estado Estado que quedara guardado en el base de datos
+     */
+    public static function setEstado($idVenta,$estado){
+        self::$dbh=Tool::conectar();
+        
+        $sql="UPDATE ventas SET Estado=? WHERE Id=?";
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1,$estado);
+        $query->bindParam(2,$idVenta);
+        $query->execute();
+        
+        Tool::desconectar(self::$dbh);
+    }
+    
+
+
+
 }

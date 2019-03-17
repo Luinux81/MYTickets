@@ -205,30 +205,7 @@ class TipoEntrada
         TipoEntrada::desconectar();        
     }
     
-    /**
-     * Obtiene el siguiente identificador valido para un registro nuevo en la base de datos de un tipo de entrada asociado al evento determinado con el parametro de entrada.
-     *  
-     * @param int $eid Identificador del evento.
-     * 
-     * @return int 
-     */
-    public static function nuevoIdTipoEntrada($eid){
-        TipoEntrada::conectar();
-        
-        $sql="SELECT MAX(Id) from tiposentrada WHERE Id_Evento=?";
-        
-        $query=TipoEntrada::$dbh->prepare($sql);
-        
-        $query->bindParam(1,$eid);
-        
-        $query->execute();
-        
-        $res=$query->fetch(PDO::FETCH_NUM);
-        
-        TipoEntrada::desconectar();
-        
-        return $res[0]+1;
-    }
+
 
     /**
      * Obtiene un array con todos los tipos de entrada de un determinado evento determinado por el parametro de entrada.
@@ -283,6 +260,34 @@ class TipoEntrada
         
         return TipoEntrada::arrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
     }
+    
+    
+    /**
+     * Obtiene el siguiente identificador valido para un registro nuevo en la base de datos de un tipo de entrada asociado al evento determinado con el parametro de entrada.
+     *
+     * @param int $eid Identificador del evento.
+     *
+     * @return int
+     */
+    public static function nuevoIdTipoEntrada($eid){
+        TipoEntrada::conectar();
+        
+        $sql="SELECT MAX(Id) from tiposentrada WHERE Id_Evento=?";
+        
+        $query=TipoEntrada::$dbh->prepare($sql);
+        
+        $query->bindParam(1,$eid);
+        
+        $query->execute();
+        
+        $res=$query->fetch(PDO::FETCH_NUM);
+        
+        TipoEntrada::desconectar();
+        
+        return $res[0]+1;
+    }
+    
+    
     
     /**
      * Define el handler de la conexion con la base de datos.

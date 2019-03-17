@@ -32,10 +32,8 @@ class Html{
                 break;
         }
         
-        $aux.=self::verInfoLogin($location)
-        
-            ."</ul>"
-            ."</div>";
+        $aux.=self::verInfoLogin($location) . 
+            "</ul></div>";
         
         return $aux;
     }
