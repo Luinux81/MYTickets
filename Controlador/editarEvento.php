@@ -33,6 +33,6 @@ if($_FILES['imagen']['error']===0){
 
 $e->editarEventoEnBD();
 
-header("Location:../Vista/gestionarEventos.php");
+header("Location:../Vista/Evento/editarEvento.php?eid=".$id);
 
 ?>

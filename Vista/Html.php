@@ -40,9 +40,12 @@ class Html{
      * @return string HTML del menu de navegacion.
      */
     public static function actionBar($location="home"){
-        $aux="<div id='menu-div'>
-                <ul class='nav'>
-                <li><a href='" . Tool::getBaseURL() . "/home.php'>Home</a></li>";
+        $aux="<nav>
+                <div id='menu-div'>
+                    
+                    <p id='logo' >MYTickets</p>
+                    <ul class='nav'>
+                    <li><a href='" . Tool::getBaseURL() . "/home.php'>Home</a></li>";
         
         $aux.=self::addCarroCompra();
         
@@ -56,7 +59,9 @@ class Html{
         }
         
         $aux.=self::verInfoLogin($location) . 
-            "</ul></div>";
+            "   </ul>
+            </div>
+            </nav>";
         
         return $aux;
     }
@@ -129,6 +134,27 @@ class Html{
                         <a href='" . Tool::getBaseURL() . "/Vista/verEntradasCompradas.php' id='link_ver_carro'>Ver Entradas ( " . count($entradas) . " )</a>
                     </li>";
         }
+        
+        return $out;
+    }
+
+
+    public static function menuGestionEvento(){
+        $out="";
+        
+        $out.=" <nav>
+                <div id='evento-menu-gestion'>
+                    <ul>
+                        <li><a href='#'>Panel de control</a></li>
+                        <li><a href='#'>Editar</a></li>
+                        <li><a href='#'>Diseño</a></li>
+                        <li><a href='#'>Opciones de pagos</a></li>
+                        <li><a href='#'>Promoción e invitaciones</a></li>
+                        <li><a href='#'>Analisis</a></li>
+                        <li><a href='#'>Gestion de asistentes</a></li>
+                    </ul>
+                </div>
+                </nav>";
         
         return $out;
     }

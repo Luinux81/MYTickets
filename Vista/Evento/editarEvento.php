@@ -15,10 +15,11 @@ $ev=Evento::getEvento($eid);
 
 echo Html::cabeceraHtml() . Html::actionBar();
 
+echo Html::menuGestionEvento();
 ?>
 
-<div style='width: 100%;' id='mainContent'>
-	<form method="post" action="../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
+<div id='mainContent'>
+	<form method="post" action="../../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
     	<h3>Detalles del evento</h3>
     	<p>Nombre</p>
     	<input type="text" id="evento_nombre" name="evento_nombre" value="<?php echo trim($ev->nombre); ?>">
@@ -48,8 +49,8 @@ echo Html::cabeceraHtml() . Html::actionBar();
     	<input type="file" id="imagen" name="imagen" accept="image/*" style="display:block;">
     	<img id="imagen_preview" height="250px" style="clear:both;" src="data:image/*;base64,<?php echo base64_encode(stripslashes($ev->imagen)); ?>">
     	<br>
-    	<input type="hidden"  name="id" value="<?php echo $ev->id; ?>">
-    	<input type="submit" value="Editar evento">
+    	<input type="hidden"  id="evento_id"name="id" value="<?php echo $ev->id; ?>">
+    	<input type="submit" id="boton-editar-evento" value="Editar evento">
     </form>
     
 <?php 
@@ -76,7 +77,7 @@ echo "</ul>";
     	<input type="hidden" name="url_ref" value="Vista/editarEvento.php">
     	<input type="submit" value="Crear nuevo Tipo de Entrada">
     </form>
-</div>
+
 <?php 
 
 echo "<h3>Lista de entradas</h3>";
@@ -117,6 +118,7 @@ echo "<input type='hidden' id='evento_id' value='" . $ev->id . "'>";
 
 <br>
 <button id='venta_enviar' disabled>Registrar Venta</button>
+</div>
 
 <script>
 $("#imagen").change(function(){
@@ -128,4 +130,50 @@ $("#imagen").change(function(){
 		reader.readAsDataURL(this.files[0]);
 	}	
 });
+
+$("#boton-editar-evento").click(function(e){
+	/*
+	e.preventDefault();
+	console.log("Editar evento Pulsado");
+
+	if(verificaElementos()){
+		var parametros=getParametrosParaEditar();
+
+		$.ajax({
+				url:"../../Controlador/Evento/ajax.php?action=editar&"+encodeURI(parametros) ,
+				success: function(result){
+					console.log(result);
+				}
+			});
+	}
+	*/
+});
+
+
+function verificaElementos(){
+	return true;	
+}
+
+function getParametrosParaEditar(){
+	var res;
+
+	res="id="+document.getElementById("evento_id").value+"&";
+	res+="nombre="+document.getElementById("evento_nombre").value+"&";
+	res+="descripcion="+document.getElementById("evento_descripcion").value+"&";
+	res+="fecha_inicio="+document.getElementById("evento_fecha_inicio").value+"&";
+	res+="hora_inicio="+document.getElementById("evento_hora_inicio").value+"&";
+	res+="fecha_fin="+document.getElementById("evento_fecha_fin").value+"&";
+	res+="hora_fin="+document.getElementById("evento_hora_fin").value+"&";
+	res+="aforo="+document.getElementById("evento_aforo").value+"&";
+	res+="local="+document.getElementById("evento_local").value+"&";
+	res+="ciudad="+document.getElementById("evento_ciudad").value+"&";
+	res+="direccion="+document.getElementById("evento_direccion").value+"&";
+	res+="pais="+document.getElementById("evento_pais").value+"&";
+	res+="gps="+document.getElementById("evento_gps").value+"&";
+	res+="imagen="+document.getElementById("imagen").value;
+
+	return res;
+}
 </script>
+
+
