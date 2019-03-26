@@ -22,11 +22,15 @@ class Html{
      * @return string HTML de la cabecera.
      */
     public static function cabeceraHtml(){
-        $aux="<head>"
+        
+        $aux="<!DOCTYPE html><head>"
             . "<script type='text/javascript' src='https://code.jquery.com/jquery-3.3.1.min.js'></script>"
             . "<script type='text/javascript' src='" . APP_URL . "/main.js'></script>"  
             . "<link rel='stylesheet' type='text/css' href='" . APP_URL . "/style.css" . "'>"    
             . "<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'> "
+            . "<script defer src='https://use.fontawesome.com/releases/v5.8.1/js/all.js' integrity='sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ' crossorigin='anonymous'></script>"
+            . "<meta http-equiv='content-type' content='text/html; charset=utf-8'>"
+            . "<meta charset='utf-8'>"    
             . "</head>";
         
         return $aux;
@@ -147,9 +151,8 @@ class Html{
                     <ul>
                         <li><a href='#'>Panel de control</a></li>
                         <li><a href='#'>Editar</a></li>
-                        <li><a href='#'>Diseño</a></li>
                         <li><a href='#'>Opciones de pagos</a></li>
-                        <li><a href='#'>Promoción e invitaciones</a></li>
+                        <li><a href='#'>Promocion e invitaciones</a></li>
                         <li><a href='#'>Analisis</a></li>
                         <li><a href='#'>Gestion de asistentes</a></li>
                     </ul>

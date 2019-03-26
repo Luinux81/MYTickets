@@ -13,46 +13,78 @@ $eid=$_GET['eid'];
 
 $ev=Evento::getEvento($eid);
 
+$entradas=Entrada::getAllEntradasEvento($eid);
+
 echo Html::cabeceraHtml() . Html::actionBar();
 
 echo Html::menuGestionEvento();
 ?>
 
+<main>
 <div id='mainContent'>
-	<form method="post" action="../../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
-    	<h3>Detalles del evento</h3>
-    	<p>Nombre</p>
-    	<input type="text" id="evento_nombre" name="evento_nombre" value="<?php echo trim($ev->nombre); ?>">
-    	<p>Descripcion</p>
-    	<input type="text" id="evento_descripcion" name="evento_descripcion" value="<?php echo trim($ev->descripcion); ?>">
-    	<p>Fecha Inicio</p>
-    	<input type="date" id="evento_fecha_inicio" name="evento_fecha_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,true); ?>">
-    	<p>Hora Inicio</p>
-    	<input type="time" id="evento_hora_inicio" name="evento_hora_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,false); ?>">
-    	<p>Fecha Fin</p>
-    	<input type="date" id="evento_fecha_fin" name="evento_fecha_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,true); ?>">
-    	<p>Hora Fin</p>
-    	<input type="time" id="evento_hora_fin" name="evento_hora_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,false); ?>">
-    	<p>Aforo</p>
-    	<input type="text" id="evento_aforo" name="evento_aforo" value="<?php echo trim($ev->aforo); ?>">
-    	<p>Local</p>
-    	<input type="text" id="evento_local" name="evento_local" value="<?php echo trim($ev->local); ?>">
-    	<p>Direccion</p>
-    	<input type="text" id="evento_direccion" name="evento_direccion" value="<?php echo trim($ev->direccion); ?>">
-    	<p>Ciudad</p>
-    	<input type="text" id="evento_ciudad" name="evento_ciudad" value="<?php echo trim($ev->ciudad); ?>">
-    	<p>Pais</p>
-    	<input type="text" id="evento_pais" name="evento_pais" value="<?php echo trim($ev->pais); ?>">
-    	<p>GPS</p>
-    	<input type="text" id="evento_gps" name="evento_gps" value="<?php echo trim($ev->gps); ?>">
-    	<p>Imagen</p>
-    	<input type="file" id="imagen" name="imagen" accept="image/*" style="display:block;">
-    	<img id="imagen_preview" height="250px" style="clear:both;" src="data:image/*;base64,<?php echo base64_encode(stripslashes($ev->imagen)); ?>">
-    	<br>
-    	<input type="hidden"  id="evento_id"name="id" value="<?php echo $ev->id; ?>">
-    	<input type="submit" id="boton-editar-evento" value="Editar evento">
-    </form>
-    
+
+	<div id="evento-panelcontrol-top-div">
+		<div id="evento-panelcontrol-top-item1" class="evento-panelcontrol-top-item">			
+			<i class="evento-panelcontrol-top-icon fas fa-globe-americas"></i>
+			<div>
+				<h4>Estado</h4>
+				<p>Tu evento está <?php echo $ev->estado?>.</p>
+			</div>
+		</div>
+		<div id="evento-panelcontrol-top-item2" class="evento-panelcontrol-top-item">
+			<i class="evento-panelcontrol-top-icon fas fa-chart-line"></i>
+			<div>
+				<h4>Ventas</h4>
+				<p>El total de ventas es </p>
+			</div>
+		</div>
+		<div id="evento-panelcontrol-top-item3" class="evento-panelcontrol-top-item">
+			<i class="evento-panelcontrol-top-icon fas fa-receipt"></i>
+			<div>
+				<h4>Entradas</h4>
+				<p>Entradas vendidas: <?php echo count($entradas);?> / <?php echo trim($ev->aforo); ?></p>
+				<div class="progressBarBG">
+					<div class="progressBarProgress" style="width:<?php echo count($entradas)*100/$ev->aforo?>%" ></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="evento-editar-div">
+    	<form method="post" action="../../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
+        	<h3><span>1</span> Detalles del evento</h3>
+        	<p>Nombre</p>
+        	<input type="text" id="evento_nombre" name="evento_nombre" value="<?php echo trim($ev->nombre); ?>">
+        	<p>Descripcion</p>
+        	<input type="text" id="evento_descripcion" name="evento_descripcion" value="<?php echo trim($ev->descripcion); ?>">
+        	<p>Fecha Inicio</p>
+        	<input type="date" id="evento_fecha_inicio" name="evento_fecha_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,true); ?>">
+        	<p>Hora Inicio</p>
+        	<input type="time" id="evento_hora_inicio" name="evento_hora_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,false); ?>">
+        	<p>Fecha Fin</p>
+        	<input type="date" id="evento_fecha_fin" name="evento_fecha_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,true); ?>">
+        	<p>Hora Fin</p>
+        	<input type="time" id="evento_hora_fin" name="evento_hora_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,false); ?>">
+        	<p>Aforo</p>
+        	<input type="text" id="evento_aforo" name="evento_aforo" value="<?php echo trim($ev->aforo); ?>">
+        	<p>Local</p>
+        	<input type="text" id="evento_local" name="evento_local" value="<?php echo trim($ev->local); ?>">
+        	<p>Direccion</p>
+        	<input type="text" id="evento_direccion" name="evento_direccion" value="<?php echo trim($ev->direccion); ?>">
+        	<p>Ciudad</p>
+        	<input type="text" id="evento_ciudad" name="evento_ciudad" value="<?php echo trim($ev->ciudad); ?>">
+        	<p>Pais</p>
+        	<input type="text" id="evento_pais" name="evento_pais" value="<?php echo trim($ev->pais); ?>">
+        	<p>GPS</p>
+        	<input type="text" id="evento_gps" name="evento_gps" value="<?php echo trim($ev->gps); ?>">
+        	<p>Imagen</p>
+        	<input type="file" id="imagen" name="imagen" accept="image/*" style="display:block;">
+        	<img id="imagen_preview" height="250px" style="clear:both;" src="data:image/*;base64,<?php echo base64_encode(stripslashes($ev->imagen)); ?>">
+        	<br>
+        	<input type="hidden"  id="evento_id"name="id" value="<?php echo $ev->id; ?>">
+        	<input type="submit" id="boton-editar-evento" value="Editar evento">
+        </form>
+    </div>
 <?php 
 
 $res=TipoEntrada::getAllTipoEntradas($ev->id);
@@ -119,6 +151,7 @@ echo "<input type='hidden' id='evento_id' value='" . $ev->id . "'>";
 <br>
 <button id='venta_enviar' disabled>Registrar Venta</button>
 </div>
+</main>
 
 <script>
 $("#imagen").change(function(){
