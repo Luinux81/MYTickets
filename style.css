@@ -33,6 +33,68 @@ input{
 	width:20em;
 }
 
+															/***	Clases para usar en varios sitios	***/
+															
+.seccion-info{	
+	border: black 2px solid;
+	border-radius:25px;
+	padding:.5em;
+	margin-left:1em;
+	margin-right:1em;
+	margin-bottom:2em;
+	background-color:white;	
+}
+
+.seccion-info-innerdiv{
+	width:90%;
+	margin:0 auto;
+	padding:1em 2em 1em 2em;
+	background-color:#ced2fc;
+	border:black 1px solid;
+	border-radius:25px;	
+}
+
+.seccion-cabecera-numero{
+	width:2em;
+	height:2em;
+	border-radius:50%;
+	border:black 1px solid;
+	
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	
+	background-color:#5f6499;
+	
+	margin-right:.5em;
+	
+}
+
+.seccion-cabecera-linea{
+	display:flex;
+	align-items:center;
+	margin-top:1em;
+	margin-bottom:1em;
+}
+															
+.seccion-footer{
+	width:100%;	
+	margin-top:2em;
+	margin-bottom:1em;
+	text-align:center;
+}
+
+.boton{
+	background-color:#5f6499;
+	color:black;
+	font-size:1em;
+	line-height:2em;
+	border:black 1px solid;
+	border-radius:20px;
+	width:20em;
+	
+}
+
 															/***	Menu superior	***/
 #menu-div{	
 	position:relative;
@@ -163,14 +225,6 @@ input{
 
 .evento-panelcontrol-top-item{
 	width:30%;
-	border:black 2px solid;
-	border-radius:25px;
-	
-	padding:.5em;
-	margin-right:1em;
-	margin-left:1em;
-	background-color:white;
-	
 	display:flex;
 }
 
@@ -207,13 +261,40 @@ input{
 }
 
 											/***	Panel de control	***/
-											/***		Detalles 		***/
+										/***		Editar - Detalles 		***/
 											
 #evento-editar-div{
-	margin-left:1em;
-	margin-right:1em;
 	padding:1.5em;
-	background-color:aliceblue;
-	border-radius:25px;
-	border:black 2px solid;
+}
+
+#seccion-editar-evento-tipos{
+	margin-top:2em;
+	margin-bottom:2em;
+}
+
+#seccion-editar-evento-detalle form{
+	display:flex;
+	justify-content:space-between;
+	flex-wrap:wrap;
+}
+											/***	Panel de control	***/
+									/***		Editar - Tipos de entrada 		***/
+#seccion-editar-evento-tipos{
+	
+}
+								
+#seccion-editar-evento-tipos li{
+	list-style:none;
+	background-color:black;
+	color:white;
+	padding:1em;
+	
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	
+}		
+
+#seccion-editar-evento-tipos a{
+	color:white;
 }

@@ -24,21 +24,23 @@ echo Html::menuGestionEvento();
 <div id='mainContent'>
 
 	<div id="evento-panelcontrol-top-div">
-		<div id="evento-panelcontrol-top-item1" class="evento-panelcontrol-top-item">			
+		
+		<div id="evento-panelcontrol-top-item1" class="evento-panelcontrol-top-item seccion-info">			
 			<i class="evento-panelcontrol-top-icon fas fa-globe-americas"></i>
 			<div>
 				<h4>Estado</h4>
 				<p>Tu evento está <?php echo $ev->estado?>.</p>
 			</div>
 		</div>
-		<div id="evento-panelcontrol-top-item2" class="evento-panelcontrol-top-item">
+		
+		<div id="evento-panelcontrol-top-item2" class="evento-panelcontrol-top-item seccion-info">
 			<i class="evento-panelcontrol-top-icon fas fa-chart-line"></i>
 			<div>
 				<h4>Ventas</h4>
 				<p>El total de ventas es <?php echo Evento::getRecaudacionTotal($ev->id)." €";?></p>
 			</div>
 		</div>
-		<div id="evento-panelcontrol-top-item3" class="evento-panelcontrol-top-item">
+		<div id="evento-panelcontrol-top-item3" class="evento-panelcontrol-top-item seccion-info">
 			<i class="evento-panelcontrol-top-icon fas fa-receipt"></i>
 			<div>
 				<h4>Entradas</h4>
@@ -50,106 +52,142 @@ echo Html::menuGestionEvento();
 		</div>
 	</div>
 	
-	<div id="evento-editar-div">
-    	<form method="post" action="../../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
-        	<h3><span>1</span> Detalles del evento</h3>
-        	<p>Nombre</p>
-        	<input type="text" id="evento_nombre" name="evento_nombre" value="<?php echo trim($ev->nombre); ?>">
-        	<p>Descripcion</p>
-        	<input type="text" id="evento_descripcion" name="evento_descripcion" value="<?php echo trim($ev->descripcion); ?>">
-        	<p>Fecha Inicio</p>
-        	<input type="date" id="evento_fecha_inicio" name="evento_fecha_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,true); ?>">
-        	<p>Hora Inicio</p>
-        	<input type="time" id="evento_hora_inicio" name="evento_hora_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,false); ?>">
-        	<p>Fecha Fin</p>
-        	<input type="date" id="evento_fecha_fin" name="evento_fecha_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,true); ?>">
-        	<p>Hora Fin</p>
-        	<input type="time" id="evento_hora_fin" name="evento_hora_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,false); ?>">
-        	<p>Aforo</p>
-        	<input type="text" id="evento_aforo" name="evento_aforo" value="<?php echo trim($ev->aforo); ?>">
-        	<p>Local</p>
-        	<input type="text" id="evento_local" name="evento_local" value="<?php echo trim($ev->local); ?>">
-        	<p>Direccion</p>
-        	<input type="text" id="evento_direccion" name="evento_direccion" value="<?php echo trim($ev->direccion); ?>">
-        	<p>Ciudad</p>
-        	<input type="text" id="evento_ciudad" name="evento_ciudad" value="<?php echo trim($ev->ciudad); ?>">
-        	<p>Pais</p>
-        	<input type="text" id="evento_pais" name="evento_pais" value="<?php echo trim($ev->pais); ?>">
-        	<p>GPS</p>
-        	<input type="text" id="evento_gps" name="evento_gps" value="<?php echo trim($ev->gps); ?>">
-        	<p>Imagen</p>
-        	<input type="file" id="imagen" name="imagen" accept="image/*" style="display:block;">
-        	<img id="imagen_preview" height="250px" style="clear:both;" src="data:image/*;base64,<?php echo base64_encode(stripslashes($ev->imagen)); ?>">
-        	<br>
-        	<input type="hidden"  id="evento_id"name="id" value="<?php echo $ev->id; ?>">
-        	<input type="submit" id="boton-editar-evento" value="Editar evento">
-        </form>
-    </div>
+	<div id="evento-editar-div" class="seccion-info">
+	
+		<section id="seccion-editar-evento-detalle">
+		<header>
+			<h3 class="seccion-cabecera-linea"><span class="seccion-cabecera-numero">1</span> Detalles del evento</h3>
+		</header>
+		<div class="seccion-info-innerdiv">
+        	<form method="post" action="../../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
+        		<div>
+                	<p>Nombre</p>
+                	<input type="text" id="evento_nombre" name="evento_nombre" value="<?php echo trim($ev->nombre); ?>">
+                	<p>Descripcion</p>
+                	<input type="text" id="evento_descripcion" name="evento_descripcion" value="<?php echo trim($ev->descripcion); ?>">
+                	<p>Fecha Inicio</p>
+                	<input type="date" id="evento_fecha_inicio" name="evento_fecha_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,true); ?>">
+                	<p>Hora Inicio</p>
+                	<input type="time" id="evento_hora_inicio" name="evento_hora_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,false); ?>">
+                	<p>Fecha Fin</p>
+                	<input type="date" id="evento_fecha_fin" name="evento_fecha_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,true); ?>">
+                	<p>Hora Fin</p>
+                	<input type="time" id="evento_hora_fin" name="evento_hora_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,false); ?>">
+                	<p>Aforo</p>
+                	<input type="text" id="evento_aforo" name="evento_aforo" value="<?php echo trim($ev->aforo); ?>">
+                	<p>Local</p>
+                	<input type="text" id="evento_local" name="evento_local" value="<?php echo trim($ev->local); ?>">
+                	<p>Direccion</p>
+                	<input type="text" id="evento_direccion" name="evento_direccion" value="<?php echo trim($ev->direccion); ?>">
+                	<p>Ciudad</p>
+                	<input type="text" id="evento_ciudad" name="evento_ciudad" value="<?php echo trim($ev->ciudad); ?>">
+                	<p>Pais</p>
+                	<input type="text" id="evento_pais" name="evento_pais" value="<?php echo trim($ev->pais); ?>">
+                	<p>GPS</p>
+                	<input type="text" id="evento_gps" name="evento_gps" value="<?php echo trim($ev->gps); ?>">
+            	</div>
+            	<div>
+                	<p>Imagen</p>
+                	<input type="file" id="imagen" name="imagen" accept="image/*" style="display:block;">
+                	<img id="imagen_preview" height="250px" style="clear:both;" src="data:image/*;base64,<?php echo base64_encode(stripslashes($ev->imagen)); ?>">
+                	<br>
+                	<input type="hidden"  id="evento_id"name="id" value="<?php echo $ev->id; ?>">
+            	</div>
+            	<div class="seccion-footer">
+            		<input type="submit" id="boton-editar-evento" value="Editar evento" class="boton">
+        		</div>
+            </form>
+        </div>
+        </section>
+        
+    
 <?php 
 
 $res=TipoEntrada::getAllTipoEntradas($ev->id);
 
-echo "<h3>Tipos de entradas</h3><ul>";
-foreach ($res as $tp){
-    /*
-    echo "<li>" . $tp['Nombre'] . " Precio:" . $tp['Precio'] 
-        . " <a href='../Vista/editarTipoEntrada.php?eid=". $tp['Id_Evento'] ."&tpid=". $tp['Id'] ."'>Editar</a> "
-        . " <a href='../Controlador/eliminarTipoEntrada.php?eid=". $tp['Id_Evento'] ."&tpid=". $tp['Id'] ."'>Eliminar</a></li>";
-    */
-    echo "<li>" . $tp->nombre . " Precio:" . $tp->precio
-        . " <a href='../Vista/editarTipoEntrada.php?eid=". $tp->eventoId ."&tpid=". $tp->id ."'>Editar</a> "
-    	    . " <a href='../Controlador/eliminarTipoEntrada.php?eid=". $tp->eventoId ."&tpid=". $tp->id ."'>Eliminar</a></li>";
-}
-echo "</ul>";
+$aux="<section id='seccion-editar-evento-tipos'>
+        <header><h3 class='seccion-cabecera-linea'><span class='seccion-cabecera-numero'>2</span>Tipos de entradas</h3></header>
+        <div class='seccion-info-innerdiv'>
+        <ul>";
 
+foreach ($res as $tp){
+    $aux.="<li>" . $tp->nombre . " Precio:" . $tp->precio
+        . "<div>
+                <a href='../../Vista/editarTipoEntrada.php?eid=". $tp->eventoId ."&tpid=". $tp->id ."'><i class='fas fa-wrench evento-panelcontrol-top-icon'></i></a> "
+        .     " <a href='../../Controlador/eliminarTipoEntrada.php?eid=". $tp->eventoId ."&tpid=". $tp->id ."'><i class='fas fa-trash-alt evento-panelcontrol-top-icon'></i></a>
+           </div>
+           </li>";
+}
+$aux.= "</ul>
+
+        <form method='post' action='../../Vista/crearTipoEntrada.php'>
+	       <input type='hidden' name='id_evento' value='<?php echo $ev->id; ?>'>
+	       <input type='hidden' name='url_ref' value='Vista/editarEvento.php'>
+            <div class='seccion-footer'>
+	           <input type='submit' value='Crear nuevo Tipo de Entrada' class='boton'>
+            </div>
+	    </form>
+        </div>
+    </section>
+";
+
+echo $aux;
 ?>
     
-    <form method="post" action="../Vista/crearTipoEntrada.php">
-    	<input type="hidden" name="id_evento" value="<?php echo $ev->id; ?>">
-    	<input type="hidden" name="url_ref" value="Vista/editarEvento.php">
-    	<input type="submit" value="Crear nuevo Tipo de Entrada">
-    </form>
+</div>
+
 
 <?php 
 
-echo "<h3>Lista de entradas</h3>";
+echo " <div id='evento-listado-div' class='seccion-info'>
+        <section>
+        <header><h3>Lista de entradas</h3></header>";
 
 $aux=Venta::getVentasEvento($ev->id);
 
-echo "<table>" .
+echo "  <table>" .
         "<tr><th>#</th><th>Id</th><th>Nombre</th><th>Email</th><th>Cantidad</th><th>Fecha</th></tr>";
 $i=1;
 foreach ($aux as $v){
     $u=Usuario::getUsuario($v['Id_Usuario']);
     echo "<tr><td>" . $i++ . "</td><td><a href='../visualizadorEntradas.php?v=" . $v['Id_Venta'] . "&lv=" . $v['Id'] . "&u=" . $v['Id_Usuario'] . "' target='_blank'>" . $v['Id_Venta'] . "</a></td><td>" . $u->nombre . "</td><td>" . $u->email . "</td><td>" . $v['Cantidad'] . "</td><td>" . $v['Fecha'] . "</td></tr>";
 }
-echo "</table>";
+echo "  </table>
+        </section>
+      </div>
+    ";
 
 ?>
-<h3>Nueva Venta Manual</h3>
-
-<h4>Usuario</h4>
-
-<label for='user_email'>Email</label><input id='user_email' ><span id='user_resultado'></span><br>
-<label for='user_nombre'>Nombre</label><input id='user_nombre' >
-
-<h4>Entradas</h4>
-
-<?php 
-
-foreach ($res as $tp){
-    echo "<label for='entrada_" . $tp->id . "'>" . $tp->nombre . " " . $tp->precio . "e</label>";
-    echo "<input id='entrada_" . $tp->id . "' class='cantidadTipoEntrada' type='number' min='0' value='0'>";
+    <div class="seccion-info">
+    <section>
+    <header><h3>Nueva Venta Manual</h3></header>
     
-}
-
-echo "<input type='hidden' id='evento_id' value='" . $ev->id . "'>";
-
-?>
-
-
-<br>
-<button id='venta_enviar' disabled>Registrar Venta</button>
+    <h4>Usuario</h4>
+    
+    <label for='user_email'>Email</label><input id='user_email' ><span id='user_resultado'></span><br>
+    <label for='user_nombre'>Nombre</label><input id='user_nombre' >
+    
+    <h4>Entradas</h4>
+    
+    <?php 
+    
+    foreach ($res as $tp){
+        echo "<label for='entrada_" . $tp->id . "'>" . $tp->nombre . " " . $tp->precio . "e</label>";
+        echo "<input id='entrada_" . $tp->id . "' class='cantidadTipoEntrada' type='number' min='0' value='0'>";
+        
+    }
+    
+    echo "<input type='hidden' id='evento_id' value='" . $ev->id . "'>";
+    
+    ?>
+    
+    
+    <br>
+    <div class="seccion-footer">
+    	<button id='venta_enviar' disabled class="boton">Registrar Venta</button>
+    </div>
+    </section>
+	</div>
 </div>
 </main>
 
