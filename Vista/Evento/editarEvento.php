@@ -35,7 +35,7 @@ echo Html::menuGestionEvento();
 			<i class="evento-panelcontrol-top-icon fas fa-chart-line"></i>
 			<div>
 				<h4>Ventas</h4>
-				<p>El total de ventas es </p>
+				<p>El total de ventas es <?php echo Evento::getRecaudacionTotal($ev->id)." €";?></p>
 			</div>
 		</div>
 		<div id="evento-panelcontrol-top-item3" class="evento-panelcontrol-top-item">

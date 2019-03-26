@@ -2,7 +2,7 @@
 /**
  * Clase Venta | Modelo/Venta.php
  *
- * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @author      Luis Breï¿½a Calvo <luinux81@gmail.com>
  * @version     v.0.1 
  */
 

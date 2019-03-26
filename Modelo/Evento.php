@@ -2,13 +2,14 @@
 /**
  * Clase Evento | Modelo/Evento.php
  *
- * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @author      Luis Breï¿½a Calvo <luinux81@gmail.com>
  * @version     v.0.1
  */
 
 
 require_once APP_ROOT . '/Modelo/TipoEntrada.php';
 require_once APP_ROOT . '/Modelo/Tool.php';
+require_once APP_ROOT . '/Modelo/Venta.php';
 
 
 /**
@@ -245,6 +246,25 @@ class Evento{
         return self::arrayAObjeto($query->fetch(PDO::FETCH_ASSOC));
     }
 
+    
+    /**
+     * Obtiene el total de todos los importes de ventas de entradas del evento determinado por el parÃ¡metro de entrada.
+     * 
+     * @param int $eid Id del evento.
+     * @return number 
+     */
+    public static function getRecaudacionTotal($eid){
+        $res=0;
+        
+        $ventas=Venta::getVentasEvento($eid);
+        
+        
+        foreach($ventas as $v){
+            $res+=floatval($v['Importe']);
+        }
+        
+        return $res;
+    }
     
     //TODO:Aclarar formato fechas en la documentacion
     /**
