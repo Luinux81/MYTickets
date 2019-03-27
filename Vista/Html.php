@@ -2,7 +2,7 @@
 /**
  * Clase Html | Modelo/Html.php
  *
- * @author      Luis Bre�a Calvo <luinux81@gmail.com>
+ * @author      Luis Bre�a Calvo <luinux81@gmail.com>
  * @version     v.0.1
  */
 
@@ -149,12 +149,12 @@ class Html{
         $out.=" <nav>
                 <div id='evento-menu-gestion'>
                     <ul>
-                        <li><a href='#'>Panel de control</a></li>
-                        <li><a href='#'>Editar</a></li>
-                        <li><a href='#'>Opciones de pagos</a></li>
-                        <li><a href='#'>Promocion e invitaciones</a></li>
-                        <li><a href='#'>Analisis</a></li>
-                        <li><a href='#'>Gestion de asistentes</a></li>
+                        <li><a href='#'><i class='fas fa-home evento-menu-icon'></i>Panel de control</a></li>
+                        <li><a href='#'><i class='fas fa-edit evento-menu-icon'></i>Editar</a></li>
+                        <li><a href='#'><i class='fas fa-donate evento-menu-icon'></i>Opciones de pagos</a></li>
+                        <li><a href='#'><i class='fas fa-bullhorn evento-menu-icon'></i>Promoción e invitaciones</a></li>
+                        <li><a href='#'><i class='fas fa-sitemap evento-menu-icon'></i>Análisis</a></li>
+                        <li><a href='#'><i class='fas fa-users evento-menu-icon'></i>Gestión de asistentes</a></li>
                     </ul>
                 </div>
                 </nav>";

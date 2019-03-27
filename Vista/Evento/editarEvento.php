@@ -61,29 +61,40 @@ echo Html::menuGestionEvento();
 		<div class="seccion-info-innerdiv">
         	<form method="post" action="../../Controlador/editarEvento.php" enctype="multipart/form-data" accept-charset="utf-8">
         		<div>
-                	<p>Nombre</p>
+                	<label for="evento_nombre">Nombre</label>
                 	<input type="text" id="evento_nombre" name="evento_nombre" value="<?php echo trim($ev->nombre); ?>">
-                	<p>Descripcion</p>
+                	
+                	<label for="evento_descripcion">Descripción</label>
                 	<input type="text" id="evento_descripcion" name="evento_descripcion" value="<?php echo trim($ev->descripcion); ?>">
-                	<p>Fecha Inicio</p>
+
+                	<label for="evento_fecha_inicio">Fecha Inicio</label>
                 	<input type="date" id="evento_fecha_inicio" name="evento_fecha_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,true); ?>">
-                	<p>Hora Inicio</p>
+
+                	<label for="evento_hora_inicio">Hora Inicio</label>
                 	<input type="time" id="evento_hora_inicio" name="evento_hora_inicio" value="<?php echo Tool::separaFechaHora($ev->fecha_inicio,false); ?>">
-                	<p>Fecha Fin</p>
+
+                	<label for="evento_fecha_fin">Fecha Fin</label>
                 	<input type="date" id="evento_fecha_fin" name="evento_fecha_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,true); ?>">
-                	<p>Hora Fin</p>
+
+                	<label for="evento_hora_fin">Hora Fin</label>
                 	<input type="time" id="evento_hora_fin" name="evento_hora_fin" value="<?php echo Tool::separaFechaHora($ev->fecha_fin,false); ?>">
-                	<p>Aforo</p>
+
+                	<label for="evento_aforo">Aforo</label>
                 	<input type="text" id="evento_aforo" name="evento_aforo" value="<?php echo trim($ev->aforo); ?>">
-                	<p>Local</p>
+
+                	<label for="evento_local">Local</label>
                 	<input type="text" id="evento_local" name="evento_local" value="<?php echo trim($ev->local); ?>">
-                	<p>Direccion</p>
+
+                	<label for="evento_direccion">Direccion</label>
                 	<input type="text" id="evento_direccion" name="evento_direccion" value="<?php echo trim($ev->direccion); ?>">
-                	<p>Ciudad</p>
+
+                	<label for="evento_ciudad">Ciudad</label>
                 	<input type="text" id="evento_ciudad" name="evento_ciudad" value="<?php echo trim($ev->ciudad); ?>">
-                	<p>Pais</p>
+
+                	<label for="evento_pais">Pais</label>
                 	<input type="text" id="evento_pais" name="evento_pais" value="<?php echo trim($ev->pais); ?>">
-                	<p>GPS</p>
+
+                	<label for="evento_gps">GPS</label>
                 	<input type="text" id="evento_gps" name="evento_gps" value="<?php echo trim($ev->gps); ?>">
             	</div>
             	<div>
@@ -158,7 +169,7 @@ echo "  </table>
     ";
 
 ?>
-    <div class="seccion-info">
+    <div id="seccion-evento-nuevaventa" class="seccion-info">
     <section>
     <header><h3>Nueva Venta Manual</h3></header>
     
