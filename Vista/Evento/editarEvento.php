@@ -23,35 +23,48 @@ echo Html::menuGestionEvento();
 <main>
 <div id='mainContent'>
 
-	<div id="evento-panelcontrol-top-div">
-		
-		<div id="evento-panelcontrol-top-item1" class="evento-panelcontrol-top-item seccion-info">			
-			<i class="evento-panelcontrol-top-icon fas fa-globe-americas"></i>
-			<div>
-				<h4>Estado</h4>
-				<p>Tu evento está <?php echo $ev->estado?>.</p>
-			</div>
-		</div>
-		
-		<div id="evento-panelcontrol-top-item2" class="evento-panelcontrol-top-item seccion-info">
-			<i class="evento-panelcontrol-top-icon fas fa-chart-line"></i>
-			<div>
-				<h4>Ventas</h4>
-				<p>El total de ventas es <?php echo Evento::getRecaudacionTotal($ev->id)." €";?></p>
-			</div>
-		</div>
-		<div id="evento-panelcontrol-top-item3" class="evento-panelcontrol-top-item seccion-info">
-			<i class="evento-panelcontrol-top-icon fas fa-receipt"></i>
-			<div>
-				<h4>Entradas</h4>
-				<p>Entradas vendidas: <?php echo count($entradas);?> / <?php echo trim($ev->aforo); ?></p>
-				<div class="progressBarBG">
-					<div class="progressBarProgress" style="width:<?php echo count($entradas)*100/$ev->aforo?>%" ></div>
-				</div>
-			</div>
-		</div>
+	<div id="evento-panelcontrol">
+    	<div id="evento-panelcontrol-top-div">    		
+    		<div id="evento-panelcontrol-top-item1" class="evento-panelcontrol-top-item seccion-info">			
+    			<i class="evento-panelcontrol-top-icon fas fa-globe-americas"></i>
+    			<div>
+    				<h4>Estado</h4>
+    				<p>Tu evento está <?php echo $ev->estado?>.</p>
+    			</div>
+    		</div>
+    		
+    		<div id="evento-panelcontrol-top-item2" class="evento-panelcontrol-top-item seccion-info">
+    			<i class="evento-panelcontrol-top-icon fas fa-chart-line"></i>
+    			<div>
+    				<h4>Ventas</h4>
+    				<p>El total de ventas es <?php echo Evento::getRecaudacionTotal($ev->id)." €";?></p>
+    			</div>
+    		</div>
+    		<div id="evento-panelcontrol-top-item3" class="evento-panelcontrol-top-item seccion-info">
+    			<i class="evento-panelcontrol-top-icon fas fa-receipt"></i>
+    			<div>
+    				<h4>Entradas</h4>
+    				<p>Entradas vendidas: <?php echo count($entradas);?> / <?php echo trim($ev->aforo); ?></p>
+    				<div class="progressBarBG">
+    					<div class="progressBarProgress" style="width:<?php echo count($entradas)*100/$ev->aforo?>%" ></div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    	<div id="evento-panelcontrol-mid-div" class="seccion-info">
+        	<div id="evento-panelcontrol-mid-grafica">
+        		<canvas id="myCanvas"></canvas>
+        	</div>
+        	<div id="evento-panelcontrol-mid-tabs">
+        	<ul>
+        		<li>Total Ventas</li>
+        		<li>Total Ventas</li>
+        		<li>Total Ventas</li>
+        		<li>Total Ventas</li>
+        	</ul>
+        	</div>
+    	</div>
 	</div>
-	
 	<div id="evento-editar-div" class="seccion-info">
 	
 		<section id="seccion-editar-evento-detalle">
@@ -202,7 +215,13 @@ echo "  </table>
 </div>
 </main>
 
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 <script>
+
+cargaGrafica();
+
 $("#imagen").change(function(){
 	if(this.files && this.files[0]){
 		var reader=new FileReader();
@@ -255,6 +274,30 @@ function getParametrosParaEditar(){
 	res+="imagen="+document.getElementById("imagen").value;
 
 	return res;
+}
+
+function cargaGrafica(){
+
+	var ctx = document.getElementById('myCanvas').getContext('2d');
+	var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'line',
+
+	    // The data for our dataset
+	    data: {
+	        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+	        datasets: [{
+	            label: 'My First dataset',
+	            backgroundColor: 'rgb(255, 99, 132)',
+	            borderColor: 'rgb(255, 99, 132)',
+	            data: [0, 10, 5, 2, 20, 30, 45]
+	        }]
+	    },
+
+	    // Configuration options go here
+	    options: {}
+	});
+	
 }
 </script>
 

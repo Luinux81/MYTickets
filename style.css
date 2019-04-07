@@ -36,7 +36,7 @@ input{
 	padding:.5em;
 	margin-left:1em;
 	margin-right:1em;
-	margin-bottom:2em;
+	margin-bottom:1em;
 	background-color:white;	
 }
 
@@ -218,11 +218,16 @@ input{
 
 											/***	Panel de control	***/
 											/***		Header			***/
+											
+#evento-panelcontrol{
+	margin-top:0em;
+	margin-bottom:2em;	
+}
+
 #evento-panelcontrol-top-div{
-	width:100%;
+	width:95%;
 	
-	margin-top:1em;
-	margin-bottom:1em;
+	margin:1em auto 1em auto;
 	
 	display:flex;
 	justify-content:space-between;
@@ -265,6 +270,26 @@ input{
 	min-height:1em;
 	border-radius:10px;
 }
+
+											/***	Panel de control	***/
+										/***			Grafica 			***/
+#evento-panelcontrol-mid-div{
+	width:90%;
+	margin:0 auto;
+	display:flex;
+	
+}
+
+#evento-panelcontrol-mid-grafica{
+	width:80%;
+}
+#evento-panelcontrol-mid-tabs{
+	width:20%;
+}
+#evento-panelcontrol-mid-tabs ul{
+	list-style:none;
+}
+
 
 											/***	Panel de control	***/
 										/***		Editar - Detalles 		***/
