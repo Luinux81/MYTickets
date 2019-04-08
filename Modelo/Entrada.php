@@ -2,7 +2,7 @@
 /**
  * Clase Entrada | Modelo/Entrada.php
  *
- * @author      Luis Breña Calvo <luinux81@gmail.com>
+ * @author      Luis Breï¿½a Calvo <luinux81@gmail.com>
  * @version     v.0.1
  */
 
@@ -328,9 +328,25 @@ class Entrada{
     }
     
     
-    
-    
-    
+    public static function getJSONEntradasMes($eid){
+        self::$dbh=Tool::conectar();
+        
+        $sql="select Fecha as fecha, COUNT(Codigo) as entradas from entradas as e 
+                inner join ventas as v on e.Id_Venta=v.Id
+                where e.Id_Evento=?
+                group by MONTH(Fecha)
+                order by Fecha";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1, $eid);
+        $query->execute();
+        
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        
+        Tool::desconectar(self::$dbh);
+        
+        return json_encode($res);
+    }
     
     
     

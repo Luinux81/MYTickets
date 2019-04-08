@@ -202,6 +202,8 @@ class Tool
     public static function adaptaJSONaGrafica($json,$modo){        
         $data=json_decode($json);
         $primero=true;
+        $acumulado=0;
+        
         
         $aux="[";
         
@@ -219,6 +221,17 @@ class Tool
                     break;
                 case "ventas-mes":
                     $aux.=$d->importe;
+                    break;
+                case "ventas-total":
+                    $acumulado+=$d->importe;
+                    $aux.=$acumulado;
+                    break;
+                case "entradas-mes":
+                    $aux.=$d->entradas;
+                    break;
+                case "entradas-total":
+                    $acumulado+=$d->entradas;
+                    $aux.=$acumulado;
                     break;
             }
             

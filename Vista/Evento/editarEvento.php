@@ -19,7 +19,8 @@ echo Html::cabeceraHtml() . Html::actionBar();
 
 echo Html::menuGestionEvento();
 
-$jsonGrafica=Venta::getJSONIngresoMes($eid);
+$jsonVentas=Venta::getJSONIngresoMes($eid);
+$jsonEntradas=Entrada::getJSONEntradasMes($ev->id);
 
 ?>
 
@@ -60,10 +61,10 @@ $jsonGrafica=Venta::getJSONIngresoMes($eid);
         	</div>
         	<div id="evento-panelcontrol-mid-tabs">
         	<ul>
-        		<li>Ventas Mes</li>
-        		<li>Ventas Total</li>
-        		<li>Entradas Mes</li>
-        		<li>Entradas Total</li>
+        		<li onclick="cargaGrafica('ventas-mes');">Ventas Mes</li>
+        		<li onclick="cargaGrafica('ventas-total');">Ventas Total</li>
+        		<li onclick="cargaGrafica('entradas-mes');">Entradas Mes</li>
+        		<li onclick="cargaGrafica('entradas-total');">Entradas Total</li>
         	</ul>
         	</div>
     	</div>
@@ -163,11 +164,10 @@ echo $aux;
     
 </div>
 
+<div id='gestion-asistentes-div'>
 
 <?php 
-
-echo " <div id='gestion-asistentes-div'>
-        <div id='evento-listado-div' class='seccion-info'>
+echo "<div id='evento-listado-div' class='seccion-info'>
         <section>
         <header><h3>Lista de entradas</h3></header>";
 
@@ -225,7 +225,7 @@ echo "  </table>
 
 <script>
 
-cargaGrafica();
+cargaGrafica("ventas-mes");
 
 $("#imagen").change(function(){
 	if(this.files && this.files[0]){
@@ -281,8 +281,28 @@ function getParametrosParaEditar(){
 	return res;
 }
 
-function cargaGrafica(){
+function cargaGrafica(modo){
+	$("#evento-panelcontrol-mid-grafica").html("");
+	$("#evento-panelcontrol-mid-grafica").html("<canvas id='myCanvas'></canvas>");
+	
+	switch(modo){
+    	case "ventas-mes":
+    		ventasMes();
+    		break;
+    	case "ventas-total":
+        	ventasTotal();
+        	break;
+    	case "entradas-mes":
+        	entradasMes();
+        	break;
+    	case "entradas-total":
+        	entradasTotal();
+        	break;
+	}
+	
+}
 
+function ventasMes(){
 	var ctx = document.getElementById('myCanvas').getContext('2d');
 	var chart = new Chart(ctx, {
 	    // The type of chart we want to create
@@ -290,12 +310,114 @@ function cargaGrafica(){
 
 	    // The data for our dataset
 	    data: {
-	        labels: <?php echo Tool::adaptaJSONaGrafica($jsonGrafica, "fecha");?>,
+	        labels: <?php echo Tool::adaptaJSONaGrafica($jsonVentas, "fecha");?>,
 	        datasets: [{
 	            label: 'Ventas Mes',
 	            backgroundColor: 'rgb(0, 80, 0)',
 	            borderColor: 'rgb(0, 160, 0)',
-	            data: <?php echo Tool::adaptaJSONaGrafica($jsonGrafica, "ventas-mes");?>
+	            data: <?php echo Tool::adaptaJSONaGrafica($jsonVentas, "ventas-mes");?>
+	        }]
+	    },
+
+	    // Configuration options go here
+	    options: {
+	    	scales: {
+	            yAxes: [{
+	                display: true,
+	                ticks: {
+	                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+	                    // OR //
+	                    beginAtZero: true   // minimum value will be 0.
+	                }
+	            }]
+	        }
+	    }
+	});
+	
+}
+
+function ventasTotal(){
+	var ctx = document.getElementById('myCanvas').getContext('2d');
+	var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'line',
+
+	    // The data for our dataset
+	    data: {
+	        labels: <?php echo Tool::adaptaJSONaGrafica($jsonVentas, "fecha");?>,
+	        datasets: [{
+	            label: 'Total Ventas',
+	            backgroundColor: 'rgb(0, 80, 0)',
+	            borderColor: 'rgb(0, 160, 0)',
+	            data: <?php echo Tool::adaptaJSONaGrafica($jsonVentas, "ventas-total");?>
+	        }]
+	    },
+
+	    // Configuration options go here
+	    options: {
+	    	scales: {
+	            yAxes: [{
+	                display: true,
+	                ticks: {
+	                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+	                    // OR //
+	                    beginAtZero: true   // minimum value will be 0.
+	                }
+	            }]
+	        }
+	    }
+	});
+	
+}
+
+function entradasMes(){
+	var ctx = document.getElementById('myCanvas').getContext('2d');
+	var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'bar',
+
+	    // The data for our dataset
+	    data: {
+	        labels: <?php echo Tool::adaptaJSONaGrafica($jsonEntradas, "fecha");?>,
+	        datasets: [{
+	            label: 'Entradas Mes',
+	            backgroundColor: 'rgb(0, 80, 0)',
+	            borderColor: 'rgb(0, 160, 0)',
+	            data: <?php echo Tool::adaptaJSONaGrafica($jsonEntradas, "entradas-mes");?>
+	        }]
+	    },
+
+	    // Configuration options go here
+	    options: {
+	    	scales: {
+	            yAxes: [{
+	                display: true,
+	                ticks: {
+	                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+	                    // OR //
+	                    beginAtZero: true   // minimum value will be 0.
+	                }
+	            }]
+	        }
+	    }
+	});
+	
+}
+
+function entradasTotal(){
+	var ctx = document.getElementById('myCanvas').getContext('2d');
+	var chart = new Chart(ctx, {
+	    // The type of chart we want to create
+	    type: 'line',
+
+	    // The data for our dataset
+	    data: {
+	        labels: <?php echo Tool::adaptaJSONaGrafica($jsonEntradas, "fecha");?>,
+	        datasets: [{
+	            label: 'Total Entradas',
+	            backgroundColor: 'rgb(0, 80, 0)',
+	            borderColor: 'rgb(0, 160, 0)',
+	            data: <?php echo Tool::adaptaJSONaGrafica($jsonEntradas, "entradas-total");?>
 	        }]
 	    },
 

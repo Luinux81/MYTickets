@@ -295,7 +295,8 @@ input{
 	
 	height:85%;
 	margin-top:2em;
-	margin-bottom:2em;
+	margin-bottom:-2em;
+	
 	
 	display:flex;
 	flex-direction:column;
@@ -308,6 +309,16 @@ input{
 	margin-top:2px;
 	border-radius:5px;
 	padding:.5em;
+	
+	margin-left:0em;
+	margin-right:1em;
+	
+	cursor:pointer;
+}
+
+#evento-panelcontrol-mid-tabs ul li:hover{
+	background-color:#5f6499;
+	color:white;
 }
 
 											/***	Panel de control	***/
