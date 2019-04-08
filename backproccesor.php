@@ -33,7 +33,9 @@ if(!$aux){
     else{
         //echo "Error creando usuario";
         //error creando usuario, enviar a log
-        Tool::log("ERROR creando usuario: " . $ipn->payer_email . " " . $ipn->payer_name . " " . $ipn->payer_lastname);
+        $aux="ERROR creando usuario: " . $ipn->payer_email . " " . $ipn->payer_name . " " . $ipn->payer_lastname;
+        Tool::log($aux);
+        Tool::enviaEmail("druida@transitionfestival.org", "druida@transitionfestival.org", "Admin MYTickets", "Error", $aux, "");
         return false;
     }
 }
@@ -44,7 +46,7 @@ else{
 }
 
 
-//adaptación a connection festival 2019
+//adaptaciï¿½n a connection festival 2019
 if($ipn->custom_idevento==""){
     $ipn->custom_idevento="10";
     $ipn->custom_idtipoentrada="1";
@@ -103,7 +105,10 @@ if($v->crearVenta()){
     Tool::enviaEmail($ipn->payer_email, $from, $fromNombre, "Tickets", $msg, "",$pdfs);
 }
 else{
-    Tool::log("Error creando venta");
+    $aux="Error creando venta";
+    Tool::log($aux);
+    Tool::enviaEmail("druida@transitionfestival.org", "druida@transitionfestival.org", "Admin MYTickets", "Error", $aux, "");
+    return false;
 }
 
 
