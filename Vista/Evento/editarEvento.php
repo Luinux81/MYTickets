@@ -18,6 +18,9 @@ $entradas=Entrada::getAllEntradasEvento($eid);
 echo Html::cabeceraHtml() . Html::actionBar();
 
 echo Html::menuGestionEvento();
+
+$jsonGrafica=Venta::getJSONIngresoMes($eid);
+
 ?>
 
 <main>
@@ -57,10 +60,10 @@ echo Html::menuGestionEvento();
         	</div>
         	<div id="evento-panelcontrol-mid-tabs">
         	<ul>
-        		<li>Total Ventas</li>
-        		<li>Total Ventas</li>
-        		<li>Total Ventas</li>
-        		<li>Total Ventas</li>
+        		<li>Ventas Mes</li>
+        		<li>Ventas Total</li>
+        		<li>Entradas Mes</li>
+        		<li>Entradas Total</li>
         	</ul>
         	</div>
     	</div>
@@ -163,7 +166,8 @@ echo $aux;
 
 <?php 
 
-echo " <div id='evento-listado-div' class='seccion-info'>
+echo " <div id='gestion-asistentes-div'>
+        <div id='evento-listado-div' class='seccion-info'>
         <section>
         <header><h3>Lista de entradas</h3></header>";
 
@@ -211,6 +215,7 @@ echo "  </table>
     	<button id='venta_enviar' disabled class="boton">Registrar Venta</button>
     </div>
     </section>
+	</div>
 	</div>
 </div>
 </main>
@@ -281,21 +286,32 @@ function cargaGrafica(){
 	var ctx = document.getElementById('myCanvas').getContext('2d');
 	var chart = new Chart(ctx, {
 	    // The type of chart we want to create
-	    type: 'line',
+	    type: 'bar',
 
 	    // The data for our dataset
 	    data: {
-	        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+	        labels: <?php echo Tool::adaptaJSONaGrafica($jsonGrafica, "fecha");?>,
 	        datasets: [{
-	            label: 'My First dataset',
-	            backgroundColor: 'rgb(255, 99, 132)',
-	            borderColor: 'rgb(255, 99, 132)',
-	            data: [0, 10, 5, 2, 20, 30, 45]
+	            label: 'Ventas Mes',
+	            backgroundColor: 'rgb(0, 80, 0)',
+	            borderColor: 'rgb(0, 160, 0)',
+	            data: <?php echo Tool::adaptaJSONaGrafica($jsonGrafica, "ventas-mes");?>
 	        }]
 	    },
 
 	    // Configuration options go here
-	    options: {}
+	    options: {
+	    	scales: {
+	            yAxes: [{
+	                display: true,
+	                ticks: {
+	                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+	                    // OR //
+	                    beginAtZero: true   // minimum value will be 0.
+	                }
+	            }]
+	        }
+	    }
 	});
 	
 }

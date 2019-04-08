@@ -1,3 +1,7 @@
+:root{
+	--ancho-seccion-div:90%;
+}
+
 *{
 	margin:0px;
 	padding:0px;
@@ -33,9 +37,8 @@ input{
 .seccion-info{	
 	border: black 2px solid;
 	border-radius:25px;
-	padding:.5em;
-	margin-left:1em;
-	margin-right:1em;
+	padding-top:.5em;
+	padding-bottom:.5em;	
 	margin-bottom:1em;
 	background-color:white;	
 }
@@ -70,6 +73,7 @@ input{
 	align-items:center;
 	margin-top:1em;
 	margin-bottom:1em;
+	margin-left:1em;
 }
 															
 .seccion-footer{
@@ -225,7 +229,7 @@ input{
 }
 
 #evento-panelcontrol-top-div{
-	width:95%;
+	width:var(--ancho-seccion-div);
 	
 	margin:1em auto 1em auto;
 	
@@ -274,7 +278,7 @@ input{
 											/***	Panel de control	***/
 										/***			Grafica 			***/
 #evento-panelcontrol-mid-div{
-	width:90%;
+	width:var(--ancho-seccion-div);
 	margin:0 auto;
 	display:flex;
 	
@@ -288,14 +292,30 @@ input{
 }
 #evento-panelcontrol-mid-tabs ul{
 	list-style:none;
+	
+	height:85%;
+	margin-top:2em;
+	margin-bottom:2em;
+	
+	display:flex;
+	flex-direction:column;
+	
 }
 
+#evento-panelcontrol-mid-tabs ul li{
+	flex-grow:1;	
+	border:grey 1px solid;
+	margin-top:2px;
+	border-radius:5px;
+	padding:.5em;
+}
 
 											/***	Panel de control	***/
 										/***		Editar - Detalles 		***/
 											
 #evento-editar-div{
-	padding:1.5em;
+	width:var(--ancho-seccion-div);
+	margin:0 auto 1em auto;
 }
 
 #seccion-editar-evento-tipos{
@@ -333,6 +353,14 @@ input{
 
 #seccion-editar-evento-tipos a{
 	color:white;
+}
+
+											/***	Panel de control	***/
+										/***		Listado		 			***/
+
+#gestion-asistentes-div{
+	width:var(--ancho-seccion-div);	
+	margin:0 auto;
 }
 
 											/***	Panel de control	***/

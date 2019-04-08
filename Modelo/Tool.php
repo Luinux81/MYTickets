@@ -2,7 +2,7 @@
 /**
  * Clase Tool | Modelo/Tool.php
  *
- * @author      Luis Bre�a Calvo <luinux81@gmail.com>
+ * @author      Luis Bre�a Calvo <luinux81@gmail.com>
  * @version     v.0.1
  */
 
@@ -189,6 +189,44 @@ class Tool
      */
     public static function log($mensaje){
         error_log(date('[Y-m-d H:i] '). " " . $mensaje . PHP_EOL, 3, LOG_FILE);
+    }
+    
+    /**
+     * Adapta un array json con datos para la gráfica a cadenas para añadir a los scripts de chart.js
+     * 
+     * @param array $json Array con los datos.
+     * @param string $modo Modo de representación de los datos.
+     * 
+     * @return string Representación en forma de cadena del array de datos adaptado al formato requerido por chart.js
+     */
+    public static function adaptaJSONaGrafica($json,$modo){        
+        $data=json_decode($json);
+        $primero=true;
+        
+        $aux="[";
+        
+        foreach($data as $d){
+            if($primero){
+                $primero=false;
+            }
+            else{
+                $aux.=",";
+            }
+            
+            switch ($modo){
+                case "fecha":
+                    $aux.= "'" . date("M y",strtotime($d->fecha)) . "'"; 
+                    break;
+                case "ventas-mes":
+                    $aux.=$d->importe;
+                    break;
+            }
+            
+        }
+        
+        $aux.="]";
+        
+        return $aux;
     }
 }
 

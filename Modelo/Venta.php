@@ -412,6 +412,30 @@ class Venta{
     }
     
 
+    /**
+     * Obtiene el un array JSON con el importe de las ventas al mes de un evento 
+     * 
+     * @param int $eid Identificador del evento.     
+     */
+    public static function getJSONIngresoMes($eid){
+        self::$dbh=Tool::conectar();
+        
+        $sql="select Fecha as fecha,SUM(Precio*Cantidad) As importe from ventas as v 
+                inner join lineasventa as lv on v.Id=lv.Id_Venta
+                where lv.Id_Evento=?
+                GROUP by MONTH(fecha) 
+                ORDER by fecha";
+        
+        $query=self::$dbh->prepare($sql);
+        $query->bindParam(1, $eid);
+        $query->execute();
+        
+        $res=$query->fetchAll(PDO::FETCH_ASSOC);
+        
+        Tool::desconectar(self::$dbh);
+        
+        return json_encode($res);
+    }
 
 
 }
