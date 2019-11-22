@@ -33,9 +33,7 @@ if(!$aux){
     else{
         //echo "Error creando usuario";
         //error creando usuario, enviar a log
-        $aux="ERROR creando usuario: " . $ipn->payer_email . " " . $ipn->payer_name . " " . $ipn->payer_lastname;
-        Tool::log($aux);
-        Tool::enviaEmail("druida@transitionfestival.org", "druida@transitionfestival.org", "Admin MYTickets", "Error", $aux, "");
+        Tool::log("ERROR creando usuario: " . $ipn->payer_email . " " . $ipn->payer_name . " " . $ipn->payer_lastname);
         return false;
     }
 }
@@ -97,6 +95,14 @@ if($v->crearVenta()){
             $to="tickets@connectionfestival.es";
             //$to="druida@transitionfestival.org";
             break;
+        case 11:
+            $from="market@transitionfestival.org";
+            $fromNombre="Transition Market";
+            $msg=Venta::getMensajeEmail($v->id,"market");
+            
+            //$to="market@transitionfestival.org";
+            $to="druida@transitionfestival.org";
+            break;   
     }
     
     Tool::enviaEmail($to, $from, $fromNombre, "Tickets", $msg, "",$pdfs);
@@ -105,10 +111,7 @@ if($v->crearVenta()){
     Tool::enviaEmail($ipn->payer_email, $from, $fromNombre, "Tickets", $msg, "",$pdfs);
 }
 else{
-    $aux="Error creando venta";
-    Tool::log($aux);
-    Tool::enviaEmail("druida@transitionfestival.org", "druida@transitionfestival.org", "Admin MYTickets", "Error", $aux, "");
-    return false;
+    Tool::log("Error creando venta");
 }
 
 

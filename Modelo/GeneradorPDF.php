@@ -1,18 +1,9 @@
 <?php
-/**
- * Clase GeneradorPDF | Modelo/GeneradorPDF.php
- *
- * @author      Luis Breña Calvo <luinux81@gmail.com>
- * @version     v.0.1
- */
-
 require_once APP_ROOT . '/Modelo/Entrada.php';
 require_once APP_ROOT . '/Modelo/Venta.php';
 require_once APP_ROOT . '/Modelo/Usuario.php';
 
-require APP_ROOT . '/vendor/autoload.php';
-
-//require_once APP_ROOT . '/lib/tcpdf/tcpdf.php';
+require_once APP_ROOT . '/lib/tcpdf/tcpdf.php';
 require_once APP_ROOT . '/lib/qrcode/qrcode.class.php';
 
 
@@ -54,10 +45,7 @@ const POSY_DATA=220;
 
 /*Modelo 2*/
 
-/**
- * Clase para generar tickets de entradas y listados de eventos en formato PDF.
- *
- */
+
 class GeneradorPDF{
     private static $modelo2Info=array(
         "top1"=>"BIENVENIDO",
@@ -83,16 +71,13 @@ class GeneradorPDF{
     );
     
     /**
-     * Devuelve las entradas pasadas como parametro en formato PDF.
      * 
-     * @param Entrada[] $arrayEntradas Array de entradas para generar en formato PDF.
-     * @param string $modo Los valores posibles son "normal"(por defecto)(para visualizar en navegador/descargar) para o "cadena"(para adjuntar a email).
-     * 
+     * @param Entrada[] $arrayEntradas
+     * @param string $modo
      * @return string
      */
     public static function generaPDF($arrayEntradas,$modo="normal"){
         $pdf=new TCPDF();
-        
         $modelo="modelo1";
         
         foreach($arrayEntradas as $entrada){
@@ -121,6 +106,16 @@ class GeneradorPDF{
                     self::$modelo2Info['imagen']="http://connection.transitionfestival.org/connection2016.jpg";
                     $modelo="modelo2";
                     break;
+                case "11": //Market Transition 2020
+                    self::$modelo2Info['head_i']="MARKET TRANSITION 2020";
+                    self::$modelo2Info['head_d']="MARKET TRANSITION 2020";
+                    self::$modelo2Info['info_t_1']="MARTES 5 MAYO 2020";
+                    self::$modelo2Info['info_t_2']="PINAR JURADO\n(ALMONTE-SPAIN)\n\n CEREMONIA DE APERTURA: 22:22 H\n\n WWW.TRANSITIONFESTIVAL.ORG\n\n\n";
+                    self::$modelo2Info['info_b_1']="TUESDAY 5th MAY 2020";
+                    self::$modelo2Info['info_b_2']="PINAR JURADO\n(ALMONTE-SPAIN)\n\n OPENING CEREMONY: 22:22 H\n\n WWW.TRANSITIONFESTIVAL.ORG";
+                    self::$modelo2Info['imagen']="http://market.transitionfestival.org/logo.jpg";
+                    $modelo="modelo2";
+                    break;
             }
             
             self::escribeEntradaEnDPF($pdf,$entrada,$modelo);                       
@@ -139,11 +134,8 @@ class GeneradorPDF{
     }
     
     /**
-     * Devuelve un listado de acceso con todas las entradas de un evento en formato PDF. 
      * 
-     * Cada linea del listado contiene el codigo de la entrada, el email y el nombre del usuario. Listado de acceso al evento.
-     * 
-     * @param int $eid Identificador del evento.
+     * @param int $eid
      */
     public static function generaPDFListadoEvento($eid){
         $aux="u.Nombre,u.Email,e.Codigo";
